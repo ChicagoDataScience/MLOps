@@ -1,0 +1,43 @@
+[
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/versioncontrol/",
+	"title": "Version Control",
+	"tags": [],
+	"description": "",
+	"content": " Chapter 1 Outline Version control for code and data.\n"
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/containers/",
+	"title": "Containers",
+	"tags": [],
+	"description": "",
+	"content": " Chapter 2 Outline Topics include containers, docker and kubernetes.\n"
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/pipelines/",
+	"title": "Pipelines",
+	"tags": [],
+	"description": "",
+	"content": " Chapter 3 Outline Topics include ML pipelines in scikit learn and tensorflow.\n"
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/",
+	"title": "MLOps: Operationalizing Machine Learning",
+	"tags": [],
+	"description": "",
+	"content": " Operationalizing Machine Learning (IDS594) This practice-oriented course surveys modern best practices around getting machine learning (ML) models into production. It continues where IDS 572 and IDS 575 left off: operationalizing machine learning workflows in the context of the larger business end-goals. The course is complementary to IDS 561. We will focus on: (a) ML monitoring, (b) orchestration, \u0026copy; governance, (d) continuous integration/deployment and (e) business impact. A preliminary list of topics that will be covered are:\n Containers for machine learning, the docker ecosystem, Kubernetes Git, CI/CD and their modifications for ML workflows A/B Testing of KPI improvements in Production Experiment tracking and logging Case studies of solutions such as Uber’s Michelangelo, Facebook\u0026rsquo;s FBLearner Flow, Google\u0026rsquo;s TFX/Kubeflow and Databricks\u0026rsquo; MLFlow.  Prior programming experience: Python\nAdditional list of topics is being worked on.\n Course logistics are TBD.\n Work in progress. Class starts in Fall 2020.\n "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
