@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MLOps: Operationalizing Machine Learning</title>
-    <link>https://chicagodatascience.github.io/MLOps/</link>
-    <description>Recent content on MLOps: Operationalizing Machine Learning</description>
+    <title>Course Logistics on MLOps: Operationalizing Machine Learning</title>
+    <link>https://chicagodatascience.github.io/MLOps/logistics/</link>
+    <description>Recent content in Course Logistics on MLOps: Operationalizing Machine Learning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     
-	<atom:link href="https://chicagodatascience.github.io/MLOps/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chicagodatascience.github.io/MLOps/logistics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
