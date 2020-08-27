@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>MLOps: Operationalizing Machine Learning :: MLOps: Operationalizing Machine Learning</title>
+    <title>Setting up Python :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css?1598559513" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/">
+  <body class="" data-url="/MLOps/software-tools/conda/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -241,7 +241,7 @@
   
     
     <li data-nav-id="/MLOps/software-tools/" title="Software Tools for Deployment" class="dd-item 
-        
+        parent
         
         
         ">
@@ -269,7 +269,7 @@
  
   
     
-      <li data-nav-id="/MLOps/software-tools/conda/" title="Setting up Python" class="dd-item ">
+      <li data-nav-id="/MLOps/software-tools/conda/" title="Setting up Python" class="dd-item active">
         <a href="/MLOps/software-tools/conda/">
         Setting up Python
         <i class="fas fa-check read-icon"></i>
@@ -372,43 +372,116 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
               
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                   Setting up Python 
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#get-miniconda">Get Miniconda</a></li>
+<li><a href="#set-up-a-conda-environment-and-activate-it">Set up a conda environment and activate it</a></li>
+<li><a href="#install-jupyter-and-pytorch-and-tensorflow-keras-scikit-learn-similarly-in-a-specific-environment">Install jupyter and pytorch (and tensorflow, keras, scikit-learn similarly) in a specific environment</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
         <div id="head-tags">
         
         </div>
         
         <div id="body-inner">
           
+            <h1>
+              
+              Setting up Python
+            </h1>
+          
 
         
 
 
-<span id="sidebar-toggle-span">
-<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
-</span>
-
- 
 
 
-<h1 id="operationalizing-machine-learning-ids594">Operationalizing Machine Learning (IDS594)</h1>
 
-<p>Note: Also known as <em>ML Deployment</em> in the course catalog.</p>
+<p>Here are a few notes on installing a user specific python distribution:</p>
 
-<p><img src="https://imgs.xkcd.com/comics/data_pipeline.png" alt="xkcd image" /></p>
+<h4 id="get-miniconda">Get Miniconda</h4>
 
-<p>This practice-oriented course surveys modern best practices around getting machine learning (ML) models into <em>production</em>. It continues where IDS 572 and IDS 575 left off, which is to learn multiple ways of operationalizing machine learning work flows and models in the context of the larger business end-goals. The course is complementary to IDS 561. We will gain a better understanding of strategies for model management, monitoring and deployment. We will also intertwine these topics with online experimentation techniques (A/B testing) and software engineering ideas such as version control, containerization, and continuous integration/continuous deployment.</p>
-
-<p>A tentative list of topics is as follows:</p>
+<pre><code class="language-bash">  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  chmod +x Miniconda3-latest-Linux-x86_64.sh
+  conda install pip #better to use the pip in the base conda env than system pip
+</code></pre>
 
 <ul>
-<li>Deploying ML models using web servers</li>
-<li>Containers for machine learning: the docker ecosystem and Kubernetes</li>
-<li>Git, CI/CD and their modifications for ML workflows</li>
-<li>A/B Testing of KPIs and data considerations</li>
-<li>Model management: model tracking and logging</li>
-<li>Case studies: Databricks&rsquo; MLFlow, Google&rsquo;s TFX/Kubeflow, Uber’s Michelangelo, Facebook&rsquo;s FBLearner Flow.</li>
+<li>The difference between <code>conda</code> and <code>pip</code>: pip is a package manager specifically for python, whereas conda is a package manager for multiple languages as well as is an environment manager. Python module venv is python specific environment manager.</li>
 </ul>
+
+<h4 id="set-up-a-conda-environment-and-activate-it">Set up a conda environment and activate it</h4>
+
+<pre><code class="language-bash">conda create --name datasci-env python #or
+conda create -n dataeng-env python jupyter pandas numpy matplotlib #or
+conda create -n datasci-env scipy=0.15.0 #or
+conda env create -f environment.yml
+
+conda activate datasci-env
+</code></pre>
+
+<ul>
+<li><p>You don&rsquo;t have to give names, can give prefixes where the env is saved, can create based on specific pages, can use explicit previous conda environments, yaml files, clone/update an existing one, etc. Use this <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">link</a> to get more information.</p></li>
+
+<li><p>Specifying a path to a subdirectory of your project directory when creating an environment can keep everything 100% self contained.</p></li>
+
+<li><p>To deactivate this environment, use <code>conda deactivate datasci-env</code>.</p></li>
+</ul>
+
+<h4 id="install-jupyter-and-pytorch-and-tensorflow-keras-scikit-learn-similarly-in-a-specific-environment">Install jupyter and pytorch (and tensorflow, keras, scikit-learn similarly) in a specific environment</h4>
+
+<pre><code class="language-bash">conda install jupyter
+conda install pytorch torchvision cpuonly -c pytorch # https://pytorch.org/
+</code></pre>
+
+<ul>
+<li>Change the command for pytorch installation if you do intend to use GPUs.</li>
+</ul>
+
+
+<footer class="footline">
 	
-  
+</footer>
+
         
         </div> 
         
@@ -539,6 +612,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -551,6 +625,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -567,6 +642,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -623,8 +701,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/MLOps/software-tools/" title="Software Tools for Deployment"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/MLOps/logistics/" title="Course Logistics" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/MLOps/software-tools/mlflow/" title="MLFlow" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

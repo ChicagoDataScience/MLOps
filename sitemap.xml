@@ -11,6 +11,18 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/software-tools/conda/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/software-tools/mlflow/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/software-tools/jupyter/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/experimentation/</loc>
   </url>
   
