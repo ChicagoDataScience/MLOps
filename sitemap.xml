@@ -3,15 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/versioncontrol/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/logistics/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/containers/</loc>
-  </url>
-  
-  <url>
-    <loc>https://chicagodatascience.github.io/MLOps/pipelines/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/schedule/</loc>
   </url>
   
   <url>
@@ -19,11 +15,11 @@
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/categories/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/software-tools/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/logistics/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/categories/</loc>
   </url>
   
   <url>
@@ -32,6 +28,10 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/software-tools/python-ds-landscape/</loc>
   </url>
   
   <url>

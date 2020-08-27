@@ -1,24 +1,17 @@
 [
 {
-	"uri": "https://chicagodatascience.github.io/MLOps/versioncontrol/",
-	"title": "Version Control",
+	"uri": "https://chicagodatascience.github.io/MLOps/logistics/",
+	"title": "Course Logistics",
 	"tags": [],
 	"description": "",
-	"content": " Chapter 1 Outline Version control for code and data.\n"
+	"content": " Course Logistics  Semester: Fall 2020 Lectures: Thursdays 6.30 PM to 9.00 PM Mode: Online synchronous (i.e., location is online). The course will be delivered over Zoom (an invite will be sent before the first day of class). See the online learning page for basic technology requirements. Staff  Instructor: Dr. Theja Tulabandhula (netid: theja) Teaching Assistant: Tengteng Ma (netid: tma24)  Communication: via slack. Office hours: online via slack and zoom (by appointment).  Textbook and Materials  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Software  Any OS should be okay. If in doubt, run a virtual machine running linux (this will be discussed in the class). Some of the software we will work with are:  Docker for Desktop Lightweight Kubernetes Python (Anaconda)  \u0026hellip;  Hardware  There will be varied computing resources needed for this course. Try using a virtual machine with linux on your own computer if possible. A Windows virtual desktop is available at desktop.uic.edu if needed. You can refer to these two help pages to get started.   Project  There are no assignments or exams for this course. Students are expected to apply what they learn in the course and demonstrate a deployment of an existing machine learning model they have access to. A suitable documentation of this process along with the scripts/codes/commands used is to be submitted on October 16th. The evaluation criteria and other details will be released shortly. Submission deadline is BEFORE 11.59 PM on the concerned day. Late submissions will have an automatic 20% penalty per day. Use Blackboard for uploading your work as a single zip file.  Grade  Grades will be assigned based on the project (see project evaluation criteria above) (80%) and course participation (20%).  Miscellaneous Information  This is a 2 credit graduate level course offered by the Information and Decision Sciences department at UIC. See the academic calendar for the semester timeline. Students who wish to observe their religious holidays (http://oae.uic.edu/religious-calendar/) should notify the instructor within one week of the first lecture date. Contact the instructor at the earliest, if you require any accommodations for access to and/or participation in this course. Refer to the academic integrity guidelines set by the university.  "
 },
 {
-	"uri": "https://chicagodatascience.github.io/MLOps/containers/",
-	"title": "Containers",
+	"uri": "https://chicagodatascience.github.io/MLOps/schedule/",
+	"title": "Schedule",
 	"tags": [],
 	"description": "",
-	"content": " Containers Outline Topics include containers, docker and kubernetes.\n"
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/pipelines/",
-	"title": "Pipelines",
-	"tags": [],
-	"description": "",
-	"content": " Chapter 3 Outline Topics include ML pipelines in scikit learn and tensorflow.\n"
+	"content": " Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4  Lecture 4: ML Model Pipelines  Ref Chapter 5  Lecture 5:  Ref Chapter 6  Lecture 6:  Ref Chapter 7  Lecture 7:  Ref Chapter 8  Lecture 8: Online Experimentation  Ref 1: https://help.optimizely.com/Get_Started/Get_started_with_Optimizely_Web_Recommendations Ref 2: https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html  "
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/experimentation/",
@@ -28,18 +21,18 @@
 	"content": " Online Experimentation - A/B testing: sample size considerations - Tackling bandit feedback "
 },
 {
+	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/",
+	"title": "Software Tools for Deployment",
+	"tags": [],
+	"description": "",
+	"content": " Software Tooling Outline Git: Version control for code and data. CI/CD: Continuous Integration and Delivery.\n"
+},
+{
 	"uri": "https://chicagodatascience.github.io/MLOps/categories/",
 	"title": "Categories",
 	"tags": [],
 	"description": "",
 	"content": ""
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/logistics/",
-	"title": "Course Logistics",
-	"tags": [],
-	"description": "",
-	"content": " Course Logistics  Semester: Fall 2020 Lectures: Thursdays 6.30 PM to 9.00 PM Mode: Online synchronous (i.e., location is online). The course will be delivered over Zoom (an invite will be sent before the first day of class). See the online learning page for basic technology requirements. Staff  Instructor: Dr. Theja Tulabandhula (netid: theja) Teaching Assistant: Tengteng Ma (netid: tma24)  Communication: via slack. Office hours: online via slack and zoom (by appointment).  Textbook and Materials  There are no textbooks required. Suitable material will be provided during the lectures.  Software  Any OS should be okay. If in doubt, run a virtual machine running linux (this will be discussed in the class). Some of the software we will work with are:  Docker for Desktop Lightweight Kubernetes Python (Anaconda)  \u0026hellip;  Hardware  There will be varied computing resources needed for this course. Try using a virtual machine with linux on your own computer if possible. A Windows virtual desktop is available at desktop.uic.edu if needed. You can refer to these two help pages to get started.   Project  There are no assignments or exams for this course. Students are expected to apply what they learn in the course and demonstrate a deployment of an existing machine learning model they have access to. A suitable documentation of this process along with the scripts/codes/commands used is to be submitted on October 16th. The evaluation criteria and other details will be released shortly. Submission deadline is BEFORE 11.59 PM on the concerned day. Late submissions will have an automatic 20% penalty per day. Use Blackboard for uploading your work as a single zip file.  Grade  Grades will be assigned based on the project (see project evaluation criteria above) (80%) and course participation (20%).  Miscellaneous Information  This is a 2 credit graduate level course offered by the Information and Decision Sciences department at UIC. See the academic calendar for the semester timeline. Students who wish to observe their religious holidays (http://oae.uic.edu/religious-calendar/) should notify the instructor within one week of the first lecture date. Contact the instructor at the earliest, if you require any accommodations for access to and/or participation in this course. Refer to the academic integrity guidelines set by the university.  "
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/",
@@ -54,6 +47,13 @@
 	"tags": [],
 	"description": "",
 	"content": " Online Learning Details To maximize the learning experience, it will be good if students can meet the following basic technology requirements:\n At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the Basic Technology Requirements link for more details.\n Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself. This can result in somewhat reduced functionality, depending on your needs. If you do not have reliable access to a computer at home, ACCC may have a laptop to lend to you. Please fill out our request form at accc.uic.edu/forms/laptop-request\n Internet: Many service providers are offering connectivity solutions for students without access to Wi-Fi or the internet. The Illinois Citizens Utility Board is maintaining a comprehensive list of the available options here: citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency.\n The State of Illinois is maintaining a map of publicly available internet hotspots across the state that can be used for academic-related needs. These hotspots are available from within a parked vehicle. The map, and additional information, can be viewed at www.ildceo.net/wifi.\n Additionally, the ACCC has a very limited supply of cellular hotspots available for those students who are unable to take advantage of the above offers. Please fill out our request form at accc.uic.edu/forms/laptop-request/.\n  Microphone: While this may be built into your computer, we recommend using an external device such as a USB microphone or headset.\n Webcam: A built-in camera may be installed on your laptop; if not, you can use an external USB camera for video conferencing.\n  "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/python-ds-landscape/",
+	"title": "Python Datascience Landscape",
+	"tags": [],
+	"description": "",
+	"content": "TBD\n"
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/tags/",
