@@ -28,6 +28,20 @@
 	"content": " Software Tooling Outline Git: Version control for code and data. CI/CD: Continuous Integration and Delivery.\n"
 },
 {
+	"uri": "https://chicagodatascience.github.io/MLOps/schedule/lec01_basics/",
+	"title": "Lecture 1 - Basics",
+	"tags": [],
+	"description": "",
+	"content": " Python  We will be predominantly concerned with the Python ecosystem A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution. Many companies use python to start data science projects in-house (via fresh recruits, interns etc) Python has some relatively easy ways to access databases Big data platforms such as Spark have great python bindings  E.g., Pandas dataframe and Spark dataframe  Latest models (deep learning, pre-trained) are built in the python ecosystem Many many useful libraries: pandas, matplotlib, flask,\u0026hellip;  Our Objective  Learn the patterns, not the specific tools  Deployment Targets  Local machines On-prem or self-hosted machines (needs DevOps skills) Managed cloud  Heroku (PAAS) Azure GCP AWS (IAAS)  The decision to deply on one versus the other depends on  skills business need internal vs external scale, reliability, security costs ease of deployment   Local Deployments are Hard  Need to learn linux security Need to learn how to manage access Need for learn backups Need to learn hot switching / reliability  Cloud Deployments are not Easy  Also need to learn a complex ecosystem Vendor lock-in (for successful businesses, this is not an issue)  Aside: Software Tools Python development can happen:\n In text editors (e.g., sublime-text) In IDEs (e.g., Pycharm or VSCode) In Jupyter notebooks and variants (Google Colab, Databricks notebooks)  vanilla notebook does not allow collaboration as such   Part 1: Setting up Jupyter access on Vultr  Alternatives: using Digitalocean, AWS EC2; using Google Colab and other vendors Firewall SSH only access Conda installation SSH tunneling  Part 2: Basic Pytorch Model  Accessing data Training  Part 4: Saving and Loading Models: Model Persistence  Natively: https://pytorch.org/tutorials/recipes/recipes/save_load_across_devices.html Using MLFlow: https://www.mlflow.org/docs/latest/python_api/mlflow.pytorch.html  "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/schedule/lec01_webservers/",
+	"title": "Lecture 1 - Serving ML Models Using Web Servers",
+	"tags": [],
+	"description": "",
+	"content": " Model Serving  Sharing results with others (humans, web services, applications) Batch approach: dump predictions to a database (quite popular) Real-time approach: send a test feature vector, get back the prediction instantly and the computation happens now  How to consume from prediction services?  Using web requests (e.g., using a JSON payload)  How to output predictions?  We will plan to set up a server to serve predictions  It will respond to web requests (GET, POST) We pass some inputs (image, text, vector of numbers), and get some outputs (just like a function) The environment from which we pass inputs may be very different from the environment where the prediction happens (e.g., different hardware)   Our Objective  Use sklearn/keras with flask, gunicorn and heroku to set up a prediction server  Part 1: Making API Calls  Using the requests module Using curl Using postman  Part 2: Simple Flask App  Function decorators Simple response to API Calls Integrating the model with the app  "
+},
+{
 	"uri": "https://chicagodatascience.github.io/MLOps/categories/",
 	"title": "Categories",
 	"tags": [],

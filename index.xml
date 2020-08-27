@@ -11,6 +11,24 @@
     
     
     <item>
+      <title>Lecture 1 - Basics</title>
+      <link>https://chicagodatascience.github.io/MLOps/schedule/lec01_basics/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/schedule/lec01_basics/</guid>
+      <description>Python  We will be predominantly concerned with the Python ecosystem A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution. Many companies use python to start data science projects in-house (via fresh recruits, interns etc) Python has some relatively easy ways to access databases Big data platforms such as Spark have great python bindings  E.g., Pandas dataframe and Spark dataframe  Latest models (deep learning, pre-trained) are built in the python ecosystem Many many useful libraries: pandas, matplotlib, flask,&amp;hellip;  Our Objective  Learn the patterns, not the specific tools  Deployment Targets  Local machines On-prem or self-hosted machines (needs DevOps skills) Managed cloud  Heroku (PAAS) Azure GCP AWS (IAAS)  The decision to deply on one versus the other depends on  skills business need internal vs external scale, reliability, security costs ease of deployment   Local Deployments are Hard  Need to learn linux security Need to learn how to manage access Need for learn backups Need to learn hot switching / reliability  Cloud Deployments are not Easy  Also need to learn a complex ecosystem Vendor lock-in (for successful businesses, this is not an issue)  Aside: Software Tools Python development can happen:</description>
+    </item>
+    
+    <item>
+      <title>Lecture 1 - Serving ML Models Using Web Servers</title>
+      <link>https://chicagodatascience.github.io/MLOps/schedule/lec01_webservers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/schedule/lec01_webservers/</guid>
+      <description>Model Serving  Sharing results with others (humans, web services, applications) Batch approach: dump predictions to a database (quite popular) Real-time approach: send a test feature vector, get back the prediction instantly and the computation happens now  How to consume from prediction services?  Using web requests (e.g., using a JSON payload)  How to output predictions?  We will plan to set up a server to serve predictions  It will respond to web requests (GET, POST) We pass some inputs (image, text, vector of numbers), and get some outputs (just like a function) The environment from which we pass inputs may be very different from the environment where the prediction happens (e.</description>
+    </item>
+    
+    <item>
       <title>Online Learning Details</title>
       <link>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
