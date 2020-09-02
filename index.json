@@ -7,6 +7,13 @@
 	"content": " Course Logistics  Semester: Fall 2020 Lectures: Thursdays 6.30 PM to 9.00 PM Mode: Online synchronous (i.e., location is online). The course will be delivered over Zoom (an invite will be sent before the first day of class). See the online learning page for basic technology requirements. Staff  Instructor: Dr. Theja Tulabandhula (netid: theja) Teaching Assistant: Tengteng Ma (netid: tma24)  Communication: via slack. Office hours: online via slack and zoom (by appointment).  Textbook and Materials  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Software  Any OS should be okay. If in doubt, run a virtual machine running linux (this will be discussed in the class). Some of the software we will work with are:  Docker for Desktop Lightweight Kubernetes Python (Anaconda)  \u0026hellip;  Hardware  There will be varied computing resources needed for this course. Try using a virtual machine with linux on your own computer if possible. A Windows virtual desktop is available at desktop.uic.edu if needed. You can refer to these two help pages to get started.   Project  There are no assignments or exams for this course. Students are expected to apply what they learn in the course and demonstrate a deployment of an existing machine learning model they have access to. A suitable documentation of this process along with the scripts/codes/commands used is to be submitted on October 16th. The evaluation criteria and other details will be released shortly. Submission deadline is BEFORE 11.59 PM on the concerned day. Late submissions will have an automatic 20% penalty per day. Use Blackboard for uploading your work as a single zip file.  Grade  Grades will be assigned based on the project (see project evaluation criteria above) (80%) and course participation (20%).  Miscellaneous Information  This is a 2 credit graduate level course offered by the Information and Decision Sciences department at UIC. See the academic calendar for the semester timeline. Students who wish to observe their religious holidays (http://oae.uic.edu/religious-calendar/) should notify the instructor within one week of the first lecture date. Contact the instructor at the earliest, if you require any accommodations for access to and/or participation in this course. Refer to the academic integrity guidelines set by the university.  "
 },
 {
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/",
+	"title": "Lecture 1",
+	"tags": [],
+	"description": "",
+	"content": " Web Servers - Conda - Jupyter "
+},
+{
 	"uri": "https://chicagodatascience.github.io/MLOps/schedule/",
 	"title": "Schedule",
 	"tags": [],
@@ -14,53 +21,95 @@
 	"content": " Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4  Lecture 4: ML Model Pipelines  Ref Chapter 5  Lecture 5:  Ref Chapter 6  Lecture 6:  Ref Chapter 7  Lecture 7:  Ref Chapter 8  Lecture 8: Online Experimentation  Ref 1: https://help.optimizely.com/Get_Started/Get_started_with_Optimizely_Web_Recommendations Ref 2: https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html  "
 },
 {
-	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/conda/",
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/intro/",
+	"title": "Basics",
+	"tags": [],
+	"description": "",
+	"content": " Python  We will be predominantly concerned with the Python ecosystem A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution. Many companies use python to start data science projects in-house (via fresh recruits, interns etc) Python has some relatively easy ways to access databases Big data platforms such as Spark have great python bindings  E.g., Pandas dataframe and Spark dataframe  Latest models (deep learning, pre-trained) are built in the python ecosystem Many many useful libraries: pandas, matplotlib, flask,\u0026hellip;  Our Objective  Learn the patterns, not the specific tools  Deployment Targets  Local machines On-prem or self-hosted machines (needs DevOps skills) Managed cloud  Heroku (PAAS) Azure GCP AWS (IAAS)  The decision to deply on one versus the other depends on  skills business need internal vs external scale, reliability, security costs ease of deployment   Local Deployments are Hard  Need to learn linux security Need to learn how to manage access Need for learn backups Need to learn hot switching / reliability  Cloud Deployments are not Easy  Also need to learn a complex ecosystem Vendor lock-in (for successful businesses, this is not an issue)  Aside: Software Tools Python development can happen:\n In text editors (e.g., sublime-text) In IDEs (e.g., Pycharm or VSCode) In Jupyter notebooks and variants (Google Colab, Databricks notebooks)  vanilla notebook does not allow collaboration as such   Part 1: Setting up Jupyter access on Vultr  Alternatives: Digitalocean, AWS EC2, Google Cloud; using Google Colab and other vendors Firewall and basic security SSH only access Conda installation (see notes) screen session SSH tunneling  Part 2: Basic Pytorch Model  Accessing data Training  Part 4: Saving and Loading Models: Model Persistence  Natively: https://pytorch.org/tutorials/recipes/recipes/save_load_across_devices.html Using MLFlow: https://www.mlflow.org/docs/latest/python_api/mlflow.pytorch.html  "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/conda/",
 	"title": "Setting up Python",
 	"tags": [],
 	"description": "",
 	"content": " Here are a few notes on installing a user specific python distribution:\nGet Miniconda wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh chmod +x Miniconda3-latest-Linux-x86_64.sh conda install pip #better to use the pip in the base conda env than system pip   The difference between conda and pip: pip is a package manager specifically for python, whereas conda is a package manager for multiple languages as well as is an environment manager. Python module venv is python specific environment manager.  Set up a conda environment and activate it conda create --name datasci-env python #or conda create -n dataeng-env python jupyter pandas numpy matplotlib #or conda create -n datasci-env scipy=0.15.0 #or conda env create -f environment.yml conda activate datasci-env   You don\u0026rsquo;t have to give names, can give prefixes where the env is saved, can create based on specific pages, can use explicit previous conda environments, yaml files, clone/update an existing one, etc. Use this link to get more information.\n Specifying a path to a subdirectory of your project directory when creating an environment can keep everything 100% self contained.\n To deactivate this environment, use conda deactivate datasci-env.\n  Install jupyter and pytorch (and tensorflow, keras, scikit-learn similarly) in a specific environment conda install jupyter conda install pytorch torchvision cpuonly -c pytorch # https://pytorch.org/   Change the command for pytorch installation if you do intend to use GPUs.  "
 },
 {
-	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/mlflow/",
-	"title": "MLFlow",
-	"tags": [],
-	"description": "",
-	"content": "See https://pypi.org/project/mlflow/\n"
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/jupyter/",
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/jupyter/",
 	"title": "Remote Jupyter Server",
 	"tags": [],
 	"description": "",
 	"content": "The following sets a simple password based login, which is handy:\njupyter notebook --generate-config jupyter notebook password  Unfortuantely, hashed password is sent unencrypted by your browser here. So read up here to do this in a better way.\nStarting jupyter on the server can be done inside a screen session:\nscreen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no-browser --port=8888  SSH tunnel can be setup by running the following on your local machine, and then opening the browser (http://localhost:8889)\nssh -N -f -L localhost:8889:localhost:8888 -p 22 theja@192.168.0.105  "
 },
 {
-	"uri": "https://chicagodatascience.github.io/MLOps/experimentation/",
-	"title": "Online Experimentation",
-	"tags": [],
-	"description": "",
-	"content": " Online Experimentation - A/B testing: sample size considerations - Tackling bandit feedback "
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/",
-	"title": "Software Tools for Deployment",
-	"tags": [],
-	"description": "",
-	"content": " Software Tooling Outline Git: Version control for code and data. CI/CD: Continuous Integration and Delivery.\n"
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/schedule/lec01_basics/",
-	"title": "Lecture 1 - Basics",
-	"tags": [],
-	"description": "",
-	"content": " Python  We will be predominantly concerned with the Python ecosystem A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution. Many companies use python to start data science projects in-house (via fresh recruits, interns etc) Python has some relatively easy ways to access databases Big data platforms such as Spark have great python bindings  E.g., Pandas dataframe and Spark dataframe  Latest models (deep learning, pre-trained) are built in the python ecosystem Many many useful libraries: pandas, matplotlib, flask,\u0026hellip;  Our Objective  Learn the patterns, not the specific tools  Deployment Targets  Local machines On-prem or self-hosted machines (needs DevOps skills) Managed cloud  Heroku (PAAS) Azure GCP AWS (IAAS)  The decision to deply on one versus the other depends on  skills business need internal vs external scale, reliability, security costs ease of deployment   Local Deployments are Hard  Need to learn linux security Need to learn how to manage access Need for learn backups Need to learn hot switching / reliability  Cloud Deployments are not Easy  Also need to learn a complex ecosystem Vendor lock-in (for successful businesses, this is not an issue)  Aside: Software Tools Python development can happen:\n In text editors (e.g., sublime-text) In IDEs (e.g., Pycharm or VSCode) In Jupyter notebooks and variants (Google Colab, Databricks notebooks)  vanilla notebook does not allow collaboration as such   Part 1: Setting up Jupyter access on Vultr  Alternatives: Digitalocean, AWS EC2, Google Cloud; using Google Colab and other vendors Firewall and basic security SSH only access Conda installation (see notes) screen session SSH tunneling  Part 2: Basic Pytorch Model  Accessing data Training  Part 4: Saving and Loading Models: Model Persistence  Natively: https://pytorch.org/tutorials/recipes/recipes/save_load_across_devices.html Using MLFlow: https://www.mlflow.org/docs/latest/python_api/mlflow.pytorch.html  "
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/schedule/lec01_webservers/",
-	"title": "Lecture 1 - Serving ML Models Using Web Servers",
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/deploy_webserver/",
+	"title": "Serving ML Models Using Web Servers",
 	"tags": [],
 	"description": "",
 	"content": " Model Serving  Sharing results with others (humans, web services, applications) Batch approach: dump predictions to a database (quite popular) Real-time approach: send a test feature vector, get back the prediction instantly and the computation happens now  How to consume from prediction services?  Using web requests (e.g., using a JSON payload)  How to output predictions?  We will plan to set up a server to serve predictions  It will respond to web requests (GET, POST) We pass some inputs (image, text, vector of numbers), and get some outputs (just like a function) The environment from which we pass inputs may be very different from the environment where the prediction happens (e.g., different hardware)   Our Objective  Use sklearn/keras with flask, gunicorn and heroku to set up a prediction server  Part 1: Making API Calls  Using the requests module from a jupyter notebook (this is an example of a programmatic way) Alternatively, using curl or postman (these are more for testing)  Part 2: Simple Flask App  Function decorators Simple response to API Calls Integrating the model with the app  "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/mlflow/",
+	"title": "MLFlow",
+	"tags": [],
+	"description": "",
+	"content": "See https://pypi.org/project/mlflow/\n"
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture2/",
+	"title": "Lecture 2",
+	"tags": [],
+	"description": "",
+	"content": " Serverless Deployments - Managed Solutions - Cloud Functions (GCP) - Lambda Functions (AWS) "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/",
+	"title": "Lecture 2 - Serverless Deployments",
+	"tags": [],
+	"description": "",
+	"content": " A. TLDR  Models do not need to be complex, but it can be complex to deploy models. - Ben Weber (2020)\n Problem  We have to take care of provisioning and server maintenance while deploying our models. We have to worry about scale: would 1 server be enough? How to minimize the time to deploy (at an acceptable increase in cost)? How can a single developer or data science/analytics professional manage a complex service?  Solution  Software that abstracts away server details and lets you serve your model (any function actually) with few lines of code/UI.\n The software automates\n prrovising servers scaling machines up and down  load balancing\n code versioning\n Our task is then to specify the requirements (pandas, pytorch).\n   B. Our Objective  Write serverless functions that generate predictions when they get triggered by HTTP requests. We will work with:  AWS GCP  We will deploy  a keras model, and a sklearn model.   C. Managed Services  Cloud is responsible for abstracting away various computing components: compute, storage, networking etc Minimizes thinking about dev/staging vs production. Note: what we did last class, ssh\u0026rsquo;ing into a virtual private server (VPS) would be considered as a hosted deployment, which is the opposite of managed deployment For example, serverless technology was introduced in 2015\u0026frasl;2016 by AWS (Amazon web) and GCP (Google cloud). It contrasts with VPS based deployment. Similarly, AWS ECS (Elastic Container Service) managed solution contrasts with the hosted/manual Docker on VPS setup.  When is a managed solution a bad idea?  No need for quick iteration (company cares about processes and protocols) Need a high speed service No need to scale system arbirarily Cost conscious or have an in-house developer.  "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture3/",
+	"title": "Lecture 3",
+	"tags": [],
+	"description": "",
+	"content": " Serving ML Models Using Docker "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture4/",
+	"title": "Lecture 4",
+	"tags": [],
+	"description": "",
+	"content": " ML Model Pipelines - A/B testing: sample size considerations - Tackling bandit feedback "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture5/",
+	"title": "Lecture 5",
+	"tags": [],
+	"description": "",
+	"content": " TBD "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture6/",
+	"title": "Lecture 6",
+	"tags": [],
+	"description": "",
+	"content": " TBD "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture7/",
+	"title": "Lecture 7",
+	"tags": [],
+	"description": "",
+	"content": " TBD "
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture8/",
+	"title": "Lecture 8",
+	"tags": [],
+	"description": "",
+	"content": " Online Experimentation - A/B testing: sample size considerations - Tackling bandit feedback "
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/categories/",
@@ -82,13 +131,6 @@
 	"tags": [],
 	"description": "",
 	"content": " Online Learning Details To maximize the learning experience, it will be good if students can meet the following basic technology requirements:\n At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the Basic Technology Requirements link for more details.\n Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself. This can result in somewhat reduced functionality, depending on your needs. If you do not have reliable access to a computer at home, ACCC may have a laptop to lend to you. Please fill out our request form at accc.uic.edu/forms/laptop-request\n Internet: Many service providers are offering connectivity solutions for students without access to Wi-Fi or the internet. The Illinois Citizens Utility Board is maintaining a comprehensive list of the available options here: citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency.\n The State of Illinois is maintaining a map of publicly available internet hotspots across the state that can be used for academic-related needs. These hotspots are available from within a parked vehicle. The map, and additional information, can be viewed at www.ildceo.net/wifi.\n Additionally, the ACCC has a very limited supply of cellular hotspots available for those students who are unable to take advantage of the above offers. Please fill out our request form at accc.uic.edu/forms/laptop-request/.\n  Microphone: While this may be built into your computer, we recommend using an external device such as a USB microphone or headset.\n Webcam: A built-in camera may be installed on your laptop; if not, you can use an external USB camera for video conferencing.\n  "
-},
-{
-	"uri": "https://chicagodatascience.github.io/MLOps/software-tools/python-ds-landscape/",
-	"title": "Python Datascience Landscape",
-	"tags": [],
-	"description": "",
-	"content": "TBD\n"
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/tags/",

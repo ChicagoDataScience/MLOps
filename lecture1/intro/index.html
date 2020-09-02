@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Online Learning Details :: MLOps: Operationalizing Machine Learning</title>
+    <title>Basics :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/logistics/online_technology_requirements/">
+  <body class="" data-url="/MLOps/lecture1/intro/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -80,7 +80,7 @@
   
     
     <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
-        parent
+        
         
         
         ">
@@ -108,7 +108,7 @@
  
   
     
-      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item active">
+      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item ">
         <a href="/MLOps/logistics/online_technology_requirements/">
         Online Learning Details
         <i class="fas fa-check read-icon"></i>
@@ -137,7 +137,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -165,7 +165,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/intro/" title="Basics" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/intro/" title="Basics" class="dd-item active">
         <a href="/MLOps/lecture1/intro/">
         <b> 1. </b>Basics
         <i class="fas fa-check read-icon"></i>
@@ -544,7 +544,7 @@
                   <span class="links">
                  
                  
-                   Online Learning Details 
+                   Basics 
                  
                   </span>
                 </div>
@@ -555,7 +555,18 @@
 <ul>
 <li>
 <ul>
-<li><a href="#online-learning-details">Online Learning Details</a></li>
+<li>
+<ul>
+<li><a href="#python">Python</a></li>
+<li><a href="#our-objective">Our Objective</a></li>
+<li><a href="#deployment-targets">Deployment Targets</a></li>
+<li><a href="#local-deployments-are-hard">Local Deployments are Hard</a></li>
+<li><a href="#cloud-deployments-are-not-easy">Cloud Deployments are not Easy</a></li>
+<li><a href="#aside-software-tools">Aside: Software Tools</a></li>
+<li><a href="#part-1-setting-up-jupyter-access-on-vultr">Part 1: Setting up Jupyter access on Vultr</a></li>
+<li><a href="#part-2-basic-pytorch-model">Part 2: Basic Pytorch Model</a></li>
+<li><a href="#part-4-saving-and-loading-models-model-persistence">Part 4: Saving and Loading Models: Model Persistence</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -574,7 +585,7 @@
           
             <h1>
               
-              Online Learning Details
+              Basics
             </h1>
           
 
@@ -584,26 +595,106 @@
 
 
 
-<h2 id="online-learning-details">Online Learning Details</h2>
-
-<p>To maximize the learning experience, it will be good if students can meet the following basic technology requirements:</p>
+<h3 id="python">Python</h3>
 
 <ul>
-<li><p>At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the <a href="https://accc.uic.edu/online-learning/online-learning-students/basic-requirements-students/">Basic Technology Requirements</a> link for more details.</p></li>
-
-<li><p>Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself. This can result in somewhat reduced functionality, depending on your needs. If you do not have reliable access to a computer at home, ACCC may have a laptop to lend to you. Please fill out our request form at <a href="accc.uic.edu/forms/laptop-request">accc.uic.edu/forms/laptop-request</a></p></li>
-
-<li><p>Internet: Many service providers are offering connectivity solutions for students without access to Wi-Fi or the internet. The Illinois Citizens Utility Board is maintaining a comprehensive list of the available options here: <a href="citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency">citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency</a>.</p>
+<li>We will be predominantly concerned with the Python ecosystem</li>
+<li>A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution.</li>
+<li>Many companies use python to start data science projects in-house (via fresh recruits, interns etc)</li>
+<li>Python has some relatively easy ways to access databases</li>
+<li>Big data platforms such as Spark have great python bindings
 
 <ul>
-<li><p>The State of Illinois is maintaining a map of publicly available internet hotspots across the state that can be used for academic-related needs. These hotspots are available from within a parked vehicle. The map, and additional information, can be viewed at <a href="www.ildceo.net/wifi">www.ildceo.net/wifi</a>.</p></li>
-
-<li><p>Additionally, the ACCC has a very limited supply of cellular hotspots available for those students who are unable to take advantage of the above offers. Please fill out our request form at <a href="accc.uic.edu/forms/laptop-request/">accc.uic.edu/forms/laptop-request/</a>.</p></li>
+<li>E.g., Pandas dataframe and Spark dataframe</li>
 </ul></li>
+<li>Latest models (deep learning, pre-trained) are built in the python ecosystem</li>
+<li>Many many useful libraries: pandas, matplotlib, flask,&hellip;</li>
+</ul>
 
-<li><p>Microphone: While this may be built into your computer, we recommend using an external device such as a USB microphone or headset.</p></li>
+<h3 id="our-objective">Our Objective</h3>
 
-<li><p>Webcam: A built-in camera may be installed on your laptop; if not, you can use an external USB camera for video conferencing.</p></li>
+<ul>
+<li>Learn the patterns, not the specific tools</li>
+</ul>
+
+<h3 id="deployment-targets">Deployment Targets</h3>
+
+<ul>
+<li>Local machines</li>
+<li>On-prem or self-hosted machines (needs DevOps skills)</li>
+<li>Managed cloud
+
+<ul>
+<li>Heroku (PAAS)</li>
+<li>Azure</li>
+<li>GCP</li>
+<li>AWS (IAAS)</li>
+</ul></li>
+<li>The decision to deply on one versus the other depends on
+
+<ul>
+<li>skills</li>
+<li>business need</li>
+<li>internal vs external</li>
+<li>scale, reliability, security</li>
+<li>costs</li>
+<li>ease of deployment</li>
+</ul></li>
+</ul>
+
+<h3 id="local-deployments-are-hard">Local Deployments are Hard</h3>
+
+<ul>
+<li>Need to learn linux security</li>
+<li>Need to learn how to manage access</li>
+<li>Need for learn backups</li>
+<li>Need to learn hot switching / reliability</li>
+</ul>
+
+<h3 id="cloud-deployments-are-not-easy">Cloud Deployments are not Easy</h3>
+
+<ul>
+<li>Also need to learn a complex ecosystem</li>
+<li>Vendor lock-in (for successful businesses, this is not an issue)</li>
+</ul>
+
+<h3 id="aside-software-tools">Aside: Software Tools</h3>
+
+<p>Python development can happen:</p>
+
+<ul>
+<li>In text editors (e.g., sublime-text)</li>
+<li>In IDEs (e.g., Pycharm or VSCode)</li>
+<li>In Jupyter notebooks and variants (Google Colab, Databricks notebooks)
+
+<ul>
+<li>vanilla notebook does not allow collaboration as such</li>
+</ul></li>
+</ul>
+
+<h3 id="part-1-setting-up-jupyter-access-on-vultr">Part 1: Setting up Jupyter access on Vultr</h3>
+
+<ul>
+<li>Alternatives: Digitalocean, AWS EC2, Google Cloud; using Google Colab and other vendors</li>
+<li>Firewall and basic security</li>
+<li>SSH only access</li>
+<li>Conda installation (see notes)</li>
+<li>screen session</li>
+<li>SSH tunneling</li>
+</ul>
+
+<h3 id="part-2-basic-pytorch-model">Part 2: Basic Pytorch Model</h3>
+
+<ul>
+<li>Accessing data</li>
+<li>Training</li>
+</ul>
+
+<h3 id="part-4-saving-and-loading-models-model-persistence">Part 4: Saving and Loading Models: Model Persistence</h3>
+
+<ul>
+<li>Natively: <a href="https://pytorch.org/tutorials/recipes/recipes/save_load_across_devices.html">https://pytorch.org/tutorials/recipes/recipes/save_load_across_devices.html</a></li>
+<li>Using MLFlow: <a href="https://www.mlflow.org/docs/latest/python_api/mlflow.pytorch.html">https://www.mlflow.org/docs/latest/python_api/mlflow.pytorch.html</a></li>
 </ul>
 
 
@@ -642,40 +733,6 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                         
                         
                     
@@ -703,10 +760,47 @@
             
         
                     
+            
+        
+                    
                         
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -923,10 +1017,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/logistics/" title="Course Logistics"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/" title="Lecture 1"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture1/" title="Lecture 1" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/conda/" title="Setting up Python" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

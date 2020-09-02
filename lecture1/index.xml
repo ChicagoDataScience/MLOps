@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MLOps: Operationalizing Machine Learning</title>
-    <link>https://chicagodatascience.github.io/MLOps/</link>
-    <description>Recent content on MLOps: Operationalizing Machine Learning</description>
+    <title>Lecture 1 on MLOps: Operationalizing Machine Learning</title>
+    <link>https://chicagodatascience.github.io/MLOps/lecture1/</link>
+    <description>Recent content in Lecture 1 on MLOps: Operationalizing Machine Learning</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     
-	<atom:link href="https://chicagodatascience.github.io/MLOps/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chicagodatascience.github.io/MLOps/lecture1/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -57,27 +57,6 @@ screen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</guid>
       <description>See https://pypi.org/project/mlflow/</description>
-    </item>
-    
-    <item>
-      <title>Lecture 2 - Serverless Deployments</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</guid>
-      <description>A. TLDR  Models do not need to be complex, but it can be complex to deploy models. - Ben Weber (2020)
- Problem  We have to take care of provisioning and server maintenance while deploying our models. We have to worry about scale: would 1 server be enough? How to minimize the time to deploy (at an acceptable increase in cost)? How can a single developer or data science/analytics professional manage a complex service?</description>
-    </item>
-    
-    <item>
-      <title>Online Learning Details</title>
-      <link>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</guid>
-      <description>Online Learning Details To maximize the learning experience, it will be good if students can meet the following basic technology requirements:
- At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the Basic Technology Requirements link for more details.
- Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself.</description>
     </item>
     
   </channel>

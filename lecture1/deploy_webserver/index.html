@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Online Learning Details :: MLOps: Operationalizing Machine Learning</title>
+    <title>Serving ML Models Using Web Servers :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/logistics/online_technology_requirements/">
+  <body class="" data-url="/MLOps/lecture1/deploy_webserver/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -80,7 +80,7 @@
   
     
     <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
-        parent
+        
         
         
         ">
@@ -108,7 +108,7 @@
  
   
     
-      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item active">
+      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item ">
         <a href="/MLOps/logistics/online_technology_requirements/">
         Online Learning Details
         <i class="fas fa-check read-icon"></i>
@@ -137,7 +137,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -228,7 +228,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/deploy_webserver/" title="Serving ML Models Using Web Servers" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/deploy_webserver/" title="Serving ML Models Using Web Servers" class="dd-item active">
         <a href="/MLOps/lecture1/deploy_webserver/">
         <b> 4. </b>Serving ML Models Using Web Servers
         <i class="fas fa-check read-icon"></i>
@@ -544,7 +544,7 @@
                   <span class="links">
                  
                  
-                   Online Learning Details 
+                   Serving ML Models Using Web Servers 
                  
                   </span>
                 </div>
@@ -555,7 +555,15 @@
 <ul>
 <li>
 <ul>
-<li><a href="#online-learning-details">Online Learning Details</a></li>
+<li>
+<ul>
+<li><a href="#model-serving">Model Serving</a></li>
+<li><a href="#how-to-consume-from-prediction-services">How to consume from prediction services?</a></li>
+<li><a href="#how-to-output-predictions">How to output predictions?</a></li>
+<li><a href="#our-objective">Our Objective</a></li>
+<li><a href="#part-1-making-api-calls">Part 1: Making API Calls</a></li>
+<li><a href="#part-2-simple-flask-app">Part 2: Simple Flask App</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -574,7 +582,7 @@
           
             <h1>
               
-              Online Learning Details
+              Serving ML Models Using Web Servers
             </h1>
           
 
@@ -584,26 +592,51 @@
 
 
 
-<h2 id="online-learning-details">Online Learning Details</h2>
-
-<p>To maximize the learning experience, it will be good if students can meet the following basic technology requirements:</p>
+<h3 id="model-serving">Model Serving</h3>
 
 <ul>
-<li><p>At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the <a href="https://accc.uic.edu/online-learning/online-learning-students/basic-requirements-students/">Basic Technology Requirements</a> link for more details.</p></li>
+<li>Sharing results with others (humans, web services, applications)</li>
+<li>Batch approach: dump predictions to a database (quite popular)</li>
+<li>Real-time approach: send a test feature vector, get back the prediction instantly and the computation happens now</li>
+</ul>
 
-<li><p>Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself. This can result in somewhat reduced functionality, depending on your needs. If you do not have reliable access to a computer at home, ACCC may have a laptop to lend to you. Please fill out our request form at <a href="accc.uic.edu/forms/laptop-request">accc.uic.edu/forms/laptop-request</a></p></li>
-
-<li><p>Internet: Many service providers are offering connectivity solutions for students without access to Wi-Fi or the internet. The Illinois Citizens Utility Board is maintaining a comprehensive list of the available options here: <a href="citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency">citizensutilityboard.org/blog/2020/03/19/cubs-guide-utility-services-during-the-covid-19-public-health-emergency</a>.</p>
+<h3 id="how-to-consume-from-prediction-services">How to consume from prediction services?</h3>
 
 <ul>
-<li><p>The State of Illinois is maintaining a map of publicly available internet hotspots across the state that can be used for academic-related needs. These hotspots are available from within a parked vehicle. The map, and additional information, can be viewed at <a href="www.ildceo.net/wifi">www.ildceo.net/wifi</a>.</p></li>
+<li>Using web requests (e.g., using a JSON payload)</li>
+</ul>
 
-<li><p>Additionally, the ACCC has a very limited supply of cellular hotspots available for those students who are unable to take advantage of the above offers. Please fill out our request form at <a href="accc.uic.edu/forms/laptop-request/">accc.uic.edu/forms/laptop-request/</a>.</p></li>
+<h3 id="how-to-output-predictions">How to output predictions?</h3>
+
+<ul>
+<li>We will plan to set up a server to serve predictions
+
+<ul>
+<li>It will respond to web requests (GET, POST)</li>
+<li>We pass some inputs (image, text, vector of numbers), and get some outputs (just like a function)</li>
+<li>The environment from which we pass inputs may be very different from the environment where the prediction happens (e.g., different hardware)</li>
 </ul></li>
+</ul>
 
-<li><p>Microphone: While this may be built into your computer, we recommend using an external device such as a USB microphone or headset.</p></li>
+<h3 id="our-objective">Our Objective</h3>
 
-<li><p>Webcam: A built-in camera may be installed on your laptop; if not, you can use an external USB camera for video conferencing.</p></li>
+<ul>
+<li>Use sklearn/keras with flask, gunicorn and heroku to set up a prediction server</li>
+</ul>
+
+<h3 id="part-1-making-api-calls">Part 1: Making API Calls</h3>
+
+<ul>
+<li>Using the <code>requests</code> module from a jupyter notebook (this is an example of a programmatic way)</li>
+<li>Alternatively, using <code>curl</code> or <code>postman</code> (these are more for testing)</li>
+</ul>
+
+<h3 id="part-2-simple-flask-app">Part 2: Simple Flask App</h3>
+
+<ul>
+<li>Function decorators</li>
+<li>Simple response to API Calls</li>
+<li>Integrating the model with the app</li>
 </ul>
 
 
@@ -642,40 +675,6 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                         
                         
                     
@@ -703,10 +702,30 @@
             
         
                     
+            
+        
+                    
                         
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -755,6 +774,26 @@
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -923,10 +962,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/logistics/" title="Course Logistics"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/jupyter/" title="Remote Jupyter Server"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture1/" title="Lecture 1" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/mlflow/" title="MLFlow" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

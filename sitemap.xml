@@ -7,35 +7,63 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/schedule/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/software-tools/conda/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/intro/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/software-tools/mlflow/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/conda/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/software-tools/jupyter/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/jupyter/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/experimentation/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/deploy_webserver/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/software-tools/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/schedule/lec01_basics/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture2/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/schedule/lec01_webservers/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture3/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture8/</loc>
   </url>
   
   <url>
@@ -48,10 +76,6 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</loc>
-  </url>
-  
-  <url>
-    <loc>https://chicagodatascience.github.io/MLOps/software-tools/python-ds-landscape/</loc>
   </url>
   
   <url>
