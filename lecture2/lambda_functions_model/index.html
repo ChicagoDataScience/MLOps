@@ -844,7 +844,8 @@
 <ul>
 <li>
 <ul>
-<li><a href="#storing-the-model-on-s3-simple-storage-service">Storing the Model on S3 (Simple Storage Service)</a></li>
+<li><a href="#storing-the-model-on-s3">Storing the Model on S3</a></li>
+<li><a href="#zip-of-local-environment">Zip of Local Environment</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -874,13 +875,148 @@
 
 
 
-<h3 id="storing-the-model-on-s3-simple-storage-service">Storing the Model on S3 (Simple Storage Service)</h3>
+<h3 id="storing-the-model-on-s3">Storing the Model on S3</h3>
 
 <ul>
-<li>S3 is a very popular service used by many large and small companies and individuals.</li>
-<li>For example, a typical data science work flow may involve ETL work on databases (such as Amazon Redshift) and then storing outputs on S3.</li>
 <li>To set up S3 for model serving, we have to perform a number of steps.</li>
 <li>We start with the s3 page.</li>
+</ul>
+
+<p><img src="s3.png" alt="s3" />
+ - Create a bucket with an informative name.</p>
+
+<p><img src="s3_create1.png" alt="s3_create1" /></p>
+
+<ul>
+<li>We don&rsquo;t have to touch any of these for now.</li>
+</ul>
+
+<p><img src="s3_create2.png" alt="s3_create2" /></p>
+
+<p><img src="s3_create3.png" alt="s3_create3" /></p>
+
+<ul>
+<li>Here the summary to review.</li>
+</ul>
+
+<p><img src="s3_create4.png" alt="s3_create4" /></p>
+
+<ul>
+<li>And we can see the bucket in the list of buckets.</li>
+</ul>
+
+<p><img src="s3_create5.png" alt="s3_create5" /></p>
+
+<h3 id="zip-of-local-environment">Zip of Local Environment</h3>
+
+<ul>
+<li>We need a zip of local environment that includes all dependent libraries.</li>
+<li>This is because there is no way to specify requirements.txt like in Cloud Functions.</li>
+<li>This zip file can be uploaded to the bucket we created above.</li>
+
+<li><p>We start with creating a directory of all dependencies.</p>
+
+<pre><code class="language-bash">mkdir lambda_model
+cd lambda_model
+# pip install pickle5 -t . #if we had a specific requirement, we would execute this line
+</code></pre></li>
+
+<li><p>First we will read the model and the <code>movie.dat</code> files (presumably in the parent directory) to create two new dictionaries:</p>
+
+<pre><code class="language-python">#Dumping the recommendations and movie info as dictionaries.
+
+from surprise import Dataset
+import pandas as pd
+import pickle5
+import pickle
+import json
+
+def load(file_name):
+dump_obj = pickle5.load(open(file_name, 'rb'))
+return dump_obj['predictions'], dump_obj['algo']
+
+def get_top_n(predictions, n=10):
+
+# First map the predictions to each user.
+top_n = {}
+for uid, iid, true_r, est, _ in predictions:
+    if uid not in top_n:
+        top_n[uid] = []
+    top_n[uid].append((iid, est))
+
+# Then sort the predictions for each user and retrieve the k highest ones.
+for uid, user_ratings in top_n.items():
+    user_ratings.sort(key=lambda x: x[1], reverse=True)
+    top_n[uid] = user_ratings[:n]
+
+return top_n
+
+def defaultdict(default_type):
+class DefaultDict(dict):
+    def __getitem__(self, key):
+        if key not in self:
+            dict.__setitem__(self, key, default_type())
+        return dict.__getitem__(self, key)
+return DefaultDict()
+
+df = pd.read_csv('../movies.dat',sep=&quot;::&quot;,header=None,engine='python')
+df.columns = ['iid','name','genre']
+df.set_index('iid',inplace=True)
+predictions, algo = load('../surprise_model')
+top_n = get_top_n(predictions, n=5)
+df = df.drop(['genre'],axis=1)
+movie_dict = df.T.to_dict()
+pickle.dump(movie_dict,open('movie_dict.pkl','wb'))
+pickle.dump(top_n,open('top_n.pkl','wb'))
+
+</code></pre></li>
+
+<li><p>Next we will create the following file called <code>lambda_function.py</code> in this directory:</p>
+
+<pre><code class="language-python">import json
+
+# top_n = {'196':[(1,3),(2,4)]}
+# movie_dict = {1:{'name':'a'},2:{'name':'b'}}
+
+def lambda_handler(event,context):
+data = {&quot;success&quot;: False}
+
+
+with open(&quot;top_n.json&quot;, &quot;r&quot;) as read_file:
+    top_n = json.load(read_file)
+with open(&quot;movie_dict.json&quot;, &quot;r&quot;) as read_file:
+    movie_dict = json.load(read_file)
+
+
+print(event) #debug
+if &quot;body&quot; in event:
+    event = event[&quot;body&quot;]
+    if event is not None:
+        event = json.loads(event)
+    else:
+        event = {}
+
+if &quot;uid&quot; in event: 
+    data[&quot;response&quot;] = str([movie_dict.get(iid,{'name':None})['name'] for (iid, _) in top_n[event.get(&quot;uid&quot;)]])
+    data[&quot;success&quot;] = True
+
+return {
+    'statusCode': 200,
+    'headers':{'Content-Type':'application/json'},
+    'body': json.dumps(data)
+} 
+</code></pre></li>
+
+<li><p>Here instead of a request object in GCP, a pair <code>(event,context)</code> are taken as input. The <code>event</code> object will have the query values. See <a href="https://docs.aws.amazon.com/lambda/latest/dg/python-handler.html">this</a> for more details.</p></li>
+
+<li><p>Next we zip the model and its dependencies and upload to S3.</p>
+
+<pre><code class="language-bash">zip -r recommend.zip .
+aws s3 cp recommend.zip s3://theja-model-store/recommend.zip 
+aws s3 ls s3://theja-model-store/
+</code></pre></li>
+
+<li><p>Add the API Gateway as before and see the predictions in action!</p></li>
 </ul>
 
 

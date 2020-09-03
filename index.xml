@@ -163,7 +163,8 @@ numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions_model/</guid>
-      <description> Storing the Model on S3 (Simple Storage Service)  S3 is a very popular service used by many large and small companies and individuals. For example, a typical data science work flow may involve ETL work on databases (such as Amazon Redshift) and then storing outputs on S3. To set up S3 for model serving, we have to perform a number of steps. We start with the s3 page.  </description>
+      <description>Storing the Model on S3  To set up S3 for model serving, we have to perform a number of steps. We start with the s3 page.  - Create a bucket with an informative name.
+ We don&amp;rsquo;t have to touch any of these for now.   Here the summary to review.   And we can see the bucket in the list of buckets.  Zip of Local Environment  We need a zip of local environment that includes all dependent libraries.</description>
     </item>
     
     <item>
@@ -210,6 +211,7 @@ numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file i
  Connect your custom domain to the GCP Cloudn Function and the API Gateway/Lambda function in AWS.
  Learn command line tools for GCP and the difference between programmatic access and manual access.
  Learn about identities, roles and access aspects in GCP and AWS.
+ Try deploying a different recommendation model.
   </description>
     </item>
     

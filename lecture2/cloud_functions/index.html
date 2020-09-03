@@ -951,8 +951,7 @@ requests
 
 <li><p>Our main file is the following:</p>
 
-<pre><code class="language-python">
-def weather(request):
+<pre><code class="language-python">def weather(request):
 from flask import jsonify
 from geopy.geocoders import Nominatim
 import requests
@@ -971,7 +970,6 @@ if &quot;msg&quot; in params:
     data[&quot;response&quot;] = result2.json()
     data[&quot;success&quot;] = True
 return jsonify(data)
-
 </code></pre></li>
 
 <li><p>Once the function is deployed, we can test the function (click actions on the far right in the dashboard)</p></li>
