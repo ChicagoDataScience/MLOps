@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 4 :: MLOps: Operationalizing Machine Learning</title>
+    <title>AWS Serverless Model Serving :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture4/">
+  <body class="" data-url="/MLOps/lecture2/lambda_functions_model/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -444,7 +444,7 @@
   
     
     <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
-        
+        parent
         
         
         ">
@@ -556,7 +556,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" class="dd-item active">
         <a href="/MLOps/lecture2/lambda_functions_model/">
         AWS Serverless Model Serving
         <i class="fas fa-check read-icon"></i>
@@ -611,8 +611,8 @@
   
     
     <li data-nav-id="/MLOps/lecture4/" title="Lecture 4" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture4/">
@@ -763,13 +763,32 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 4 
+                   AWS Serverless Model Serving 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#storing-the-model-on-s3-simple-storage-service">Storing the Model on S3 (Simple Storage Service)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -778,9 +797,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              AWS Serverless Model Serving
+            </h1>
           
 
         
@@ -788,24 +810,21 @@
 
 
 
-	
 
-<h1 id="ml-model-pipelines">ML Model Pipelines</h1>
+<h3 id="storing-the-model-on-s3-simple-storage-service">Storing the Model on S3 (Simple Storage Service)</h3>
 
-<h3 id="a-b-testing-sample-size-considerations">- A/B testing: sample size considerations</h3>
+<ul>
+<li>S3 is a very popular service used by many large and small companies and individuals.</li>
+<li>For example, a typical data science work flow may involve ETL work on databases (such as Amazon Redshift) and then storing outputs on S3.</li>
+<li>To set up S3 for model serving, we have to perform a number of steps.</li>
+<li>We start with the s3 page.</li>
+</ul>
 
-<h3 id="tackling-bandit-feedback">- Tackling bandit feedback</h3>
 
-
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1574,6 +1593,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1586,6 +1606,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1651,6 +1674,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1661,22 +1685,6 @@
                     
             
         
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
                     
             
         
@@ -1686,6 +1694,8 @@
             
                 
                     
+                        
+                        
                     
                 
                 
@@ -1703,8 +1713,21 @@
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
                         
-                        
+            
+            
+                
                     
                 
                 
@@ -1774,10 +1797,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture3/" title="Lecture 3"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture2/lambda_functions/" title="Lambda Functions"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture5/" title="Lecture 5" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture3/" title="Lecture 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1848,3 +1871,4 @@
 
   </body>
 </html>
+

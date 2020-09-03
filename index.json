@@ -116,7 +116,14 @@
 	"title": "Lambda Functions",
 	"tags": [],
 	"description": "",
-	"content": ""
+	"content": "  Lambda by Amazon Web Services (AWS) is an analogous serverless solution. Lambda can be used internall as well as for model deployments (we are focusing on the latter). We will repeat setting up the weather app and the recommender model, using the CLI (command line interface tools)  Aside: Setting up an IAM user  TBD  Hello World in Lambda  Select the lambda service.   Pick the python 3.7 runtime.   You will see the green bar indicating a successful creation.   We will initially not changed the code.   And create a dummy test.   The result looks like this.  Setting up an API Gateway  We will slightly change the function so that it forms a proper HTTP response.   Under the Designer section, we will \u0026lsquo;Add Trigger\u0026rsquo; and select \u0026lsquo;API Gateway\u0026rsquo;.   We choose HTTP API and security to be open for the time being.   A block will appear on the designer tab in the Lambda function page.   Once you click on the API Gateway link provided, you will see the response as expected:  See this documentation for more details.\n"
+},
+{
+	"uri": "https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions_model/",
+	"title": "AWS Serverless Model Serving",
+	"tags": [],
+	"description": "",
+	"content": " Storing the Model on S3 (Simple Storage Service)  S3 is a very popular service used by many large and small companies and individuals. For example, a typical data science work flow may involve ETL work on databases (such as Amazon Redshift) and then storing outputs on S3. To set up S3 for model serving, we have to perform a number of steps. We start with the s3 page.  "
 },
 {
 	"uri": "https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/",

@@ -547,6 +547,27 @@
 
             
           
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions_model/">
+        AWS Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
         
         </ul>
               
@@ -754,7 +775,19 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#aside-setting-up-an-iam-user">Aside: Setting up an IAM user</a></li>
+<li><a href="#hello-world-in-lambda">Hello World in Lambda</a></li>
+<li><a href="#setting-up-an-api-gateway">Setting up an API Gateway</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -778,6 +811,97 @@
 
 
 
+
+
+<ul>
+<li>Lambda by Amazon Web Services (AWS) is an analogous serverless solution.</li>
+<li>Lambda can be used internall as well as for model deployments (we are focusing on the latter).</li>
+<li>We will repeat setting up the weather app and the recommender model, using the CLI (command line interface tools)</li>
+</ul>
+
+<p><img src="aws.png" alt="aws" /></p>
+
+<h3 id="aside-setting-up-an-iam-user">Aside: Setting up an IAM user</h3>
+
+<ul>
+<li>TBD</li>
+</ul>
+
+<h3 id="hello-world-in-lambda">Hello World in Lambda</h3>
+
+<ul>
+<li>Select the lambda service.</li>
+</ul>
+
+<p><img src="lambda_start.png" alt="lambda_start" /></p>
+
+<ul>
+<li>Pick the python 3.7 runtime.</li>
+</ul>
+
+<p><img src="lambda_scratch.png" alt="lambda_scratch" /></p>
+
+<ul>
+<li>You will see the green bar indicating a successful creation.</li>
+</ul>
+
+<p><img src="lambda_start_success.png" alt="lambda_start_success" /></p>
+
+<ul>
+<li>We will initially not changed the code.</li>
+</ul>
+
+<p><img src="lambda_hello_world.png" alt="lambda_hello_world" /></p>
+
+<ul>
+<li>And create a dummy test.</li>
+</ul>
+
+<p><img src="lambda_hello_world_test.png" alt="lambda_hello_world_test" /></p>
+
+<ul>
+<li>The result looks like this.</li>
+</ul>
+
+<p><img src="lambda_hello_world_test_result.png" alt="lambda_hello_world_test_result" /></p>
+
+<h3 id="setting-up-an-api-gateway">Setting up an API Gateway</h3>
+
+<ul>
+<li>We will slightly change the function so that it forms a proper HTTP response.</li>
+</ul>
+
+<p><img src="lambda_api0.png" alt="lambda_api0" /></p>
+
+<ul>
+<li>Under the Designer section, we will &lsquo;Add Trigger&rsquo; and select &lsquo;API Gateway&rsquo;.</li>
+</ul>
+
+<p><img src="lambda_api1.png" alt="lambda_api1" /></p>
+
+<p><img src="lambda_api2.png" alt="lambda_api2" /></p>
+
+<ul>
+<li>We choose HTTP API and security to be open for the time being.</li>
+</ul>
+
+<p><img src="lambda_api3.png" alt="lambda_api3" /></p>
+
+<ul>
+<li>A block will appear on the designer tab in the Lambda function page.</li>
+</ul>
+
+<p><img src="lambda_api4.png" alt="lambda_api4" /></p>
+
+<ul>
+<li>Once you click on the API Gateway link provided, you will see the response as expected:</li>
+</ul>
+
+<p><img src="lambda_api5.png" alt="lambda_api5" /></p>
+
+<p><img src="lambda_api6.png" alt="lambda_api6" /></p>
+
+<p>See this <a href="https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html">documentation</a> for more details.</p>
 
 
 <footer class="footline">
@@ -1629,9 +1753,6 @@
             
         
                     
-            
-        
-                    
                         
             
             
@@ -1639,6 +1760,25 @@
                     
                         
                         
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -1743,7 +1883,7 @@
 			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture3/" title="Lecture 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

@@ -134,7 +134,16 @@ numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions/</guid>
-      <description></description>
+      <description>Lambda by Amazon Web Services (AWS) is an analogous serverless solution. Lambda can be used internall as well as for model deployments (we are focusing on the latter). We will repeat setting up the weather app and the recommender model, using the CLI (command line interface tools)  Aside: Setting up an IAM user  TBD  Hello World in Lambda  Select the lambda service.   Pick the python 3.</description>
+    </item>
+    
+    <item>
+      <title>AWS Serverless Model Serving</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions_model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions_model/</guid>
+      <description> Storing the Model on S3 (Simple Storage Service)  S3 is a very popular service used by many large and small companies and individuals. For example, a typical data science work flow may involve ETL work on databases (such as Amazon Redshift) and then storing outputs on S3. To set up S3 for model serving, we have to perform a number of steps. We start with the s3 page.  </description>
     </item>
     
     <item>
