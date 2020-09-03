@@ -11,12 +11,32 @@
     
     
     <item>
+      <title>Online Learning Details</title>
+      <link>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</guid>
+      <description>Online Learning Details To maximize the learning experience, it will be good if students can meet the following basic technology requirements:
+ At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the Basic Technology Requirements link for more details.
+ Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself.</description>
+    </item>
+    
+    <item>
       <title>Schedule</title>
       <link>https://chicagodatascience.github.io/MLOps/logistics/schedule/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/logistics/schedule/</guid>
       <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4  Lecture 4: ML Model Pipelines  Ref Chapter 5  Lecture 5:  Ref Chapter 6  Lecture 6:  Ref Chapter 7  Lecture 7:  Ref Chapter 8  Lecture 8: Online Experimentation  Ref 1: https://help.</description>
+    </item>
+    
+    <item>
+      <title>Project</title>
+      <link>https://chicagodatascience.github.io/MLOps/logistics/project_instructions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/logistics/project_instructions/</guid>
+      <description>Aim  The aim of the project is to simulate the real-world process of deploying machine learning models. More specifically, the project component of this course allows you to explore a technology that assists in model deployment, either directly or indirectly, and asks you to report your experience working with that technology (or multiple technologies) to achieve some overall deployment goal.  Group  You should form groups of 4 students for this project component (this is a strict requirement).</description>
     </item>
     
     <item>
@@ -166,14 +186,31 @@ numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file i
     </item>
     
     <item>
-      <title>Online Learning Details</title>
-      <link>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</link>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/logistics/online_technology_requirements/</guid>
-      <description>Online Learning Details To maximize the learning experience, it will be good if students can meet the following basic technology requirements:
- At a minimum, students should have a device and an internet connection. A microphone, and a webcam would be highly recommended. See the Basic Technology Requirements link for more details.
- Laptop, Chromebook or Desktop Computer: Note that Chromebooks are used to perform a variety of browser-based tasks with most data and applications, such as Blackboard Learn, Blackboard Collaborate, Google Docs, and Office 365, residing in the cloud rather than on the machine itself.</description>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</guid>
+      <description> Deploy model on Heroku.
+ Set up your custom domain to point to your VPS.
+ Repeat the setup on AWS, GCP, DigitalOcean or any other VPS of your choice.
+ Read the documentation for flask, mlflow, pytorch, surprise, pandas.
+ Replace Flask with Django and Starlette.
+ Read up about function decorators in Python.
+  </description>
+    </item>
+    
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/exercises/</guid>
+      <description> Find out how serverless technologies work behind the scene.
+ Connect your custom domain to the GCP Cloudn Function and the API Gateway/Lambda function in AWS.
+ Learn command line tools for GCP and the difference between programmatic access and manual access.
+ Learn about identities, roles and access aspects in GCP and AWS.
+  </description>
     </item>
     
   </channel>

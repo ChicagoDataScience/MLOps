@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 1 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Project :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture1/">
+  <body class="" data-url="/MLOps/logistics/project_instructions/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -80,7 +80,7 @@
   
     
     <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
-        
+        parent
         
         
         ">
@@ -150,7 +150,7 @@
  
   
     
-      <li data-nav-id="/MLOps/logistics/project_instructions/" title="Project" class="dd-item ">
+      <li data-nav-id="/MLOps/logistics/project_instructions/" title="Project" class="dd-item active">
         <a href="/MLOps/logistics/project_instructions/">
         <b> </b>Project
         <i class="fas fa-check read-icon"></i>
@@ -179,8 +179,8 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture1/">
@@ -829,7 +829,7 @@
                   <span class="links">
                  
                  
-                   Lecture 1 
+                   Project 
                  
                   </span>
                 </div>
@@ -851,27 +851,73 @@
 
 
 
-	
 
-<h1 id="web-servers">Web Servers</h1>
+<h3 id="aim">Aim</h3>
 
-<h3 id="ssh-and-firewall">- SSH and Firewall</h3>
+<ul>
+<li>The aim of the project is to simulate the real-world process of deploying machine learning models. More specifically, the project component of this course allows you to explore a technology that assists in model deployment, either directly or indirectly, and asks you to report your experience working with that technology (or multiple technologies) to achieve some overall deployment goal.</li>
+</ul>
 
-<h3 id="conda-environments">- Conda Environments</h3>
+<h3 id="group">Group</h3>
 
-<h3 id="jupyter">- Jupyter</h3>
+<ul>
+<li>You should form groups of 4 students for this project component (this is a strict requirement). Reach out to your classmates early. Because this is a group project, a commensurate effort is expected, and each members contributions needs to be reported in the final submission.</li>
+</ul>
 
-<h3 id="making-requests-and-processing-responses">- Making requests and processing responses</h3>
+<h3 id="project-outcomes">Project Outcomes</h3>
 
-<h3 id="model-persistence-using-mlflow">- Model Persistence using MLFlow</h3>
+<ul>
+<li>There is one due-date for the project deliverables. See the course logistics page for the exact date. The deliverables are as follows.</li>
+<li>Project Report: In at most 8 pages (12 point, single column; you can have an appendix for supplementary material that may or may not be checked), you should explain your contributions in the project.</li>
+<li>Code and data: Code associated with the project (e.g., Jupyter notebooks), a small sample of the data/inputs/outputs if needed, and all steps necessary to replicate your project should be provided along with/in the report. A link to your github/gitlab/bitbucket/other repository is acceptable here (provide it at the front page of the report).</li>
+<li>A video presentation: You should provide a 10 minute video walk-through (discussing highlights) of your project and provide the link (say from Youtube where the video can be in unlisted mode) on the front page of the report.</li>
+</ul>
 
-<h3 id="serving-a-model-using-flask">- Serving a model using Flask</h3>
+<p>Each team should upload the report (and code and video link) to Blackboard before the deadline.</p>
+
+<h4 id="example-report-components">Example Report Components</h4>
+
+<ul>
+<li>For example, here are some aspects to focus on in your project report:
+
+<ul>
+<li>what was the goal</li>
+<li>what were the possible solutions</li>
+<li>what were the specific pros and cons from a business point of view</li>
+<li>a cost benefit analysis</li>
+<li>actual handling of the technology and demonstration in a dev environment</li>
+<li>documenting the experience</li>
+<li>lessons learned</li>
+<li>code artifacts and/or Jupyter notebooks</li>
+<li>&hellip;</li>
+</ul></li>
+<li>Here is an example project idea: try out a technology (or a specific aspect of it) and its competitors by following their documentation in a very extensive and well thought out manner (e.g., MLFlow vs bentoml vs cortex).</li>
+</ul>
+
+<h3 id="grading-rubric">Grading Rubric</h3>
+
+<ul>
+<li>Projects will be graded based on the creativity shown in handling the technology and the insights drawn. The reports should be very clearly written and presented, and will be evaluated based on the correctness, content, creativity and clarity:
+
+<ul>
+<li>Correctness will be assessed based on the correct application of a technology, valid software setup and discussion of choices, technical correctness and the assumptions laid out.</li>
+<li>Content will be assessed based on the contributions made in the project (given group size) and project depth (e.g., why this aspect of ML deployment, why this problem, what did you do, visualization and interesting conclusions, insights, discussion of methodology followed). You should try to demonstrate your understanding of the relevant topics and their use in your non-trivial project.</li>
+<li>Creativity will be assessed based on how no-obvious your solution or contribution is and how different choices were thoughtfully made in the execution of the project.</li>
+<li>Clarity will be assessed based on the language quality, layout and structure of the report, the adequacy of the references cited,  the capability of the team in explaining ideas in a clear and professional manner, and the clarity demonstrated in your discussions etc.</li>
+</ul></li>
+<li>All external material/sources (code/idea/theory/insights) used should be cited prominently without failure. Use of pre-trained models, databases, web servers, front-end frameworks, visualization tools etc for your project is allowed and encouraged. This project cannot be used as part of any other course or requirement.</li>
+</ul>
+
+<h3 id="additional-pointers">Additional Pointers</h3>
+
+<ul>
+<li>Keep track of costs especially if you are using services that require having a payment mode on file. Also, try to use free resources as much as possible.</li>
+<li>Do not train deep networks from scratch if it can be avoided. The project should not be centered around model accuracy.</li>
+<li>It is importantly to make a project plan that allocates sufficient tasks for each team member. It will be great if you can submit the project plan (a Gantt chart for example).</li>
+</ul>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
@@ -908,8 +954,6 @@
             
                 
                     
-                        
-                        
                     
                 
                 
@@ -923,6 +967,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -956,6 +1003,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -975,6 +1023,8 @@
             
                 
                     
+                        
+                        
                     
                 
                 
@@ -990,9 +1040,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1975,10 +2022,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/logistics/project_instructions/" title="Project"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/logistics/schedule/" title="Schedule"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture1/intro/" title="Basics" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/" title="Lecture 1" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2049,3 +2096,4 @@
 
   </body>
 </html>
+

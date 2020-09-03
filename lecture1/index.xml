@@ -71,5 +71,20 @@ screen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no
 Weather Reporting Service The key thing to see here are that the HTTP route / is mapped directly to a function weather. For instance, when someone hits localhost:5000 (5000 is the default unless specified in app.</description>
     </item>
     
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</guid>
+      <description> Deploy model on Heroku.
+ Set up your custom domain to point to your VPS.
+ Repeat the setup on AWS, GCP, DigitalOcean or any other VPS of your choice.
+ Read the documentation for flask, mlflow, pytorch, surprise, pandas.
+ Replace Flask with Django and Starlette.
+ Read up about function decorators in Python.
+  </description>
+    </item>
+    
   </channel>
 </rss>
