@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Recommendation (SVD) Training :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture1/recommendation_model/surprise_training/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -158,7 +158,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -273,7 +273,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" class="dd-item 
-        
+        parent
         
         
         ">
@@ -301,7 +301,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_training/" title="Recommendation (SVD) Training" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_training/" title="Recommendation (SVD) Training" class="dd-item active">
         <a href="/MLOps/lecture1/recommendation_model/surprise_training/">
         <b> </b>Recommendation (SVD) Training
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,22 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   Recommendation (SVD) Training 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,30 +724,54 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Recommendation (SVD) Training
+            </h1>
           
 
         
 
 
 
+<pre><code class="language-python"># https://github.com/NicolasHug/Surprise
+from surprise import SVD, Dataset
+from surprise.accuracy import rmse
+from surprise.dump import dump
+</code></pre>
 
-	
+<pre><code class="language-python"># Load the movielens-100k dataset (download it if needed).
+data = Dataset.load_builtin('ml-100k')
+trainset = data.build_full_trainset()
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+# Use an example algorithm: SVD.
+algo = SVD()
+algo.fit(trainset)
+
+# predict ratings for all pairs (u, i) that are in the training set.
+testset = trainset.build_testset()
+predictions = algo.test(testset)
+rmse(predictions)                                                                              
+
+#actual predictions as thse items have not been seen by the users. there is no ground truth. 
+# We predict ratings for all pairs (u, i) that are NOT in the training set.
+testset = trainset.build_anti_testset()
+predictions = algo.test(testset)
+</code></pre>
+
+<pre><code>RMSE: 0.6774
+</code></pre>
+
+<pre><code class="language-python">dump('./surprise_model', predictions, algo)
+</code></pre>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -821,20 +854,6 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -851,6 +870,25 @@
             
                 
                     
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
                 
                 
 
@@ -863,6 +901,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -880,103 +919,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1047,6 +991,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1059,6 +1004,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -1076,281 +1022,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1421,6 +1094,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1433,6 +1107,26 @@
             
             
                 
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -1477,6 +1171,384 @@
             
         
                     
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
                         
             
             
@@ -1555,7 +1627,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1571,9 +1642,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1659,10 +1727,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/recommendation_model/" title="Recommendation Models"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/recommendation_model/surprise_inference/" title="Recommendation (SVD) Inference" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +1801,4 @@
 
   </body>
 </html>
+

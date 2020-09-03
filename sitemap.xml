@@ -11,11 +11,15 @@
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/schedule/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/logistics/schedule/</loc>
   </url>
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture1/intro/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/ssh_and_firewall/</loc>
   </url>
   
   <url>
@@ -27,11 +31,23 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_training/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture1/deploy_webserver/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_inference/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/flask/</loc>
   </url>
   
   <url>
@@ -39,7 +55,19 @@
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture2/serverless/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_inference/</loc>
   </url>
   
   <url>

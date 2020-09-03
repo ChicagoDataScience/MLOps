@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recommendation Models on MLOps: Operationalizing Machine Learning</title>
+    <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/</link>
+    <description>Recent content in Recommendation Models on MLOps: Operationalizing Machine Learning</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    
+	<atom:link href="https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Recommendation (SVD) Training</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_training/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_training/</guid>
+      <description># https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.accuracy import rmse from surprise.dump import dump  # Load the movielens-100k dataset (download it if needed). data = Dataset.load_builtin(&#39;ml-100k&#39;) trainset = data.build_full_trainset() # Use an example algorithm: SVD. algo = SVD() algo.fit(trainset) # predict ratings for all pairs (u, i) that are in the training set. testset = trainset.build_testset() predictions = algo.test(testset) rmse(predictions) #actual predictions as thse items have not been seen by the users.</description>
+    </item>
+    
+    <item>
+      <title>Recommendation (SVD) Inference</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_inference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_inference/</guid>
+      <description># https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.dump import load from collections import defaultdict import pandas as pd def get_top_n(predictions, n=10): &amp;quot;&amp;quot;&amp;quot;Return the top-N recommendation for each user from a set of predictions. Args: predictions(list of Prediction objects): The list of predictions, as returned by the test method of an algorithm. n(int): The number of recommendation to output for each user. Default is 10. Returns: A dict where keys are user (raw) ids and values are lists of tuples: [(raw item id, rating estimation), .</description>
+    </item>
+    
+    <item>
+      <title>Recommendation (Pytorch) Training</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/</guid>
+      <description>Please install the package using the command conda install -c conda-forge scikit-surprise in the ight environment.
+# https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.accuracy import rmse from surprise.dump import dump import numpy as np import torch from torch import nn import torch.nn.functional as F from ignite.engine import Events, create_supervised_trainer, create_supervised_evaluator from ignite.metrics import Loss, MeanSquaredError from datetime import datetime from sklearn.utils import shuffle class Loader(): current = 0 def __init__(self, x, y, batchsize=1024, do_shuffle=True): self.</description>
+    </item>
+    
+    <item>
+      <title>Recommendation (Pytorch) Inference</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_inference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_inference/</guid>
+      <description>from surprise import Dataset import numpy as np import torch from torch import nn import pandas as pd class MF(nn.Module): itr = 0 def __init__(self, n_user, n_item, k=18, c_vector=1.0, c_bias=1.0): super(MF, self).__init__() self.k = k self.n_user = n_user self.n_item = n_item self.c_bias = c_bias self.c_vector = c_vector self.user = nn.Embedding(n_user, k) self.item = nn.Embedding(n_item, k) # We&#39;ve added new terms here: self.bias_user = nn.Embedding(n_user, 1) self.bias_item = nn.Embedding(n_item, 1) self.bias = nn.</description>
+    </item>
+    
+  </channel>
+</rss>

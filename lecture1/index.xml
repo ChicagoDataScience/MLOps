@@ -20,6 +20,17 @@
     </item>
     
     <item>
+      <title>SSH and Firewall</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/ssh_and_firewall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/ssh_and_firewall/</guid>
+      <description>It is important to secure your connection to the machine. In order to do so, we will configure the ssh access pattern as well as set up a firewall that blocks all incoming requests except ssh port and web server ports.
+We will assume that we have a non-root account that is in the sudoers group.
+SSH  When you first create the server instance, you may or may not have the ssh server running.</description>
+    </item>
+    
+    <item>
       <title>Setting up Python</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture1/conda/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -51,12 +62,13 @@ screen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no
     </item>
     
     <item>
-      <title>MLFlow</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</link>
+      <title>Flask App</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/flask/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</guid>
-      <description>See https://pypi.org/project/mlflow/</description>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/flask/</guid>
+      <description>Flask is a micro web framework written in Python. We first show how a simple service works, and then show how to load a model (e.g., based on pytorch) and serve it as well.
+Weather Reporting Service The key thing to see here are that the HTTP route / is mapped directly to a function weather. For instance, when someone hits localhost:5000 (5000 is the default unless specified in app.</description>
     </item>
     
   </channel>

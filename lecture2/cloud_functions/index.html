@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Cloud Functions :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture2/cloud_functions/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -444,7 +444,7 @@
   
     
     <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
-        
+        parent
         
         
         ">
@@ -493,7 +493,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture2/cloud_functions/" title="Cloud Functions" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture2/cloud_functions/" title="Cloud Functions" class="dd-item active">
         <a href="/MLOps/lecture2/cloud_functions/">
         Cloud Functions
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,41 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   Cloud Functions 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#empty-deployment">Empty Deployment</a>
+<ul>
+<li><a href="#setting-up-using-ui">Setting up using UI</a></li>
+<li><a href="#python-files-and-requirements">Python Files and Requirements</a></li>
+</ul></li>
+<li><a href="#saving-model-on-the-cloud">Saving Model on the Cloud</a>
+<ul>
+<li><a href="#gcp-access-via-the-commandline">GCP access via the commandline</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,9 +743,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Cloud Functions
+            </h1>
           
 
         
@@ -725,20 +756,261 @@
 
 
 
-	
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+<h3 id="intro">Intro</h3>
+
+<ul>
+<li>Cloud Functions (CFs) are a solution from GCP for serverless deployments.</li>
+<li>Very little boilerplate beyond what we will write for simple offline model inference.</li>
+<li>In any such deployment, we need to be concerned about:
+
+<ul>
+<li>where the model is stored (recall pickle and mlflow), and</li>
+<li>what python packages are available.</li>
+</ul></li>
+</ul>
+
+<h3 id="empty-deployment">Empty Deployment</h3>
+
+<ul>
+<li>We will set up triggers that will trigger our serving function (in particular, a HTTP request).</li>
+<li>We will specify the requirements needed for our python function to work</li>
+<li>The function we deploy here, similar to lecture 1, produces weather forecasts given a location.</li>
+</ul>
+
+<h4 id="setting-up-using-ui">Setting up using UI</h4>
+
+<ul>
+<li><p>Sign up with GCP if you haven&rsquo;t already (typically you get a 300$ credit)</p></li>
+
+<li><p>Get to the console and find the Cloud Function page.</p></li>
+</ul>
+
+<p><img src="cf_landing.png" alt="landing" /></p>
+
+<ul>
+<li>Go through the UI for creating a function.</li>
+</ul>
+
+<p><img src="cf_create_function.png" alt="create" /></p>
+
+<ul>
+<li>We will choose the HTTP trigger and unauthenticated access option.</li>
+</ul>
+
+<p><img src="cf_http_trigger.png" alt="trigger" /></p>
+
+<ul>
+<li>We may have to enable Cloud Build API</li>
+</ul>
+
+<p><img src="cf_cloudbuild.png" alt="cloudbild" /></p>
+
+<ul>
+<li>Finally, we choose the Python environment. You can see two default example files (main.py and requirements.txt). We will be modifying these two.</li>
+</ul>
+
+<p><img src="cf_python_env.png" alt="python" /></p>
+
+<h4 id="python-files-and-requirements">Python Files and Requirements</h4>
+
+<ul>
+<li><p>We will specify the following requirements:</p>
+
+<pre><code class="language-python">flask
+geopy
+requests
+
+</code></pre></li>
+
+<li><p>Our main file is the following:</p>
+
+<pre><code class="language-python">
+def weather(request):
+from flask import jsonify
+from geopy.geocoders import Nominatim
+import requests
+
+data = {&quot;success&quot;: False}
+#https://pypi.org/project/geopy/
+geolocator = Nominatim(user_agent=&quot;cloud_function_weather_app&quot;)
+params = request.get_json()
+if &quot;msg&quot; in params:
+    location = geolocator.geocode(str(params['msg']))
+    # https://www.weather.gov/documentation/services-web-api
+    # Example query: https://api.weather.gov/points/39.7456,-97.0892
+    result1 = requests.get(f&quot;https://api.weather.gov/points/{location.latitude},{location.longitude}&quot;)
+    # Example query: https://api.weather.gov/gridpoints/TOP/31,80
+    result2 = requests.get(f&quot;{result1.json()['properties']['forecast']}&quot;)
+    data[&quot;response&quot;] = result2.json()
+    data[&quot;success&quot;] = True
+return jsonify(data)
+
+</code></pre></li>
+
+<li><p>The webserver version of the above would be:</p>
+
+<pre><code class="language-python">
+# load Flask 
+import flask
+from flask import jsonify
+from geopy.geocoders import Nominatim
+import requests
+
+app = flask.Flask(__name__)
+
+# define a predict function as an endpoint 
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;,&quot;POST&quot;])
+def weather():
+
+data = {&quot;success&quot;: False}
+#https://pypi.org/project/geopy/
+geolocator = Nominatim(user_agent=&quot;cloud_function_weather_app&quot;)
 
 
+params = flask.request.json
+if params is None:
+    params = flask.request.args
 
 
+# params = request.get_json()
+if &quot;msg&quot; in params:
+    location = geolocator.geocode(str(params['msg']))
+    # https://www.weather.gov/documentation/services-web-api
+    result1 = requests.get(f&quot;https://api.weather.gov/points/{location.latitude},{location.longitude}&quot;)
+    result2 = requests.get(f&quot;{result1.json()['properties']['forecast']}&quot;)
+    data[&quot;response&quot;] = result2.json()
+    data[&quot;success&quot;] = True
+return jsonify(data)
+    
+# start the flask app, allow remote connections
+if __name__ == '__main__':
+app.run(host='0.0.0.0')
 
-<footer class=" footline" >
+</code></pre></li>
+
+<li><p>Once the function is deployed, we can test the function (click actions on the far right in the dashboard)</p></li>
+</ul>
+
+<p><img src="cf_dashboard.png" alt="dashboard" /></p>
+
+<ul>
+<li>We can pass the JSON string <code>{&quot;msg&quot;:&quot;Chicago&quot;}</code> and see that we indeed get the JSON output for the weather of Chicago.</li>
+</ul>
+
+<p><img src="cf_test.png" alt="test" /></p>
+
+<ul>
+<li><p>We can also access the function from the web endpoint <code>https://us-central1-authentic-realm-276822.cloudfunctions.net/function-1</code> (you will have a different endpoint). Note that unlike previous times, the request to this endpoint is a JSON payload.</p></li>
+
+<li><p>Below is the screen-shot of querying the weather of Chicago using the <code>Postman</code> tool. The way to use it is as follows:</p>
+
+<ol>
+<li>Insert the URL of the API</li>
+<li>Se the method type to POST</li>
+<li>Navigate to body and choose <code>raw</code> and then choose <code>JSON</code> from the dropdown menu.</li>
+<li>Now add the relevant parameters as a JSON string.</li>
+</ol></li>
+</ul>
+
+<p><img src="cf_postman.png?classes=border" alt="test" /></p>
+
+<ul>
+<li><p>Finally, here is a query you can use from a Jupyter notebook.</p>
+
+<pre><code class="language-python">
+import requests
+result = requests.post(
+    &quot;https://us-central1-authentic-realm-276822.cloudfunctions.net/function-1&quot;
+                ,json = { 'msg': 'Chicago' })
+print(result.json())
+#should match with https://forecast.weather.gov/MapClick.php?textField1=41.98&amp;textField2=-87.9
+</code></pre></li>
+</ul>
+
+<h3 id="saving-model-on-the-cloud">Saving Model on the Cloud</h3>
+
+<ul>
+<li><p>For our original task of deploying a trained ML model, we need a way to read it from somewhere when the function is triggered.</p></li>
+
+<li><p>One way is to dump the model onto Google Cloud Storage (GCS)</p></li>
+
+<li><p>GCS is similar to the S3 (simple storage service) by AWS.</p></li>
+
+<li><p>We will use the command line to dump our model onto the cloud.</p></li>
+</ul>
+
+<h4 id="gcp-access-via-the-commandline">GCP access via the commandline</h4>
+
+<ul>
+<li><p>First we need to install the Google Cloud <a href="https://cloud.google.com/sdk/install">SDK</a> from <a href="https://cloud.google.com/sdk/docs/downloads-interactive">https://cloud.google.com/sdk/docs/downloads-interactive</a></p>
+
+<pre><code class="language-bash">curl https://sdk.cloud.google.com | bash
+gcloud init
+</code></pre></li>
+
+<li><p>There are two types of accounts you can work with: a user account or a service account (see <a href="https://cloud.google.com/sdk/docs/authorizing?authuser=2">https://cloud.google.com/sdk/docs/authorizing?authuser=2</a>).</p></li>
+
+<li><p>Among others, [this page] gives a brief idea of why such an account is needed. In particular, we will create a service account (so that it can be used by an application programmatically anywhere) and store the encrypted credentials on disk for programmatic access through python. To do so, we run the following commands:</p>
+
+<ol>
+<li><p>We <a href="https://cloud.google.com/iam/docs/creating-managing-service-accounts#iam-service-accounts-list-gcloud">create the service account</a> and check that it is active by using this command: <code>gcloud iam service-accounts list</code>.</p>
+
+<pre><code class="language-bash">gcloud iam service-accounts create idsservice \
+--description=&quot;IDS service account&quot; \
+--display-name=&quot;idsservice-displayed&quot;
+</code></pre></li>
+
+<li><p>We then <a href="https://cloud.google.com/iam/docs/granting-changing-revoking-access">assign a new role</a> for this service account in the project. The account can be disabled using the command <code>gcloud iam service-accounts disable idsservice@authentic-realm-276822.iam.gserviceaccount.com</code> (change idsservice and authentic-realm-276822 to your specific names).</p>
+
+<pre><code class="language-bash">gcloud projects add-iam-policy-binding authentic-realm-276822     --member=serviceAccount:idsservice@authentic-realm-276822.iam.gserviceaccount.com --role=roles/owner
+</code></pre></li>
+
+<li><p>Finally, we can <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">download the credentials</a></p>
+
+<pre><code class="language-bash">gcloud iam service-accounts keys create ~/idsservice.json \
+--iam-account idsservice@authentic-realm-276822.iam.gserviceaccount.com
+</code></pre></li>
+
+<li><p>Once the credentials are downloaded, they can be programmatically accessed using python running on that machine. We just have to explore the location of the file:</p>
+
+<pre><code class="language-bash">export GOOGLE_APPLICATION_CREDENTIALS=/Users/theja/idsservice.json
+</code></pre></li>
+</ol></li>
+
+<li><p>Next we will install a python module to access GCS, so that we can write our model to the cloud:</p>
+
+<pre><code class="language-bash">pip install google-cloud-storage
+</code></pre></li>
+
+<li><p>The following code creates a bucket called <code>theja_model_store</code></p>
+
+<pre><code class="language-python">from google.cloud import storage
+bucket_name = &quot;theja_model_store&quot;
+storage_client = storage.Client()
+storage_client.create_bucket(bucket_name)
+for bucket in storage_client.list_buckets():
+print(bucket.name)
+</code></pre></li>
+
+<li><p>We can dump the model we used previous here using the following snippet</p>
+
+<pre><code class="language-python">
+from google.cloud import storage
+bucket_name = &quot;dsp_model_store&quot;
+storage_client = storage.Client()
+bucket = storage_client.get_bucket(bucket_name)
+blob = bucket.blob(&quot;serverless/modelname/v1&quot;)
+blob.upload_from_filename(&quot;modelname.pkl&quot;)
+
+</code></pre></li>
+</ul>
+
+
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1507,6 +1779,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1520,21 +1793,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
+                        
                     
                 
                 
@@ -1543,9 +1803,6 @@
                     
                     
 
-                    
-            
-        
                     
             
         
@@ -1567,6 +1824,9 @@
             
         
                     
+            
+        
+                    
                         
             
             
@@ -1574,6 +1834,22 @@
                     
                         
                         
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -1659,10 +1935,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture2/serverless/" title="Serverless Deployments"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture3/" title="Lecture 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +2009,4 @@
 
   </body>
 </html>
+

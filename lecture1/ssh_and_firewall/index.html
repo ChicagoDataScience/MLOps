@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>SSH and Firewall :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture1/ssh_and_firewall/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -158,7 +158,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -209,7 +209,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/ssh_and_firewall/" title="SSH and Firewall" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/ssh_and_firewall/" title="SSH and Firewall" class="dd-item active">
         <a href="/MLOps/lecture1/ssh_and_firewall/">
         <b> 2. </b>SSH and Firewall
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,33 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   SSH and Firewall 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#ssh">SSH</a></li>
+<li><a href="#firewall">Firewall</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,9 +735,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              SSH and Firewall
+            </h1>
           
 
         
@@ -725,20 +748,66 @@
 
 
 
-	
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+<p>It is important to secure your connection to the machine. In order to do so, we will configure the ssh access pattern as well as set up a firewall that blocks all incoming requests except ssh port and web server ports.</p>
+
+<p>We will assume that we have a non-root account that is in the sudoers group.</p>
+
+<h3 id="ssh">SSH</h3>
+
+<ul>
+<li><p>When you first create the server instance, you may or may not have the ssh server running. If it is not running, you can install it first. On Ubuntu/Debian, you can use the following <a href="https://ubuntu.com/server/docs/service-openssh">command</a>:</p>
+
+<pre><code class="language-bash">sudo apt install openssh-server
+</code></pre></li>
+
+<li><p>Next, we create a ssh key pair on our local machine with which we will access the server. From your local user home directory:</p>
+
+<pre><code class="language-bash">mkdir .ssh
+ssh-keygen
+cd .ssh
+less id_rsa.pub
+</code></pre></li>
+
+<li><p>Copy this content to the following file <code>authorized_keys</code> in the webserver:</p>
+
+<pre><code class="language-bash">mkdir .ssh
+vim authorized_keys #if vim is not present, you can use other editors or install it using `sudo apt install vim`
+#copy the content and quit (shift+colon&gt; wq -&gt; enter)
+chmod 600 authorized_keys
+</code></pre></li>
+
+<li><p>We need to edit the following fields in the file <code>/etc/ssh/sshd_config</code> on the server (say using <code>vim</code>):</p>
+
+<ul>
+<li><code>Port</code> choose something other than 22 (opttional)</li>
+<li><code>PermitRootLogin no</code> (changed from prohibit-password)</li>
+<li><code>PubkeyAuthentication yes</code> (already defaults to this)</li>
+<li><code>PasswordAuthentication no</code> (disable it for security)</li>
+</ul></li>
+
+<li><p>Restart the ssh server. In Ubuntu/Debian this is achieved by <code>sudo systemctl restart ssh</code></p></li>
+</ul>
+
+<h3 id="firewall">Firewall</h3>
+
+<ul>
+<li>A basic firewall such as <a href="https://help.ubuntu.com/community/UFW">ufw</a> can help provide a layer of security.</li>
+
+<li><p>Install and run it using the following commands (Ubuntu/Debian):</p>
+
+<pre><code class="language-bash">sudo apt install ufw
+sudo ufw allow [PortNumber] #here it is 22 or another port that you chose for ssh
+sudo ufw enable
+sudo ufw status verbose #this should show what the firewall is doing
+</code></pre></li>
+</ul>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -821,6 +890,25 @@
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
                 
                 
 
@@ -841,6 +929,90 @@
 
                     
                     
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
                         
                     
                     
@@ -850,6 +1022,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1135,104 +1310,6 @@
 
                     
                     
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
                     
 
                     
@@ -1555,7 +1632,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1571,9 +1647,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1659,10 +1732,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/recommendation_model/pytorch_inference/" title="Recommendation (Pytorch) Inference"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +1806,4 @@
 
   </body>
 </html>
+

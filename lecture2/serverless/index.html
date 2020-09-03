@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Serverless Deployments :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture2/serverless/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -444,7 +444,7 @@
   
     
     <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
-        
+        parent
         
         
         ">
@@ -472,7 +472,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture2/serverless/" title="Serverless Deployments" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture2/serverless/" title="Serverless Deployments" class="dd-item active">
         <a href="/MLOps/lecture2/serverless/">
         Serverless Deployments
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,41 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   Serverless Deployments 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#a-tldr">A. TLDR</a>
+<ul>
+<li><a href="#problem">Problem</a></li>
+<li><a href="#solution">Solution</a></li>
+</ul></li>
+<li><a href="#b-our-objective">B. Our Objective</a></li>
+<li><a href="#c-managed-services">C. Managed Services</a>
+<ul>
+<li><a href="#when-is-a-managed-solution-a-bad-idea">When is a managed solution a bad idea?</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,9 +743,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Serverless Deployments
+            </h1>
           
 
         
@@ -725,20 +756,84 @@
 
 
 
-	
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+<h3 id="a-tldr">A. TLDR</h3>
+
+<blockquote>
+<p>Models do not need to be complex, but it can be complex to deploy models. - Ben Weber (2020)</p>
+</blockquote>
+
+<h4 id="problem">Problem</h4>
+
+<ul>
+<li>We have to take care of provisioning and server maintenance while deploying our models.</li>
+<li>We have to worry about scale: would 1 server be enough?</li>
+<li>How to minimize the time to deploy (at an acceptable increase in cost)?</li>
+<li>How can a single developer or data science/analytics professional manage a complex service?</li>
+</ul>
+
+<h4 id="solution">Solution</h4>
+
+<ul>
+<li><p>Software that abstracts away server details and lets you serve your model (any function actually) with few lines of code/UI.</p></li>
+
+<li><p>The software automates</p>
+
+<ul>
+<li>prrovising servers</li>
+<li>scaling machines up and down</li>
+</ul></li>
+
+<li><p>load balancing</p>
+
+<ul>
+<li><p>code versioning</p></li>
+
+<li><p>Our task is then to specify the requirements (pandas, pytorch).</p></li>
+</ul></li>
+</ul>
+
+<h3 id="b-our-objective">B. Our Objective</h3>
+
+<ul>
+<li>Write serverless functions that generate predictions when  they get triggered by HTTP requests.</li>
+<li>We will work with:
+
+<ul>
+<li>AWS</li>
+<li>GCP</li>
+</ul></li>
+<li>We will deploy
+
+<ul>
+<li>a keras model, and</li>
+<li>a sklearn model.</li>
+</ul></li>
+</ul>
+
+<h3 id="c-managed-services">C. Managed Services</h3>
+
+<ul>
+<li>Cloud is responsible for abstracting away various computing components: compute, storage, networking etc</li>
+<li>Minimizes thinking about dev/staging vs production.</li>
+<li><em>Note: what we did last class, ssh&rsquo;ing into a virtual private server (VPS) would be considered as a hosted deployment, which is the opposite of managed deployment</em></li>
+<li>For example, serverless technology was introduced in <sup>2015</sup>&frasl;<sub>2016</sub> by AWS (Amazon web) and GCP (Google cloud). It contrasts with VPS based deployment. Similarly, AWS ECS (Elastic Container Service) managed solution contrasts with the hosted/manual Docker on VPS setup.</li>
+</ul>
+
+<h4 id="when-is-a-managed-solution-a-bad-idea">When is a managed solution a bad idea?</h4>
+
+<ul>
+<li>No need for quick iteration (company cares about processes and protocols)</li>
+<li>Need a high speed service</li>
+<li>No need to scale system arbirarily</li>
+<li>Cost conscious or have an in-house developer.</li>
+</ul>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1507,18 +1602,6 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1527,28 +1610,6 @@
                     
                     
 
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
                     
                         
             
@@ -1574,6 +1635,41 @@
                     
                         
                         
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
                     
                 
                 
@@ -1659,10 +1755,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture2/" title="Lecture 2"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +1829,4 @@
 
   </body>
 </html>
+

@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Recommendation (Pytorch) Training :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture1/recommendation_model/pytorch_training/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -158,7 +158,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -273,7 +273,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" class="dd-item 
-        
+        parent
         
         
         ">
@@ -343,7 +343,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_training/" title="Recommendation (Pytorch) Training" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_training/" title="Recommendation (Pytorch) Training" class="dd-item active">
         <a href="/MLOps/lecture1/recommendation_model/pytorch_training/">
         <b> </b>Recommendation (Pytorch) Training
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,22 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   Recommendation (Pytorch) Training 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,30 +724,274 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Recommendation (Pytorch) Training
+            </h1>
           
 
         
 
 
 
+<p>Please install the package using the command <code>conda install -c conda-forge scikit-surprise</code> in the ight environment.</p>
 
-	
+<pre><code class="language-python"># https://github.com/NicolasHug/Surprise
+from surprise import SVD, Dataset
+from surprise.accuracy import rmse
+from surprise.dump import dump
+import numpy as np
+import torch
+from torch import nn
+import torch.nn.functional as F
+from ignite.engine import Events, create_supervised_trainer, create_supervised_evaluator
+from ignite.metrics import Loss, MeanSquaredError
+from datetime import datetime
+from sklearn.utils import shuffle
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+
+class Loader():
+    current = 0
+
+    def __init__(self, x, y, batchsize=1024, do_shuffle=True):
+        self.shuffle = shuffle
+        self.x = x
+        self.y = y
+        self.batchsize = batchsize
+        self.batches = range(0, len(self.y), batchsize)
+        if do_shuffle:
+            # Every epoch re-shuffle the dataset
+            self.x, self.y = shuffle(self.x, self.y)
+
+    def __iter__(self):
+        # Reset &amp; return a new iterator
+        self.x, self.y = shuffle(self.x, self.y, random_state=0)
+        self.current = 0
+        return self
+
+    def __len__(self):
+        # Return the number of batches
+        return int(len(self.x) / self.batchsize)
+
+    def __next__(self):
+        n = self.batchsize
+        if self.current + n &gt;= len(self.y):
+            raise StopIteration
+        i = self.current
+        xs = torch.from_numpy(self.x[i:i + n])
+        ys = torch.from_numpy(self.y[i:i + n])
+        self.current += n
+        return (xs, ys)
+
+
+
+def l2_regularize(array):
+    loss = torch.sum(array ** 2.0)
+    return loss
+
+
+class MF(nn.Module):
+    itr = 0
+    
+    def __init__(self, n_user, n_item, k=18, c_vector=1.0, c_bias=1.0):
+        super(MF, self).__init__()
+        self.k = k
+        self.n_user = n_user
+        self.n_item = n_item
+        self.c_bias = c_bias
+        self.c_vector = c_vector
+        
+        self.user = nn.Embedding(n_user, k)
+        self.item = nn.Embedding(n_item, k)
+        
+        # We've added new terms here:
+        self.bias_user = nn.Embedding(n_user, 1)
+        self.bias_item = nn.Embedding(n_item, 1)
+        self.bias = nn.Parameter(torch.ones(1))
+    
+    def __call__(self, train_x):
+        user_id = train_x[:, 0]
+        item_id = train_x[:, 1]
+        vector_user = self.user(user_id)
+        vector_item = self.item(item_id)
+        
+        # Pull out biases
+        bias_user = self.bias_user(user_id).squeeze()
+        bias_item = self.bias_item(item_id).squeeze()
+        biases = (self.bias + bias_user + bias_item)
+        
+        ui_interaction = torch.sum(vector_user * vector_item, dim=1)
+        
+        # Add bias prediction to the interaction prediction
+        prediction = ui_interaction + biases
+        return prediction
+    
+    def loss(self, prediction, target):
+        loss_mse = F.mse_loss(prediction, target.squeeze())
+        
+        # Add new regularization to the biases
+        prior_bias_user =  l2_regularize(self.bias_user.weight) * self.c_bias
+        prior_bias_item = l2_regularize(self.bias_item.weight) * self.c_bias
+        
+        prior_user =  l2_regularize(self.user.weight) * self.c_vector
+        prior_item = l2_regularize(self.item.weight) * self.c_vector
+        total = loss_mse + prior_user + prior_item + prior_bias_user + prior_bias_item
+        return total
+
+def log_training_loss(engine, log_interval=400):
+    epoch = engine.state.epoch
+    itr = engine.state.iteration
+    fmt = &quot;Epoch[{}] Iteration[{}/{}] Loss: {:.2f}&quot;
+    msg = fmt.format(epoch, itr, len(train_loader), engine.state.output)
+    model.itr = itr
+    if itr % log_interval == 0:
+        print(msg)
+
+def log_validation_results(engine):
+    evaluat.run(test_loader)
+    metrics = evaluat.state.metrics
+    avg_accuracy = metrics['accuracy']
+    print(&quot;Epoch[{}] Validation MSE: {:.2f} &quot;
+          .format(engine.state.epoch, avg_accuracy))    
+</code></pre>
+
+<pre><code class="language-python">#Data
+data = Dataset.load_builtin('ml-100k')
+trainset = data.build_full_trainset()
+uir = np.array([x for x in trainset.all_ratings()])
+train_x = test_x = uir[:,:2].astype(np.int64)
+train_y = test_y = uir[:,2].astype(np.float32)
+</code></pre>
+
+<pre><code class="language-python">#Parameters
+lr = 1e-2
+k = 10 #latent dimension
+c_bias = 1e-6
+c_vector = 1e-6
+batchsize = 1024
+
+model = MF(trainset.n_users, trainset.n_items, k=k, c_bias=c_bias, c_vector=c_vector)
+optimizer = torch.optim.Adam(model.parameters())
+trainer = create_supervised_trainer(model, optimizer, model.loss)
+metrics = {'accuracy': MeanSquaredError()}
+
+evaluat = create_supervised_evaluator(model, metrics=metrics)
+train_loader = Loader(train_x, train_y, batchsize=batchsize)
+test_loader = Loader(test_x, test_y, batchsize=batchsize)
+trainer.add_event_handler(event_name=Events.ITERATION_COMPLETED, handler=log_training_loss)
+trainer.add_event_handler(event_name=Events.EPOCH_COMPLETED, handler=log_validation_results)
+</code></pre>
+
+<pre><code>&lt;ignite.engine.events.RemovableEventHandle at 0x7f011e8a67c0&gt;
+</code></pre>
+
+<pre><code class="language-python">model
+</code></pre>
+
+<pre><code>MF(
+  (user): Embedding(943, 10)
+  (item): Embedding(1682, 10)
+  (bias_user): Embedding(943, 1)
+  (bias_item): Embedding(1682, 1)
+)
+</code></pre>
+
+<pre><code class="language-python">trainer.run(train_loader, max_epochs=50)
+</code></pre>
+
+<pre><code>Epoch[1] Validation MSE: 17.82 
+Epoch[2] Validation MSE: 16.02 
+Epoch[3] Validation MSE: 14.43 
+Epoch[4] Validation MSE: 13.04 
+Epoch[5] Iteration[400/97] Loss: 12.52
+Epoch[5] Validation MSE: 11.79 
+Epoch[6] Validation MSE: 10.70 
+Epoch[7] Validation MSE: 9.71 
+Epoch[8] Validation MSE: 8.85 
+Epoch[9] Iteration[800/97] Loss: 8.95
+Epoch[9] Validation MSE: 8.08 
+Epoch[10] Validation MSE: 7.40 
+Epoch[11] Validation MSE: 6.80 
+Epoch[12] Validation MSE: 6.27 
+Epoch[13] Iteration[1200/97] Loss: 6.50
+Epoch[13] Validation MSE: 5.79 
+Epoch[14] Validation MSE: 5.36 
+Epoch[15] Validation MSE: 4.98 
+Epoch[16] Validation MSE: 4.63 
+Epoch[17] Iteration[1600/97] Loss: 4.80
+Epoch[17] Validation MSE: 4.32 
+Epoch[18] Validation MSE: 4.04 
+Epoch[19] Validation MSE: 3.79 
+Epoch[20] Validation MSE: 3.56 
+Epoch[21] Iteration[2000/97] Loss: 3.35
+Epoch[21] Validation MSE: 3.35 
+Epoch[22] Validation MSE: 3.15 
+Epoch[23] Validation MSE: 2.97 
+Epoch[24] Validation MSE: 2.81 
+Epoch[25] Iteration[2400/97] Loss: 2.73
+Epoch[25] Validation MSE: 2.66 
+Epoch[26] Validation MSE: 2.53 
+Epoch[27] Validation MSE: 2.40 
+Epoch[28] Validation MSE: 2.28 
+Epoch[29] Iteration[2800/97] Loss: 2.31
+Epoch[29] Validation MSE: 2.17 
+Epoch[30] Validation MSE: 2.07 
+Epoch[31] Validation MSE: 1.97 
+Epoch[32] Validation MSE: 1.89 
+Epoch[33] Iteration[3200/97] Loss: 1.82
+Epoch[33] Validation MSE: 1.81 
+Epoch[34] Validation MSE: 1.73 
+Epoch[35] Validation MSE: 1.66 
+Epoch[36] Validation MSE: 1.60 
+Epoch[37] Validation MSE: 1.54 
+Epoch[38] Iteration[3600/97] Loss: 1.60
+Epoch[38] Validation MSE: 1.48 
+Epoch[39] Validation MSE: 1.43 
+Epoch[40] Validation MSE: 1.38 
+Epoch[41] Validation MSE: 1.34 
+Epoch[42] Iteration[4000/97] Loss: 1.27
+Epoch[42] Validation MSE: 1.29 
+Epoch[43] Validation MSE: 1.25 
+Epoch[44] Validation MSE: 1.22 
+Epoch[45] Validation MSE: 1.19 
+Epoch[46] Iteration[4400/97] Loss: 1.11
+Epoch[46] Validation MSE: 1.15 
+Epoch[47] Validation MSE: 1.13 
+Epoch[48] Validation MSE: 1.10 
+Epoch[49] Validation MSE: 1.07 
+Epoch[50] Iteration[4800/97] Loss: 1.11
+Epoch[50] Validation MSE: 1.05 
 
 
 
 
 
-<footer class=" footline" >
+State:
+    iteration: 4850
+    epoch: 50
+    epoch_length: 97
+    max_epochs: 50
+    output: 1.0818936824798584
+    batch: &lt;class 'tuple'&gt;
+    metrics: &lt;class 'dict'&gt;
+    dataloader: &lt;class '__main__.Loader'&gt;
+    seed: &lt;class 'NoneType'&gt;
+    times: &lt;class 'dict'&gt;
+</code></pre>
+
+<pre><code class="language-python">torch.save(model.state_dict(), &quot;./pytorch_model&quot;)
+</code></pre>
+
+<pre><code class="language-python">
+</code></pre>
+
+
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -821,6 +1074,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -836,6 +1090,9 @@
             
                 
                     
+                        
+                        
+                    
                 
                 
 
@@ -845,6 +1102,718 @@
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
                     
                         
             
@@ -891,85 +1860,6 @@
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
             
         
                     
@@ -993,587 +1883,6 @@
             
             
                 
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
                     
                 
                 
@@ -1659,10 +1968,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/recommendation_model/surprise_inference/" title="Recommendation (SVD) Inference"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/recommendation_model/pytorch_inference/" title="Recommendation (Pytorch) Inference" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +2042,4 @@
 
   </body>
 </html>
+

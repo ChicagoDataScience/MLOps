@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Lecture 3 :: MLOps: Operationalizing Machine Learning</title>
+    <title>Flask App :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture3/">
+  <body class="" data-url="/MLOps/lecture1/flask/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -158,7 +158,7 @@
   
     
     <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
-        
+        parent
         
         
         ">
@@ -415,7 +415,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture1/flask/" title="Flask App" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture1/flask/" title="Flask App" class="dd-item active">
         <a href="/MLOps/lecture1/flask/">
         <b> 7. </b>Flask App
         <i class="fas fa-check read-icon"></i>
@@ -522,8 +522,8 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/lecture3/">
@@ -700,13 +700,33 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Lecture 3 
+                   Flask App 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#weather-reporting-service">Weather Reporting Service</a></li>
+<li><a href="#model-serving">Model Serving</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -715,9 +735,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Flask App
+            </h1>
           
 
         
@@ -725,20 +748,118 @@
 
 
 
-	
 
-<h1 id="serving-ml-models-using-docker">Serving ML Models Using Docker</h1>
+<p><a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> is a <a href="https://en.wikipedia.org/wiki/Flask_%28web_framework%29">micro web framework</a> written in Python. We first show how a simple service works, and then show how to load a model (e.g., based on pytorch) and serve it as well.</p>
+
+<h3 id="weather-reporting-service">Weather Reporting Service</h3>
+
+<p>The key thing to see here are that the HTTP route <code>/</code> is mapped directly to a function <code>weather</code>. For instance, when someone hits <code>localhost:5000</code> (5000 is the default unless specified in <code>app.run()</code> below) the function <code>weather</code> starts execution based on any received inputs.</p>
+
+<pre><code class="language-python">
+# load Flask 
+import flask
+from flask import jsonify
+from geopy.geocoders import Nominatim
+import requests
+
+app = flask.Flask(__name__)
+
+# define a predict function as an endpoint 
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;,&quot;POST&quot;])
+def weather():
+
+    data = {&quot;success&quot;: False}
+    #https://pypi.org/project/geopy/
+    geolocator = Nominatim(user_agent=&quot;cloud_function_weather_app&quot;)
 
 
+    params = flask.request.json
+    if params is None:
+        params = flask.request.args
 
 
+    # params = request.get_json()
+    if &quot;msg&quot; in params:
+        location = geolocator.geocode(str(params['msg']))
+        # https://www.weather.gov/documentation/services-web-api
+        result1 = requests.get(f&quot;https://api.weather.gov/points/{location.latitude},{location.longitude}&quot;)
+        result2 = requests.get(f&quot;{result1.json()['properties']['forecast']}&quot;)
+        data[&quot;response&quot;] = result2.json()
+        data[&quot;success&quot;] = True
+    return jsonify(data)
+    
+# start the flask app, allow remote connections
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
 
-<footer class=" footline" >
+
+</code></pre>
+
+<p>This service can be run by using the command <code>python weather.py</code> (assuming that is the filename for the above script) locally. If the port 5000 is open, then this server will be accessible to the world if the server has an external IP address.</p>
+
+<h3 id="model-serving">Model Serving</h3>
+
+<p>We can modify the above to serve the recommendation models we built earlier as follows:</p>
+
+<pre><code class="language-python">from surprise import Dataset
+from surprise.dump import load
+from collections import defaultdict
+import pandas as pd
+import flask
+
+def get_top_n(predictions, n=10):
+
+    # First map the predictions to each user.
+    top_n = defaultdict(list)
+    for uid, iid, true_r, est, _ in predictions:
+        top_n[uid].append((iid, est))
+
+    # Then sort the predictions for each user and retrieve the k highest ones.
+    for uid, user_ratings in top_n.items():
+        user_ratings.sort(key=lambda x: x[1], reverse=True)
+        top_n[uid] = user_ratings[:n]
+
+    return top_n
+
+
+df = pd.read_csv('./movies.dat',sep=&quot;::&quot;,header=None,engine='python')
+df.columns = ['iid','name','genre']
+df.set_index('iid',inplace=True)
+predictions, algo = load('./surprise_model')
+top_n = get_top_n(predictions, n=5)
+app = flask.Flask(__name__)
+
+# define a predict function as an endpoint
+@app.route(&quot;/&quot;, methods=[&quot;GET&quot;])
+def predict():
+    data = {&quot;success&quot;: False}
+
+
+    # check for passed in parameters   
+    params = flask.request.json
+    if params is None:
+        params = flask.request.args
+    
+    # if parameters are found, echo the msg parameter 
+    if &quot;uid&quot; in params.keys(): 
+        data[&quot;response&quot;] = str([df.loc[int(iid),'name'] for (iid, _) in top_n[params.get(&quot;uid&quot;)]])
+        data[&quot;success&quot;] = True
+        
+    # return a response in json format 
+    return flask.jsonify(data)
+
+
+# start the flask app, allow remote connections
+app.run(host='0.0.0.0')
+</code></pre>
+
+<p>You can use the following request in the browser <code>http://0.0.0.0:5000/?uid=196</code> or use the requests module.</p>
+
+
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -821,20 +942,6 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -851,88 +958,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
                         
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1233,6 +1260,104 @@
 
                     
                     
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
                     
 
                     
@@ -1406,6 +1531,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1421,18 +1547,8 @@
             
                 
                     
-                
-                
-
-                    
-                    
-                    
-
-                    
                         
-            
-            
-                
+                        
                     
                 
                 
@@ -1441,9 +1557,6 @@
                     
                     
 
-                    
-            
-        
                     
                         
             
@@ -1493,8 +1606,72 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
             
         
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
                     
             
         
@@ -1515,19 +1692,6 @@
                     
 
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
             
         
                     
@@ -1535,45 +1699,6 @@
             
             
                 
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
                     
                 
                 
@@ -1659,10 +1784,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture1/recommendation_model/pytorch_inference/" title="Recommendation (Pytorch) Inference"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/" title="Lecture 4" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -1733,3 +1858,4 @@
 
   </body>
 </html>
+

@@ -11,12 +11,32 @@
     
     
     <item>
+      <title>Schedule</title>
+      <link>https://chicagodatascience.github.io/MLOps/logistics/schedule/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/logistics/schedule/</guid>
+      <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4  Lecture 4: ML Model Pipelines  Ref Chapter 5  Lecture 5:  Ref Chapter 6  Lecture 6:  Ref Chapter 7  Lecture 7:  Ref Chapter 8  Lecture 8: Online Experimentation  Ref 1: https://help.</description>
+    </item>
+    
+    <item>
       <title>Basics</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture1/intro/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture1/intro/</guid>
       <description>Python  We will be predominantly concerned with the Python ecosystem A big advanage is that local system development can be easily moved to cloud and or a scalable on-prem solution. Many companies use python to start data science projects in-house (via fresh recruits, interns etc) Python has some relatively easy ways to access databases Big data platforms such as Spark have great python bindings  E.g., Pandas dataframe and Spark dataframe  Latest models (deep learning, pre-trained) are built in the python ecosystem Many many useful libraries: pandas, matplotlib, flask,&amp;hellip;  Our Objective  Learn the patterns, not the specific tools  Deployment Targets  Local machines On-prem or self-hosted machines (needs DevOps skills) Managed cloud  Heroku (PAAS) Azure GCP AWS (IAAS)  The decision to deply on one versus the other depends on  skills business need internal vs external scale, reliability, security costs ease of deployment   Local Deployments are Hard  Need to learn linux security Need to learn how to manage access Need for learn backups Need to learn hot switching / reliability  Cloud Deployments are not Easy  Also need to learn a complex ecosystem Vendor lock-in (for successful businesses, this is not an issue)  Aside: Software Tools Python development can happen:</description>
+    </item>
+    
+    <item>
+      <title>SSH and Firewall</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/ssh_and_firewall/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/ssh_and_firewall/</guid>
+      <description>It is important to secure your connection to the machine. In order to do so, we will configure the ssh access pattern as well as set up a firewall that blocks all incoming requests except ssh port and web server ports.
+We will assume that we have a non-root account that is in the sudoers group.
+SSH  When you first create the server instance, you may or may not have the ssh server running.</description>
     </item>
     
     <item>
@@ -42,6 +62,15 @@ screen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no
     </item>
     
     <item>
+      <title>Recommendation (SVD) Training</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_training/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_training/</guid>
+      <description># https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.accuracy import rmse from surprise.dump import dump  # Load the movielens-100k dataset (download it if needed). data = Dataset.load_builtin(&#39;ml-100k&#39;) trainset = data.build_full_trainset() # Use an example algorithm: SVD. algo = SVD() algo.fit(trainset) # predict ratings for all pairs (u, i) that are in the training set. testset = trainset.build_testset() predictions = algo.test(testset) rmse(predictions) #actual predictions as thse items have not been seen by the users.</description>
+    </item>
+    
+    <item>
       <title>Serving ML Models Using Web Servers</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture1/deploy_webserver/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -51,22 +80,60 @@ screen -S jupyter-session #can also use nohup or tmux here jupyter notebook --no
     </item>
     
     <item>
-      <title>MLFlow</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</link>
+      <title>Recommendation (SVD) Inference</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_inference/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture1/mlflow/</guid>
-      <description>See https://pypi.org/project/mlflow/</description>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/surprise_inference/</guid>
+      <description># https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.dump import load from collections import defaultdict import pandas as pd def get_top_n(predictions, n=10): &amp;quot;&amp;quot;&amp;quot;Return the top-N recommendation for each user from a set of predictions. Args: predictions(list of Prediction objects): The list of predictions, as returned by the test method of an algorithm. n(int): The number of recommendation to output for each user. Default is 10. Returns: A dict where keys are user (raw) ids and values are lists of tuples: [(raw item id, rating estimation), .</description>
     </item>
     
     <item>
-      <title>Lecture 2 - Serverless Deployments</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</link>
+      <title>Flask App</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/flask/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</guid>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/flask/</guid>
+      <description>Flask is a micro web framework written in Python. We first show how a simple service works, and then show how to load a model (e.g., based on pytorch) and serve it as well.
+Weather Reporting Service The key thing to see here are that the HTTP route / is mapped directly to a function weather. For instance, when someone hits localhost:5000 (5000 is the default unless specified in app.</description>
+    </item>
+    
+    <item>
+      <title>Serverless Deployments</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/serverless/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/serverless/</guid>
       <description>A. TLDR  Models do not need to be complex, but it can be complex to deploy models. - Ben Weber (2020)
  Problem  We have to take care of provisioning and server maintenance while deploying our models. We have to worry about scale: would 1 server be enough? How to minimize the time to deploy (at an acceptable increase in cost)? How can a single developer or data science/analytics professional manage a complex service?</description>
+    </item>
+    
+    <item>
+      <title>Cloud Functions</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions/</guid>
+      <description>Intro  Cloud Functions (CFs) are a solution from GCP for serverless deployments. Very little boilerplate beyond what we will write for simple offline model inference. In any such deployment, we need to be concerned about:  where the model is stored (recall pickle and mlflow), and what python packages are available.   Empty Deployment  We will set up triggers that will trigger our serving function (in particular, a HTTP request).</description>
+    </item>
+    
+    <item>
+      <title>Recommendation (Pytorch) Training</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_training/</guid>
+      <description>Please install the package using the command conda install -c conda-forge scikit-surprise in the ight environment.
+# https://github.com/NicolasHug/Surprise from surprise import SVD, Dataset from surprise.accuracy import rmse from surprise.dump import dump import numpy as np import torch from torch import nn import torch.nn.functional as F from ignite.engine import Events, create_supervised_trainer, create_supervised_evaluator from ignite.metrics import Loss, MeanSquaredError from datetime import datetime from sklearn.utils import shuffle class Loader(): current = 0 def __init__(self, x, y, batchsize=1024, do_shuffle=True): self.</description>
+    </item>
+    
+    <item>
+      <title>Recommendation (Pytorch) Inference</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_inference/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture1/recommendation_model/pytorch_inference/</guid>
+      <description>from surprise import Dataset import numpy as np import torch from torch import nn import pandas as pd class MF(nn.Module): itr = 0 def __init__(self, n_user, n_item, k=18, c_vector=1.0, c_bias=1.0): super(MF, self).__init__() self.k = k self.n_user = n_user self.n_item = n_item self.c_bias = c_bias self.c_vector = c_vector self.user = nn.Embedding(n_user, k) self.item = nn.Embedding(n_item, k) # We&#39;ve added new terms here: self.bias_user = nn.Embedding(n_user, 1) self.bias_item = nn.Embedding(n_item, 1) self.bias = nn.</description>
     </item>
     
     <item>

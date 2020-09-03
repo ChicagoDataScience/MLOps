@@ -11,13 +11,22 @@
     
     
     <item>
-      <title>Lecture 2 - Serverless Deployments</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</link>
+      <title>Serverless Deployments</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/serverless/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture2/lec02_serverless/</guid>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/serverless/</guid>
       <description>A. TLDR  Models do not need to be complex, but it can be complex to deploy models. - Ben Weber (2020)
  Problem  We have to take care of provisioning and server maintenance while deploying our models. We have to worry about scale: would 1 server be enough? How to minimize the time to deploy (at an acceptable increase in cost)? How can a single developer or data science/analytics professional manage a complex service?</description>
+    </item>
+    
+    <item>
+      <title>Cloud Functions</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions/</guid>
+      <description>Intro  Cloud Functions (CFs) are a solution from GCP for serverless deployments. Very little boilerplate beyond what we will write for simple offline model inference. In any such deployment, we need to be concerned about:  where the model is stored (recall pickle and mlflow), and what python packages are available.   Empty Deployment  We will set up triggers that will trigger our serving function (in particular, a HTTP request).</description>
     </item>
     
   </channel>
