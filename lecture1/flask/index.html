@@ -505,6 +505,48 @@
 
             
           
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions_model/">
+        GCP Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions/" title="Lambda Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions/">
+        Lambda Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
         
         </ul>
               
@@ -840,7 +882,6 @@ def predict():
     if params is None:
         params = flask.request.args
     
-    # if parameters are found, echo the msg parameter 
     if &quot;uid&quot; in params.keys(): 
         data[&quot;response&quot;] = str([df.loc[int(iid),'name'] for (iid, _) in top_n[params.get(&quot;uid&quot;)]])
         data[&quot;success&quot;] = True
@@ -1643,6 +1684,38 @@ app.run(host='0.0.0.0')
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             

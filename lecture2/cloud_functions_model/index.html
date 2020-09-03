@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Schedule :: MLOps: Operationalizing Machine Learning</title>
+    <title>GCP Serverless Model Serving :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/logistics/schedule/">
+  <body class="" data-url="/MLOps/lecture2/cloud_functions_model/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -80,7 +80,7 @@
   
     
     <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
-        parent
+        
         
         
         ">
@@ -108,7 +108,7 @@
  
   
     
-      <li data-nav-id="/MLOps/logistics/schedule/" title="Schedule" class="dd-item active">
+      <li data-nav-id="/MLOps/logistics/schedule/" title="Schedule" class="dd-item ">
         <a href="/MLOps/logistics/schedule/">
         <b> </b>Schedule
         <i class="fas fa-check read-icon"></i>
@@ -444,7 +444,7 @@
   
     
     <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
-        
+        parent
         
         
         ">
@@ -514,7 +514,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item active">
         <a href="/MLOps/lecture2/cloud_functions_model/">
         GCP Serverless Model Serving
         <i class="fas fa-check read-icon"></i>
@@ -742,13 +742,33 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Schedule 
+                   GCP Serverless Model Serving 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#access-management">Access Management</a></li>
+<li><a href="#updating-models-and-monitoring">Updating Models and Monitoring</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -757,9 +777,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              GCP Serverless Model Serving
+            </h1>
           
 
         
@@ -768,61 +791,115 @@
 
 
 
-<h2 id="textbook">Textbook</h2>
+<p>We modify the flask app that we had before, by again specifying the requirements.txt and the main python file appropriately.
+We will also increase the memory to 2GB and the timeout to 180 seconds. You will see that the following deployment has a lot of inefficiencies (can you spot the redundacy in loading the model and the predictions below?).</p>
+
+<p>The requirements file will have the following entries:</p>
+
+<pre><code class="language-bash">numpy
+flask
+pandas
+google-cloud-storage
+scikit-surprise
+pickle5
+</code></pre>
+
+<p>The main file is also modified accordingly. Note that if we reload the model and the metadata on every request, it will be extremely inefficient. To fix that we can use global variables. This is not a good choice in much of python programming, but quite useful here. Essentially, global variables allow us to cache some of the objects, for faster response times.</p>
+
+<pre><code class="language-python">
+top_n = None
+
+def recommend(request):
+
+    global top_n
+
+    from surprise import Dataset
+    import pandas as pd
+    import flask
+    from google.cloud import storage
+    import pickle5
+
+    def load(file_name):
+        dump_obj = pickle5.load(open(file_name, 'rb'))
+        return dump_obj['predictions'], dump_obj['algo']
+
+    def get_top_n(predictions, n=10):
+
+        def defaultdict(default_type):
+            class DefaultDict(dict):
+                def __getitem__(self, key):
+                    if key not in self:
+                        dict.__setitem__(self, key, default_type())
+                    return dict.__getitem__(self, key)
+            return DefaultDict()
+
+        # First map the predictions to each user.
+        top_n = defaultdict(list)
+        for uid, iid, true_r, est, _ in predictions:
+            top_n[uid].append((iid, est))
+
+        # Then sort the predictions for each user and retrieve the k highest ones.
+        for uid, user_ratings in top_n.items():
+            user_ratings.sort(key=lambda x: x[1], reverse=True)
+            top_n[uid] = user_ratings[:n]
+
+        return top_n
+
+
+    data = {&quot;success&quot;: False}
+    params = request.get_json()
+    if &quot;uid&quot; in params:
+
+        if not top_n:
+            bucket_name = &quot;theja_model_store&quot;
+            storage_client = storage.Client()
+            bucket = storage_client.get_bucket(bucket_name)
+            blob = bucket.blob(&quot;serverless/surprise_model/v1a&quot;)
+            blob.download_to_filename(&quot;/tmp/surprise_model&quot;)    #ideally we should be reading things into memory
+            blob = bucket.blob(&quot;serverless/surprise_model/v1b&quot;)
+            blob.download_to_filename(&quot;/tmp/movies.dat&quot;)
+            df = pd.read_csv('/tmp/movies.dat',sep=&quot;::&quot;,header=None,engine='python')
+            df.columns = ['iid','name','genre']
+            df.set_index('iid',inplace=True)
+            predictions, algo = load('/tmp/surprise_model')
+            top_n = get_top_n(predictions, n=5)
+
+        data[&quot;response&quot;] = str([df.loc[int(iid),'name'] for (iid, _) in top_n[params.get(&quot;uid&quot;)]])
+        data[&quot;success&quot;] = True
+        
+    # return a response in json format 
+    return flask.jsonify(data)
+
+</code></pre>
+
+<p>We can test the function on the GCP console with a request JSON <code>{&quot;uid&quot;:&quot;206&quot;}</code>.</p>
+
+<p><img src="cf_model_successful.png" alt="cf_model_successful" /></p>
+
+<p><em>As an exercise, think of ways to make the whole setup above lightweight in terms of model and data size.</em></p>
+
+<p><em>Deploying the pytorch model after removing the dependecy on surprise is also a good challenge to tackle.</em></p>
+
+<h3 id="access-management">Access Management</h3>
 
 <ul>
-<li><a href="https://leanpub.com/ProductionDataScience/">Data Science in Production</a> by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.</li>
+<li>It is a bad idea to allow unauthenticated access</li>
+<li>There are ways of restricting who can reach this model serving endpoint.
+
+<ul>
+<li>One way is to disable unauthenticated access while creating the function.</li>
+<li>Once we do that, we can create a permission structure based on GCP best practices.</li>
+</ul></li>
+<li>We will omit the details here.</li>
 </ul>
 
-<h2 id="lecture-schedule">Lecture Schedule</h2>
-
-<h4 id="lecture-1-serving-ml-models-using-web-servers">Lecture 1: Serving ML Models Using Web Servers</h4>
+<h3 id="updating-models-and-monitoring">Updating Models and Monitoring</h3>
 
 <ul>
-<li>Ref Chapter 2</li>
-</ul>
-
-<h4 id="lecture-2-serving-ml-models-using-serverless-infrastructure">Lecture 2: Serving ML Models Using Serverless Infrastructure</h4>
-
-<ul>
-<li>Ref Chapter 3</li>
-</ul>
-
-<h4 id="lecture-3-serving-ml-models-using-docker">Lecture 3: Serving ML Models Using Docker</h4>
-
-<ul>
-<li>Ref Chapter 4</li>
-</ul>
-
-<h4 id="lecture-4-ml-model-pipelines">Lecture 4: ML Model Pipelines</h4>
-
-<ul>
-<li>Ref Chapter 5</li>
-</ul>
-
-<h4 id="lecture-5">Lecture 5:</h4>
-
-<ul>
-<li>Ref Chapter 6</li>
-</ul>
-
-<h4 id="lecture-6">Lecture 6:</h4>
-
-<ul>
-<li>Ref Chapter 7</li>
-</ul>
-
-<h4 id="lecture-7">Lecture 7:</h4>
-
-<ul>
-<li>Ref Chapter 8</li>
-</ul>
-
-<h4 id="lecture-8-online-experimentation">Lecture 8: Online Experimentation</h4>
-
-<ul>
-<li>Ref 1: <a href="https://help.optimizely.com/Get_Started/Get_started_with_Optimizely_Web_Recommendations">https://help.optimizely.com/Get_Started/Get_started_with_Optimizely_Web_Recommendations</a></li>
-<li>Ref 2: <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html">https://docs.aws.amazon.com/sagemaker/latest/dg/model-ab-testing.html</a></li>
+<li>We can easily update our endpoint by rewriting the files we uploaded to GCS.</li>
+<li>A cleaner way is to create another cloud function.</li>
+<li>The function itself can have logic to reload files using the <code>google-cloud-storage</code> module based on time elapsed (say using <code>datetime</code>).</li>
+<li>Monitoring is very important, not just to know if our model performance has changed over time, but also to measure things such as latency, bugs and API access patterns. We will revisit this topic in the future.</li>
 </ul>
 
 
@@ -830,8 +907,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -863,88 +938,8 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                         
                         
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -986,19 +981,6 @@
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
             
         
                     
@@ -1012,17 +994,10 @@
 
                     
                     
+                        
+                    
                     
 
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
                     
                         
             
@@ -1328,6 +1303,104 @@
 
                     
                     
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
                     
 
                     
@@ -1602,6 +1675,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1614,6 +1688,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1647,6 +1724,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1662,6 +1740,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1782,10 +1863,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/logistics/" title="Course Logistics"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture2/cloud_functions/" title="Cloud Functions"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture2/lambda_functions/" title="Lambda Functions" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

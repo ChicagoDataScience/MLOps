@@ -505,6 +505,48 @@
 
             
           
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions_model/">
+        GCP Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions/" title="Lambda Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions/">
+        Lambda Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
         
         </ul>
               
@@ -848,47 +890,6 @@ return jsonify(data)
 
 </code></pre></li>
 
-<li><p>The webserver version of the above would be:</p>
-
-<pre><code class="language-python">
-# load Flask 
-import flask
-from flask import jsonify
-from geopy.geocoders import Nominatim
-import requests
-
-app = flask.Flask(__name__)
-
-# define a predict function as an endpoint 
-@app.route(&quot;/&quot;, methods=[&quot;GET&quot;,&quot;POST&quot;])
-def weather():
-
-data = {&quot;success&quot;: False}
-#https://pypi.org/project/geopy/
-geolocator = Nominatim(user_agent=&quot;cloud_function_weather_app&quot;)
-
-
-params = flask.request.json
-if params is None:
-    params = flask.request.args
-
-
-# params = request.get_json()
-if &quot;msg&quot; in params:
-    location = geolocator.geocode(str(params['msg']))
-    # https://www.weather.gov/documentation/services-web-api
-    result1 = requests.get(f&quot;https://api.weather.gov/points/{location.latitude},{location.longitude}&quot;)
-    result2 = requests.get(f&quot;{result1.json()['properties']['forecast']}&quot;)
-    data[&quot;response&quot;] = result2.json()
-    data[&quot;success&quot;] = True
-return jsonify(data)
-    
-# start the flask app, allow remote connections
-if __name__ == '__main__':
-app.run(host='0.0.0.0')
-
-</code></pre></li>
-
 <li><p>Once the function is deployed, we can test the function (click actions on the far right in the dashboard)</p></li>
 </ul>
 
@@ -997,14 +998,36 @@ print(bucket.name)
 
 <pre><code class="language-python">
 from google.cloud import storage
-bucket_name = &quot;dsp_model_store&quot;
+bucket_name = &quot;theja_model_store&quot;
 storage_client = storage.Client()
 bucket = storage_client.get_bucket(bucket_name)
-blob = bucket.blob(&quot;serverless/modelname/v1&quot;)
-blob.upload_from_filename(&quot;modelname.pkl&quot;)
+blob = bucket.blob(&quot;serverless/surprise_model/v1a&quot;)
+blob.upload_from_filename(&quot;surprise_model&quot;)
+blob = bucket.blob(&quot;serverless/surprise_model/v1b&quot;)
+blob.upload_from_filename(&quot;movies.dat&quot;)
 
 </code></pre></li>
 </ul>
+
+<p><img src="cf_storage.png" alt="storage" /></p>
+
+<p>After running the above, the surprise package based recommendation model and the helper data file will be available at <code>gs://theja_model_store/serverless/surprise_model/v1a</code> and <code>gs://theja_model_store/serverless/surprise_model/v1b</code> as seen below.</p>
+
+<p><img src="cf_storage_uri.png" alt="storage_uri" /></p>
+
+<p>We can either use the URIs above or use a programmatic way with the storage class. For example, here is the way to download the file <code>v1b</code>:</p>
+
+<pre><code class="language-python">from google.cloud import storage
+bucket_name = &quot;theja_model_store&quot;
+storage_client = storage.Client()
+bucket = storage_client.get_bucket(bucket_name)
+blob = bucket.blob(&quot;serverless/surprise_model/v1b&quot;)
+blob.download_to_filename(&quot;movies.dat.from_gcp&quot;)
+</code></pre>
+
+<p>We can diff it in Jupyter notebook itself using the expression <code>!diff movies.dat movies.dat.from_gcp</code>.</p>
+
+<p>We will use this programmatic way of reading external data/model in the cloud function next.</p>
 
 
 <footer class="footline">
@@ -1824,6 +1847,22 @@ blob.upload_from_filename(&quot;modelname.pkl&quot;)
             
         
                     
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
             
         
                     
@@ -1832,8 +1871,24 @@ blob.upload_from_filename(&quot;modelname.pkl&quot;)
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
                         
-                        
+            
+            
+                
                     
                 
                 
@@ -1938,7 +1993,7 @@ blob.upload_from_filename(&quot;modelname.pkl&quot;)
 			<a class="nav nav-prev" href="/MLOps/lecture2/serverless/" title="Serverless Deployments"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture3/" title="Lecture 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

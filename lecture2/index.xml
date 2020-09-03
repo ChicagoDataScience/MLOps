@@ -29,5 +29,25 @@
       <description>Intro  Cloud Functions (CFs) are a solution from GCP for serverless deployments. Very little boilerplate beyond what we will write for simple offline model inference. In any such deployment, we need to be concerned about:  where the model is stored (recall pickle and mlflow), and what python packages are available.   Empty Deployment  We will set up triggers that will trigger our serving function (in particular, a HTTP request).</description>
     </item>
     
+    <item>
+      <title>GCP Serverless Model Serving</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions_model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/cloud_functions_model/</guid>
+      <description>We modify the flask app that we had before, by again specifying the requirements.txt and the main python file appropriately. We will also increase the memory to 2GB and the timeout to 180 seconds. You will see that the following deployment has a lot of inefficiencies (can you spot the redundacy in loading the model and the predictions below?).
+The requirements file will have the following entries:
+numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file is also modified accordingly.</description>
+    </item>
+    
+    <item>
+      <title>Lambda Functions</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture2/lambda_functions/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
