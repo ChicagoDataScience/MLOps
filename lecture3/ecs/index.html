@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Course Logistics :: MLOps: Operationalizing Machine Learning</title>
+    <title>Orchestration using ECS and ECR :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/logistics/">
+  <body class="" data-url="/MLOps/lecture3/ecs/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -80,8 +80,8 @@
   
     
     <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/MLOps/logistics/">
@@ -648,7 +648,7 @@
   
     
     <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
-        
+        parent
         
         
         ">
@@ -718,7 +718,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR" class="dd-item active">
         <a href="/MLOps/lecture3/ecs/">
         <b>3. </b>Orchestration using ECS and ECR
         <i class="fas fa-check read-icon"></i>
@@ -941,13 +941,22 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
-                   Course Logistics 
+                   Orchestration using ECS and ECR 
                  
                   </span>
                 </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+
+    </div>
+</div>
+
                 
               </div>
             </div>
@@ -956,107 +965,25 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Orchestration using ECS and ECR
+            </h1>
           
 
         
 
 
 
-
-	
-
-<h1 id="course-logistics">Course Logistics</h1>
-
-<ul>
-<li>Semester: Fall 2020</li>
-<li>Lectures: Thursdays 6.30 PM to 9.00 PM</li>
-<li>Mode: Online synchronous (i.e., location is <em>online</em>). The course will be delivered over Zoom (an invite will be sent before the first day of class). See the online learning page for basic technology requirements.</li>
-<li>Staff
-
-<ul>
-<li>Instructor: <a href="https://theja.org">Dr. Theja Tulabandhula</a> (netid: theja)</li>
-<li>Teaching Assistant: <a href="https://www.linkedin.com/in/tengteng-ma-686899174">Tengteng Ma</a> (netid: tma24)</li>
-</ul></li>
-<li>Communication: via <a href="https://ids594.slack.com">slack</a>, <a href="https://uic.zoom.com">zoom</a> and <a href="https://uic365-my.sharepoint.com/personal/theja_uic_edu/Documents/Class%20Notebooks/IDS594">one note class notebook</a>.</li>
-<li>Office hours: online via <a href="https://ids594.slack.com">slack</a> and zoom](<a href="https://uic.zoom.com">https://uic.zoom.com</a>).</li>
-</ul>
-
-<h2 id="textbook-and-materials">Textbook and Materials</h2>
-
-<ul>
-<li><a href="https://leanpub.com/ProductionDataScience/">Data Science in Production</a> by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.</li>
-</ul>
-
-<h2 id="software">Software</h2>
-
-<ul>
-<li>Any OS should be okay. If in doubt, run a virtual machine running linux (this will be discussed in the class). Some of the software we will work with are:</li>
-<li>Docker for Desktop
-
-<ul>
-<li><a href="https://k3s.io/">Lightweight Kubernetes</a></li>
-</ul></li>
-<li>Python (Anaconda)
-
-<ul>
-<li>flask</li>
-<li>requests</li>
-<li>pandas</li>
-<li>pytorch</li>
-<li>scikit-learn</li>
-<li>matplotlib</li>
-<li>&hellip;</li>
-</ul></li>
-<li>&hellip;</li>
-</ul>
-
-<h2 id="hardware">Hardware</h2>
-
-<ul>
-<li>There will be varied computing resources needed for this course. Try using a virtual machine with linux on your own computer if possible. A Windows virtual desktop is available at <a href="https://desktop.uic.edu">desktop.uic.edu</a> if needed. You can refer to <a href="https://answers.uillinois.edu/uic/99368">these</a> two <a href="https://accc.uic.edu/services/teaching-learning/learning-environments/virtual-computer-lab/">help</a> pages to get started.</li>
-</ul>
-
-<h2 id="assignments">Assignments</h2>
-
-<ul>
-<li>There are no graded assignments or exams for this course. Students are expected to go over the lectures and practice the use of technologies discussed each week.</li>
-</ul>
-
-<h2 id="project">Project</h2>
-
-<ul>
-<li>Students are expected to apply what they learn in the course and demonstrate a deployment of an existing machine learning model they have access to. A suitable documentation of this process along with the scripts/codes/commands used is to be submitted on <span style="color:red">October 14th</span> (<em>with no exceptions</em>). The evaluation criteria and other details will be released shortly. Submission deadline is BEFORE 11.59 PM on the concerned day. Late submissions will have an automatic 20% penalty per day. Use <a href="https://uic.blackboard.com/">Blackboard</a> for uploading your work as a single zip file.</li>
-</ul>
-
-<h2 id="grade">Grade</h2>
-
-<ul>
-<li>Grades will be assigned based on the project (see project evaluation criteria above) (80%) and course participation (20%).</li>
-</ul>
-
-<h2 id="miscellaneous-information">Miscellaneous Information</h2>
-
-<ul>
-<li>This is a 2 credit graduate level course offered by the Information and Decision Sciences department at UIC.</li>
-<li>See the <a href="http://catalog.uic.edu/ucat/academic-calendar/">academic calendar</a> for the semester timeline.</li>
-<li>Students who wish to observe their religious holidays (<a href="http://oae.uic.edu/religious-calendar/">http://oae.uic.edu/religious-calendar/</a>) should notify the instructor within one week of the first lecture date.</li>
-<li>Contact the instructor at the earliest, if you require any accommodations for access to and/or participation in this course.</li>
-<li>Refer to the academic integrity guidelines set by the university.</li>
-</ul>
+<p>TBD</p>
 
 
-
-
-
-<footer class=" footline" >
+<footer class="footline">
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1088,103 +1015,8 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
                         
                         
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
                     
                 
                 
@@ -1242,6 +1074,9 @@
             
         
                     
+            
+        
+                    
                         
             
             
@@ -1252,17 +1087,10 @@
 
                     
                     
+                        
+                    
                     
 
-                    
-            
-        
-                    
-            
-        
-                    
-            
-        
                     
                         
             
@@ -1568,6 +1396,104 @@
 
                     
                     
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
                     
 
                     
@@ -2052,6 +1978,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2064,6 +1991,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2097,6 +2027,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2112,6 +2043,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2232,10 +2166,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/" title="MLOps: Operationalizing Machine Learning"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture3/docker/" title="Docker"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture3/kubernetes/" title="Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2306,3 +2240,4 @@
 
   </body>
 </html>
+

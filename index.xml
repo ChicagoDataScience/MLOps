@@ -187,6 +187,55 @@ numpy flask pandas google-cloud-storage scikit-surprise pickle5  The main file i
     </item>
     
     <item>
+      <title>Introduction</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/intro/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/intro/</guid>
+      <description>TLDR Problem  Environmental compatibility is a headache, in addition to scaling, security, maintenance and upgrade of software and hardware.  For instance, in the serverless examples, the need for pickle5 instead of pickle was due to such incompatibility.  For hosted environments, we have to work hard on the devops to ensure the environments are the same. For serverless, we did this via the requirements file (Cloud Functions) and locally installing python packages (Lambda functions)  Solution  Containers</description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/docker/</guid>
+      <description>We will first get learn a bit more about docker. From their website:
+ Docker is an open platform (written in Go) for developing, shipping, and running applications.
+Docker enables you to separate your applications from your infrastructure so you can deliver software quickly.
+With Docker, you can manage your infrastructure in the same ways you manage your applications.
+By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</description>
+    </item>
+    
+    <item>
+      <title>Orchestration using ECS and ECR</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/ecs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/ecs/</guid>
+      <description>TBD</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/kubernetes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/kubernetes/</guid>
+      <description>TBD</description>
+    </item>
+    
+    <item>
+      <title>Orchestration using GKE</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/gke/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/gke/</guid>
+      <description>TBD</description>
+    </item>
+    
+    <item>
       <title>Exercises</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
