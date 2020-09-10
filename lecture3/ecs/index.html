@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Orchestration using ECS and ECR :: MLOps: Operationalizing Machine Learning</title>
+    <title>Orchestration using ECS and ECR - Part II :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -718,9 +718,30 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR" class="dd-item active">
+      <li data-nav-id="/MLOps/lecture3/ecr/" title="Orchestration using ECS and ECR - Part I" class="dd-item ">
+        <a href="/MLOps/lecture3/ecr/">
+        <b>3. </b>Orchestration using ECS and ECR - Part I
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR - Part II" class="dd-item active">
         <a href="/MLOps/lecture3/ecs/">
-        <b>3. </b>Orchestration using ECS and ECR
+        <b>4. </b>Orchestration using ECS and ECR - Part II
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -739,30 +760,9 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture3/kubernetes/" title="Kubernetes" class="dd-item ">
-        <a href="/MLOps/lecture3/kubernetes/">
-        <b>4. </b>Kubernetes
-        <i class="fas fa-check read-icon"></i>
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/MLOps/lecture3/gke/" title="Orchestration using GKE" class="dd-item ">
-        <a href="/MLOps/lecture3/gke/">
-        <b>5. </b>Orchestration using GKE
+      <li data-nav-id="/MLOps/lecture3/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture3/exercises/">
+        <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -800,6 +800,58 @@
           
       </a>
       
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/kubernetes/">
+        <b>5. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
+        <a href="/MLOps/lecture4/gke/">
+        <b>6. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
               
     </li>
   
@@ -946,14 +998,25 @@
                   <span class="links">
                  
                  
-                   Orchestration using ECS and ECR 
+                   Orchestration using ECS and ECR - Part II 
                  
                   </span>
                 </div>
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#elastic-container-service-ecs">Elastic Container Service (ECS)</a></li>
+<li><a href="#tear-down-the-ecs-cluster">Tear Down the ECS Cluster</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -969,7 +1032,7 @@
           
             <h1>
               
-              Orchestration using ECS and ECR
+              Orchestration using ECS and ECR - Part II
             </h1>
           
 
@@ -977,7 +1040,117 @@
 
 
 
-<p>TBD</p>
+
+
+<h3 id="elastic-container-service-ecs">Elastic Container Service (ECS)</h3>
+
+<ul>
+<li>This is a AWS propreitary solution for container orchestration.</li>
+<li>There are three key concepts to work with this solution:
+
+<ul>
+<li>Service: Manages containers and relates them to EC2 machines as needed</li>
+<li>Task: Is a specific container</li>
+<li>Cluster: Is the environment of EC2 machines where containers live</li>
+</ul></li>
+<li>The below diagram illustrates these relationships.</li>
+</ul>
+
+<p><img src="ecs.png" alt="ecs" />
+<div style="text-align: right"> Source: <a href="https://aws.com/">https://aws.com/</a>
+</div></p>
+
+<ul>
+<li>We will set up a cluster and run a task/container and use a service to manage it. We will use Fargate for this exercise, although there are other more detailed ways to achieve the same end goals.</li>
+
+<li><p>Using Fargate will hide a lot of complexity, especially with privisioning the underlying EC2 instances.</p></li>
+
+<li><p>Lets start by getting to ECS.</p></li>
+</ul>
+
+<p><img src="ecs_create1.png" alt="ecs_create1" />
+<img src="ecs_create1b.png" alt="ecs_create1b" /></p>
+
+<ul>
+<li>Hit the get started button above or navigate to the  clusters link on the left and then hit the get started button below.</li>
+</ul>
+
+<p><img src="ecs_create2.png" alt="ecs_create2" /></p>
+
+<ul>
+<li>Choose the custom container definition and hit configure.</li>
+</ul>
+
+<p><img src="ecs_create3.png" alt="ecs_create3" /></p>
+
+<ul>
+<li>Name the container, and point it to the ECR image URI. Specify the port to be 80 (this is what we choose in recommend.py). Then hit update.</li>
+</ul>
+
+<p><img src="ecs_create4.png" alt="ecs_create4" /></p>
+
+<ul>
+<li>We will keep the task definition to the default values.</li>
+</ul>
+
+<p><img src="ecs_create5.png" alt="ecs_create5" /></p>
+
+<ul>
+<li>Similarly we will retain the defaults for the service definition on the next page as well.</li>
+</ul>
+
+<p><img src="ecs_create6.png" alt="ecs_create6" /></p>
+
+<ul>
+<li>Name the cluster and then review the settings. Note that a lot is happening under the hood.</li>
+</ul>
+
+<p><img src="ecs_create7.png" alt="ecs_create7" /></p>
+
+<ul>
+<li>Review the settings as shown below:</li>
+</ul>
+
+<p><img src="ecs_review1.png" alt="ecs_review1" />
+<img src="ecs_review2.png" alt="ecs_review2" /></p>
+
+<ul>
+<li>The cluster gets created and you can see the status for all tasks change to green in due time.</li>
+</ul>
+
+<p><img src="ecs_status1.png" alt="ecs_status1" /></p>
+
+<ul>
+<li>Click view service and then click the Tasks tab at the center/bottom part of the screen.</li>
+</ul>
+
+<p><img src="ecs_status2.png" alt="ecs_status2" /></p>
+
+<ul>
+<li>Clicking on the task (there should only be one task listed) will show the public IP through which we can seek model predicitons.</li>
+</ul>
+
+<p><img src="ecs_status3.png" alt="ecs_status3" /></p>
+
+<ul>
+<li>Navigating to our browser and accessing the IP and making a query such as <code>http://18.220.91.58/?uid=20</code>
+gives the following response.</li>
+</ul>
+
+<p><img src="ecs_status4.png" alt="ecs_status4" /></p>
+
+<h3 id="tear-down-the-ecs-cluster">Tear Down the ECS Cluster</h3>
+
+<ul>
+<li>Follow Step 7 onwards from this link: <a href="https://aws.amazon.com/getting-started/hands-on/deploy-docker-containers/">https://aws.amazon.com/getting-started/hands-on/deploy-docker-containers/</a>
+
+<ul>
+<li>Essentially update the service to ensure that the number of tasks is 0.</li>
+<li>Then delete the service and stop the task and delete the task and task definition.</li>
+<li>Then delete the cluster itself.</li>
+<li>Check on the EC2, VPC and Load balancing pages if you are still consuming resources.</li>
+</ul></li>
+</ul>
 
 
 <footer class="footline">
@@ -2027,6 +2200,22 @@
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
                     
                 
                 
@@ -2058,6 +2247,22 @@
             
         
                     
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
                         
             
             
@@ -2074,9 +2279,6 @@
             
         
                     
-            
-        
-                    
                         
             
             
@@ -2089,6 +2291,9 @@
                     
                     
 
+                    
+            
+        
                     
             
         
@@ -2166,10 +2371,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture3/docker/" title="Docker"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture3/ecr/" title="Orchestration using ECS and ECR - Part I"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture3/kubernetes/" title="Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture3/exercises/" title="Exercises" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

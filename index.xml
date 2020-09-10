@@ -27,7 +27,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/logistics/schedule/</guid>
-      <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4  Lecture 4: ML Model Pipelines  Ref Chapter 5  Lecture 5:  Ref Chapter 6  Lecture 6:  Ref Chapter 7  Lecture 7:  Ref Chapter 8  Lecture 8: Online Experimentation  Ref 1: https://help.</description>
+      <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4, upto 4.</description>
     </item>
     
     <item>
@@ -209,30 +209,42 @@ By taking advantage of Docker’s methodologies for shipping, testing, and deplo
     </item>
     
     <item>
-      <title>Orchestration using ECS and ECR</title>
+      <title>Orchestration using ECS and ECR - Part I</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/ecr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/ecr/</guid>
+      <description>Intro  Orchestration means managing container life cycle from building them to deploying (which requires provisioning of appropriate compute resources, storage resources, networking resources), scaling, load-balancing and other tasks, while accounting for failures throughout.
+ While there are many orchestration solutions, we will focus on a couple of them: ECS by AWS and Kubernetes (local hosted solution and managed by GCP). While there is Elastic Kubernetes Service (EKS) by AWS as well, we will omit it here, as the ideas are the same.</description>
+    </item>
+    
+    <item>
+      <title>Orchestration using ECS and ECR - Part II</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture3/ecs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture3/ecs/</guid>
-      <description>TBD</description>
+      <description>Elastic Container Service (ECS)  This is a AWS propreitary solution for container orchestration. There are three key concepts to work with this solution:  Service: Manages containers and relates them to EC2 machines as needed Task: Is a specific container Cluster: Is the environment of EC2 machines where containers live  The below diagram illustrates these relationships.  Source: https://aws.com/ 
+ We will set up a cluster and run a task/container and use a service to manage it.</description>
     </item>
     
     <item>
       <title>Kubernetes</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture3/kubernetes/</link>
+      <link>https://chicagodatascience.github.io/MLOps/lecture4/kubernetes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture3/kubernetes/</guid>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture4/kubernetes/</guid>
       <description>TBD</description>
     </item>
     
     <item>
       <title>Orchestration using GKE</title>
-      <link>https://chicagodatascience.github.io/MLOps/lecture3/gke/</link>
+      <link>https://chicagodatascience.github.io/MLOps/lecture4/gke/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://chicagodatascience.github.io/MLOps/lecture3/gke/</guid>
-      <description>TBD</description>
+      <guid>https://chicagodatascience.github.io/MLOps/lecture4/gke/</guid>
+      <description> Google Kubernetes Engine by GCP  Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications A container is a basic building block in Kubernetes. Google Kubernetes Engine (GKE) a managed service for running Kubernetes, with key features such as security, scaling and multi-cluster support.  Note: While exploring GKE, keep a tab on billing (check every so often)!
+What we will Study  Kubernetes on Desktop Use GKE (Google Kubernetes Engine) on GCP for deploying the recommendation system  </description>
     </item>
     
     <item>
@@ -262,6 +274,18 @@ By taking advantage of Docker’s methodologies for shipping, testing, and deplo
  Learn about identities, roles and access aspects in GCP and AWS.
  Try deploying a different recommendation model.
   </description>
+    </item>
+    
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture3/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture3/exercises/</guid>
+      <description>Deploy your image to Docker Hub container registry (needs an account, has free tier limits).
+ Run a container using the python images from Docker Hub.
+ Try to minimize the size of the docker images produced.
+ Add checks for out of bound queries in your recommendation function (e.g., http://localhost/?uid=2000 will give a value error on the server and the browser will show that an internal server error occured).</description>
     </item>
     
   </channel>

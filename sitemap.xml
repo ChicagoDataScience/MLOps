@@ -103,15 +103,19 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture3/ecr/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture3/ecs/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture3/kubernetes/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/kubernetes/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture3/gke/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/gke/</loc>
   </url>
   
   <url>
@@ -140,6 +144,10 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture2/exercises/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture3/exercises/</loc>
   </url>
   
   <url>

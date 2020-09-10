@@ -718,9 +718,30 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture3/ecr/" title="Orchestration using ECS and ECR - Part I" class="dd-item ">
+        <a href="/MLOps/lecture3/ecr/">
+        <b>3. </b>Orchestration using ECS and ECR - Part I
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR - Part II" class="dd-item ">
         <a href="/MLOps/lecture3/ecs/">
-        <b>3. </b>Orchestration using ECS and ECR
+        <b>4. </b>Orchestration using ECS and ECR - Part II
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -739,30 +760,9 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture3/kubernetes/" title="Kubernetes" class="dd-item ">
-        <a href="/MLOps/lecture3/kubernetes/">
-        <b>4. </b>Kubernetes
-        <i class="fas fa-check read-icon"></i>
-        </a>
-    </li>
-     
-  
- 
-
-            
-          
-            
-            
-
-
-
-
- 
-  
-    
-      <li data-nav-id="/MLOps/lecture3/gke/" title="Orchestration using GKE" class="dd-item ">
-        <a href="/MLOps/lecture3/gke/">
-        <b>5. </b>Orchestration using GKE
+      <li data-nav-id="/MLOps/lecture3/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture3/exercises/">
+        <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -800,6 +800,58 @@
           
       </a>
       
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/kubernetes/">
+        <b>5. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
+        <a href="/MLOps/lecture4/gke/">
+        <b>6. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
               
     </li>
   
@@ -1031,19 +1083,33 @@ class MF(nn.Module):
         total = loss_mse + prior_user + prior_item + prior_bias_user + prior_bias_item
         return total
 
-def get_top_n(model,testset,trainset,uid0,n=10):
+def get_top_n(model,testset,trainset,uid_input,n=10):
     
-    uid0 = trainset.to_inner_uid(uid0)
-    # First map the predictions to each user.
     preds = []
-    for uid, iid, _ in testset:
-        uid = trainset.to_inner_uid(uid)
-        if uid==uid0:
-            preds.append((iid,float(model(torch.tensor([[int(uid),int(trainset.to_inner_iid(iid))]])))))
+    try:
+        uid_input = int(trainset.to_inner_uid(uid_input))
+    except KeyError:
+        return preds        
 
-    # Then sort the predictions for each user and retrieve the k highest ones.
-    preds.sort(key=lambda x: x[1], reverse=True)
-    return preds[:n]
+    # First map the predictions to each user.
+    for uid, iid, _ in testset: #inefficient
+        try:
+            uid_internal = int(trainset.to_inner_uid(uid))
+        except KeyError:
+            continue
+        if uid_internal==uid_input:
+            try:
+                iid_internal = int(trainset.to_inner_iid(iid))
+                movie_name = df.loc[int(iid),'name']
+                preds.append((iid,movie_name,float(model(torch.tensor([[uid_input,iid_internal]])))))
+            except KeyError:
+                pass
+    # Then sort the predictions for each user and retrieve the k highest ones
+    if preds is not None:
+        preds.sort(key=lambda x: x[1], reverse=True)
+        if len(preds) &gt; n:
+            preds = preds[:n]
+    return preds
 </code></pre>
 
 <pre><code class="language-python">#Data
@@ -1091,8 +1157,7 @@ for uid,_,_ in testset:
     seen = [df.loc[int(iid),'name'] for (iid, _) in trainset.ur[int(uid)]]
     if len(seen) &gt; 10: seen = seen[:10]
     print('\tSeen:',seen)
-    user_ratings = get_top_n(model,testset,trainset,uid,n=10)
-    print('\tRecommendations:',[df.loc[int(iid),'name'] for (iid, _) in user_ratings])
+    print('\tRecommendations:',get_top_n(model,testset,trainset,uid,n=10))
     limit+=1
     if limit&gt;3:
         break
@@ -2282,6 +2347,38 @@ User: 196
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
             
         
