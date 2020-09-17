@@ -819,7 +819,28 @@
     
       <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
         <a href="/MLOps/lecture4/kubernetes/">
-        <b>5. </b>Kubernetes
+        <b>1. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/modelkube/">
+        <b>2. </b>Model Serving using Kubernetes
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -840,7 +861,28 @@
     
       <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item active">
         <a href="/MLOps/lecture4/gke/">
-        <b>6. </b>Orchestration using GKE
+        <b>3. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture4/exercises/">
+        <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -1011,8 +1053,9 @@
 <ul>
 <li>
 <ul>
-<li><a href="#google-kubernetes-engine-by-gcp">Google Kubernetes Engine by GCP</a></li>
-<li><a href="#what-we-will-study">What we will Study</a></li>
+<li><a href="#introduction-to-google-kubernetes-engine-by-gcp">Introduction to Google Kubernetes Engine by GCP</a></li>
+<li><a href="#google-container-registry">Google Container Registry</a></li>
+<li><a href="#google-kubernetes-engine">Google Kubernetes Engine</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -1042,21 +1085,194 @@
 
 
 
-<h3 id="google-kubernetes-engine-by-gcp">Google Kubernetes Engine by GCP</h3>
-
-<ul>
-<li><a href="https://kubernetes.io/">Kubernetes</a> is an open-source system for automating deployment, scaling, and management of containerized applications</li>
-<li>A container is a basic building block in Kubernetes.</li>
-<li>Google Kubernetes Engine (GKE) a managed service for running Kubernetes, with key features such as security, scaling and multi-cluster support.</li>
-</ul>
-
 <p><strong>Note: While exploring GKE, keep a tab on billing (check every so often)!</strong></p>
 
-<h3 id="what-we-will-study">What we will Study</h3>
+<h3 id="introduction-to-google-kubernetes-engine-by-gcp">Introduction to Google Kubernetes Engine by GCP</h3>
 
 <ul>
-<li>Kubernetes on Desktop</li>
-<li>Use GKE (Google Kubernetes Engine) on GCP for deploying the recommendation system</li>
+<li><p>Google Kubernetes Engine (GKE) by GCP a managed service for running K8s, with key features such as security, scaling and multi-cluster support taken care of as part of K8s on their infrastructure.</p></li>
+
+<li><p>GKE&rsquo;s operation is very similar to ECS.</p></li>
+
+<li><p>Our <strong>goal</strong> will be to use GKE for deploying our recommendation system (the ML model we have been using).</p>
+
+<ul>
+<li>We will first save our docker image to a Docker registry on GCP (this is called the Container Registry).</li>
+<li>Next we will use that image while setting up a K8s cluster.</li>
+</ul></li>
+</ul>
+
+<h3 id="google-container-registry">Google Container Registry</h3>
+
+<ul>
+<li><p>We will use the docker login command with the previously created service account with the JSON based credentials we had saved.</p>
+
+<pre><code class="language-bash">(base) ttmac:~ theja$ cat model-user.json | docker login -u _json_key --password-stdin https://us.gcr.io
+Login Succeeded
+</code></pre></li>
+
+<li><p>Tag the docker image with the Google container registry specific tag as follows:</p>
+
+<pre><code class="language-bash">(base) ttmac:~ theja$ docker tag prediction_service us.gcr.io/authentic-realm-276822/prediction_service
+(base) ttmac:~ theja$ docker images
+REPOSITORY                                                     TAG                 IMAGE ID            CREATED             SIZE
+prediction_service                                             latest              dd408a931e14        7 days ago          2.06GB
+us.gcr.io/authentic-realm-276822/prediction_service            latest              dd408a931e14        7 days ago          2.06GB
+weather_service                                                latest              20d340f941c0        9 days ago          496MB
+debian                                                         buster-slim         c7346dd7f20e        6 weeks ago         69.2MB
+continuumio/miniconda3                                         latest              b4adc22212f1        6 months ago        429MB
+hello-world                                                    latest              bf756fb1ae65        8 months ago        13.3kB
+</code></pre></li>
+
+<li><p>Next, we push the local image to GCR. The upload status will keep getting updated.</p>
+
+<pre><code class="language-bash">(base) ttmac:~ theja$ docker push us.gcr.io/authentic-realm-276822/prediction_service
+The push refers to repository [us.gcr.io/authentic-realm-276822/prediction_service]
+d4bf100b2f89: Pushed
+6719394c8842: Pushed
+a432b6ec80f7: Pushing [&gt;                                                  ]  20.81MB/1.635GB
+fcd8d39597dd: Pushing [========&gt;                                          ]  24.11MB/149.1MB
+875120aa853c: Pushing [=====&gt;                                             ]  23.17MB/210.4MB
+f2cb0ecef392: Layer already exists
+</code></pre></li>
+
+<li><p>When its done, you will see the following:</p>
+
+<pre><code class="language-bash">(base) ttmac:~ theja$ docker push us.gcr.io/authentic-realm-276822/prediction_service
+The push refers to repository [us.gcr.io/authentic-realm-276822/prediction_service]
+d4bf100b2f89: Pushed
+6719394c8842: Pushed
+a432b6ec80f7: Pushed
+fcd8d39597dd: Pushed
+875120aa853c: Pushed
+f2cb0ecef392: Layer already exists
+latest: digest: sha256:f5b19d0e4510194ab8bdbed22f915fec8a07d1a465725ccfa6196782a480172c size: 1582
+</code></pre></li>
+
+<li><p>We can verify that the prediction_service image is present in the GCR page.</p></li>
+</ul>
+
+<p><img src="gcr_image1.png" alt="gcr_image1" /></p>
+
+<p><img src="gcr_image2.png" alt="gcr_image2" /></p>
+
+<h3 id="google-kubernetes-engine">Google Kubernetes Engine</h3>
+
+<ul>
+<li>We will now set up the K8s cluster. Lets start by accessing the GKE page.</li>
+</ul>
+
+<p><img src="gke01.png" alt="gke01" /></p>
+
+<ul>
+<li>Click on <code>Deply container</code> next to the <code>Create cluster</code> button.</li>
+</ul>
+
+<p><img src="gke02.png" alt="gke02" /></p>
+
+<ul>
+<li>Pick the existing cluster option and choose <code>select</code>.</li>
+</ul>
+
+<p><img src="gke03.png" alt="gke03" /></p>
+
+<ul>
+<li>Choose the recently uploaded prediction_service image.</li>
+</ul>
+
+<p><img src="gke04.png" alt="gke04" /></p>
+
+<ul>
+<li>Hit continue.</li>
+</ul>
+
+<p><img src="gke05.png" alt="gke05" /></p>
+
+<ul>
+<li>On the next page, we will leave everything to default except for the name and then hit <code>Deploy</code> button.</li>
+</ul>
+
+<p><img src="gke06.png" alt="gke06" />
+ <img src="gke07.png" alt="gke07" /></p>
+
+<ul>
+<li>It may take some time for the cluster to get fully set up.</li>
+</ul>
+
+<p><img src="gke08.png" alt="gke08" /></p>
+
+<ul>
+<li><p>Recall the system level diagram.</p>
+
+<p><img src="kubernetes_cluster.svg" alt="kubernetes_cluster" />
+<div style="text-align: right"> Source: <a href="https://www.gstatic.com/pantheon/images/container/kubernetes_cluster.svg">https://www.gstatic.com/pantheon/images/container/kubernetes_cluster.svg</a> </div></p></li>
+
+<li><p>Once the cluster is set up, we can investigate its properties.</p></li>
+</ul>
+
+<p><img src="gke09.png" alt="gke09" /></p>
+
+<p><img src="gke10.png" alt="gke10" /></p>
+
+<p><img src="gke11.png" alt="gke11" /></p>
+
+<p><img src="gke12.png" alt="gke12" /></p>
+
+<ul>
+<li>Just as we did in the local deployment, we will expose the cluster to be able to trigger prediction requests. We can do that by going to the Workload tab and clicking on the cluster.</li>
+</ul>
+
+<p><img src="gke13.png" alt="gke13" /></p>
+
+<ul>
+<li>We will next click on the <code>expose</code> button to the far right.</li>
+</ul>
+
+<p><img src="gke14.png" alt="gke14" /></p>
+
+<ul>
+<li>We will specify the container port as 80 (if you look at recommend.py we have specified port 80 where the flask app listens to requests).</li>
+</ul>
+
+<p><img src="gke15.png" alt="gke15" /></p>
+
+<ul>
+<li>Once the service is running, we can obtain the external IP.</li>
+</ul>
+
+<p><img src="gke16.png" alt="gke16" /></p>
+
+<ul>
+<li>As expected, if we query without a payload we get a default response.</li>
+</ul>
+
+<p><img src="gke_browser1.png" alt="gke_browser1" /></p>
+
+<ul>
+<li>With an example payload, we are able to retrieve the recommendations from real-time execution of the pytorch model.</li>
+</ul>
+
+<p><img src="gke_browser2.png" alt="gke_browser2" /></p>
+
+<ul>
+<li>To tear down the cluster, we first delete the service.</li>
+</ul>
+
+<p><img src="teardown_service1.png" alt="teardown_service1" /></p>
+
+<p><img src="teardown_service2.png" alt="teardown_service2" /></p>
+
+<p><img src="teardown_service3.png" alt="teardown_service3" /></p>
+
+<ul>
+<li>Finally, we can delete the workload itself.</li>
+</ul>
+
+<p><img src="teardown_workload1.png" alt="teardown_workload1" />
+<img src="teardown_workload2.png" alt="teardown_workload2" /></p>
+
+<ul>
+<li>As a next exercise, try to create an explicit K8s cluster  and deploy the prediction model.</li>
 </ul>
 
 
@@ -2187,6 +2403,41 @@
             
                 
                     
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -2206,9 +2457,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -2278,10 +2526,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture4/kubernetes/" title="Kubernetes"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture5/" title="Lecture 5" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture4/exercises/" title="Exercises" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

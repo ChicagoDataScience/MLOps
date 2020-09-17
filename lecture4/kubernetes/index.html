@@ -819,7 +819,28 @@
     
       <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item active">
         <a href="/MLOps/lecture4/kubernetes/">
-        <b>5. </b>Kubernetes
+        <b>1. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/modelkube/">
+        <b>2. </b>Model Serving using Kubernetes
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -840,7 +861,28 @@
     
       <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
         <a href="/MLOps/lecture4/gke/">
-        <b>6. </b>Orchestration using GKE
+        <b>3. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture4/exercises/">
+        <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -1005,7 +1047,30 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#nodes-and-pods">Nodes and Pods</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#scaling-and-updating">Scaling and Updating</a></li>
+</ul></li>
+<li><a href="#installing-kubectl-minikube-virtualbox-and-docker">Installing kubectl, minikube, Virtualbox and Docker</a>
+<ul>
+<li><a href="#virtualbox">Virtualbox</a></li>
+<li><a href="#kubectl">Kubectl</a></li>
+<li><a href="#minikube">Minikube</a></li>
+</ul></li>
+<li><a href="#weather-service-app">Weather Service App</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -1029,7 +1094,394 @@
 
 
 
-<p>TBD</p>
+
+
+<p><em>Caveat: Unless we have a truly massive or complex system, we probably don’t need Kubernetes, and using it should be the result of a deliberate cost benefit analysis in comparison to other hosted solutions or managed solutions.</em></p>
+
+<h3 id="introduction">Introduction</h3>
+
+<ul>
+<li><a href="https://kubernetes.io/">Kubernetes</a> is an open-source system for automating deployment, scaling, and management of containerized applications.</li>
+<li>It was open-sourced by Google. Its predecessor was called <code>borg</code> internally.</li>
+<li>Kubernetes, or K8s for short, is a central orchestration system in large complex software systems.</li>
+<li>It coordinates a collection or cluster of computers with the purpose of working as a single unit.</li>
+<li>When we orchestrate containers with it, we are agnostic to which computer runs which container.</li>
+
+<li><p>K8s takes care of scheduling and distribution of containers to these <em>unnamed</em> computers behind the scenes.</p></li>
+
+<li><p>We will primarily be interested in ML model deployment.</p></li>
+
+<li><p>Lets start by going over some of the key concepts in the K8s container orchestration system below. For more information, have a look at the basics documented at <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/">https://kubernetes.io/docs/tutorials/kubernetes-basics/</a> and go from there.</p></li>
+
+<li><p>A K8s cluster has two resources:</p>
+
+<ul>
+<li>Master: coordinator of the cluster</li>
+<li>Nodes: workers are essentially VMs or computers that run containers.</li>
+</ul>
+
+<p><img src="k8s1.svg" alt="k8s1" />
+<div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/create-cluster/cluster-intro/</a> </div></p></li>
+
+<li><p>Each node runs <code>kubelet</code> that manages it and communicated with the master. It also runs Docker daemon (or other technologies) to manage containers.</p></li>
+
+<li><p>The deploy sequence essentially involves the following:</p>
+
+<ul>
+<li><code>kubectl</code> tells the master to start application containers.</li>
+<li>Master schedules containers to run.</li>
+</ul></li>
+</ul>
+
+<h4 id="deployment">Deployment</h4>
+
+<ul>
+<li>Once we have a cluster running, we can deploy containerized applications (one or many) using a <em>Deployment</em> configuration.</li>
+<li>We can think of this as a set of instructions to K8s to set up the application on the cluster. Essentially, the containers are mapped to individual nodes.</li>
+
+<li><p>After the mapping, a <em>Deployment Controller</em> keeps checking these instances allowing for <strong>self-healing</strong>.</p>
+
+<p><img src="module_02_first_app.svg" alt="module_02_first_app" />
+<div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/</a> </div></p></li>
+
+<li><p>We create a deployment using a tool such as <code>kubectl</code> that uses an API to interact with the Master.</p></li>
+
+<li><p>When creating a deployment, we need to specify container images as well as the number of copies of each image we want to instantiate.</p></li>
+</ul>
+
+<h4 id="nodes-and-pods">Nodes and Pods</h4>
+
+<ul>
+<li>When an app is deployed as a container, it is encapsulated in a pod on a specific node.</li>
+<li>A pod is a collection of containers that share a few things (see below) and are typically related to each other.
+
+<ul>
+<li>Storage</li>
+<li>Networking and IP address</li>
+</ul></li>
+<li>These related containers can be a web server and a database for instance.</li>
+<li>We can also have a single container in a pod (this is what we will do here).</li>
+<li>Pods are the most basic unit in K8s. It is pods that are created and destroyed, not individual containers.</li>
+</ul>
+
+<p><img src="module_03_pods.svg" alt="module_03_pods" style="width:800px;"/>
+    <div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/</a> </div></p>
+
+<ul>
+<li>A node is essentially a VM/machine and can have multiple pods (depending on how K8s schedules pods). A node runs:
+
+<ul>
+<li>Kubelet: a program that communicates between the master and the node and manages the pods on the node.</li>
+<li>Docker daemon (or equivalent) for pulling and running containers from images.</li>
+</ul></li>
+</ul>
+
+<p><img src="module_03_nodes.svg" alt="module_03_nodes" style="width:400px;"/>
+    <div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/</a> </div></p>
+
+<h4 id="services">Services</h4>
+
+<blockquote>
+<p>A Kubernetes Service is an abstraction layer which defines a logical set of Pods and enables external traffic exposure, load balancing and service discovery for those Pods.
+    <div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/</a> </div></p>
+</blockquote>
+
+<ul>
+<li>It enables coupling between pods (each of which have a unique IP).</li>
+<li>The pods with IPs cannot be typically accessed from the outside. Instead, a service can be used to allow external connections.</li>
+
+<li><p>For example, a service with a <em>spec</em> that says <code>NodePort</code> exposed pods on the same port of each selected node in the cluster using NAT (Network Address Translation). We will see an example while deploying our model.</p>
+
+<p><img src="module_04_services.svg" alt="module_04_services" />
+<div style="text-align: right"> Source: <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/</a> </div></p></li>
+
+<li><p>The Service abstraction lets pods get deleted and replicated in the cluster with no influence on our app.</p></li>
+
+<li><p>A set of pods are matched to a service using labels and selectors. See <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/expose/expose-intro/</a> for more information.</p></li>
+</ul>
+
+<h4 id="scaling-and-updating">Scaling and Updating</h4>
+
+<ul>
+<li><p>See <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/scale/scale-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/scale/scale-intro/</a> for how an app can scale.</p></li>
+
+<li><p>See <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/">https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/</a> for information on how to perform a <em>rolling update</em>.</p></li>
+</ul>
+
+<h3 id="installing-kubectl-minikube-virtualbox-and-docker">Installing kubectl, minikube, Virtualbox and Docker</h3>
+
+<ul>
+<li>We have already installed Docker for Desktop.</li>
+</ul>
+
+<h4 id="virtualbox">Virtualbox</h4>
+
+<ul>
+<li><p>Virtualbox is a software product for running virtual machines on a variety of host operating systems (MacOS/Windows/Linux).</p></li>
+
+<li><p>Go to <a href="https://www.virtualbox.org/">https://www.virtualbox.org/</a> and download the installer for your OS. The installation is straightforward.</p></li>
+
+<li><p>Once installed, try to download a Linux distribution such as <a href="https://www.debian.org/">Debian</a> or <a href="https://getfedora.org/">Fedora</a> to try out how Virtualbox works.</p></li>
+</ul>
+
+<p><img src="virtualbox.png" alt="virtualbox" /></p>
+
+<h4 id="kubectl">Kubectl</h4>
+
+<ul>
+<li><p><code>kubectl</code> is a client utility to talk to the the K8s server for container orchestration.</p></li>
+
+<li><p>Download <code>kubectl</code> from <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">this page</a>. Here is the example command for MacOS:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ curl -LO &quot;https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl&quot;
+</code></pre></li>
+
+<li><p>Change its permissions to make it executable and move it to a place where it can be on the <code>$PATH</code>. Check whether you can access it by querying its version information.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ ls -l
+total 96696
+-rw-r--r--  1 theja  staff  49458208 Sep 15 21:18 kubectl
+(datasci-dev) ttmac:k8s theja$ chmod +x kubectl
+(datasci-dev) ttmac:k8s theja$ mv kubectl ~/Library/local/bin/
+(datasci-dev) ttmac:k8s theja$ kubectl version --client
+Client Version: version.Info{Major:&quot;1&quot;, Minor:&quot;19&quot;, GitVersion:&quot;v1.19.1&quot;, GitCommit:&quot;206bcadf021e76c27513500ca24182692aabd17e&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-09-09T11:26:42Z&quot;, GoVersion:&quot;go1.15&quot;, Compiler:&quot;gc&quot;, Platform:&quot;darwin/amd64&quot;}
+</code></pre></li>
+</ul>
+
+<h4 id="minikube">Minikube</h4>
+
+<ul>
+<li><p>Minikube (<code>minikube</code>) is a tool that runs a single node K8s cluster in a virtual machine on our local computer. In particular, Minikube is a lightweight K8s implementation that creates a VM on your local machine and deploys a simple cluster containing only one node.</p></li>
+
+<li><p>Follow the instructions for your operating system at <a href="https://kubernetes.io/docs/tasks/tools/install-minikube/">https://kubernetes.io/docs/tasks/tools/install-minikube/</a>. For instance, to install it on MacOS, we do the following.</p></li>
+
+<li><p>We check if virtualization is supported. If we run the following command from the terminal, we expect the <code>VMX</code> acronym to be colored:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ sysctl -a | grep -E --color 'machdep.cpu.features|VMX'
+machdep.cpu.features: FPU VME DE PSE TSC MSR PAE MCE CX8 APIC SEP MTRR PGE MCA CMOV PAT PSE36 CLFSH DS ACPI MMX FXSR SSE SSE2 SS HTT TM PBE SSE3 PCLMULQDQ DTES64 MON DSCPL VMX EST TM2 SSSE3 CX16 TPR PDCM SSE4.1 SSE4.2 x2APIC POPCNT AES PCID XSAVE OSXSAVE TSCTMR AVX1.0 RDRAND F16C
+</code></pre></li>
+
+<li><p>We will download the stand-alone binary just as we did for <code>kubectl</code> and move it to the right path:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                             Dload  Upload   Total   Spent    Left  Speed
+100 55.5M  100 55.5M    0     0  10.9M      0  0:00:05  0:00:05 --:--:-- 11.7M
+(datasci-dev) ttmac:k8s theja$ chmod +x minikube
+(datasci-dev) ttmac:k8s theja$ mv minikube ~/Library/local/bin/
+</code></pre></li>
+
+<li><p>Check that its on the path and working correctly by using the following status check:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ minikube status
+🤷  There is no local cluster named &quot;minikube&quot;
+👉  To fix this, run: &quot;minikube start&quot;
+(datasci-dev) ttmac:k8s theja$ minikube version
+minikube version: v1.13.0
+commit: 0c5e9de4ca6f9c55147ae7f90af97eff5befef5f-dirty
+</code></pre></li>
+</ul>
+
+<h3 id="weather-service-app">Weather Service App</h3>
+
+<ul>
+<li><p>We will run the simple weather service application on K8s using Minikube. It will involve building a Docker image of the flask app, similar to before.</p></li>
+
+<li><p>The single node cluster can be started with the following command:</p>
+
+<pre><code class="language-bash">minikube start
+</code></pre></li>
+</ul>
+
+<p>You will see the following blurb which ends with &lsquo;Done! kubectl is now configured to use minikube by default&rsquo; the first time you run it. You can stop minikube using <code>minikube stop</code> after the whole exercise is done.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ minikube start
+😄  minikube v1.13.0 on Darwin 10.14.6
+✨  Automatically selected the hyperkit driver
+💾  Downloading driver docker-machine-driver-hyperkit:
+    &gt; docker-machine-driver-hyperkit.sha256: 65 B / 65 B [---] 100.00% ? p/s 0s
+    &gt; docker-machine-driver-hyperkit: 10.90 MiB / 10.90 MiB  100.00% 7.97 MiB p
+🔑  The 'hyperkit' driver requires elevated permissions. The following commands will be executed:
+
+    $ sudo chown root:wheel /Users/theja/.minikube/bin/docker-machine-driver-hyperkit
+    $ sudo chmod u+s /Users/theja/.minikube/bin/docker-machine-driver-hyperkit
+
+
+Password:
+💿  Downloading VM boot image ...
+    &gt; minikube-v1.13.0.iso.sha256: 65 B / 65 B [-------------] 100.00% ? p/s 0s
+    &gt; minikube-v1.13.0.iso: 173.73 MiB / 173.73 MiB [ 100.00% 11.61 MiB p/s 15s
+👍  Starting control plane node minikube in cluster minikube
+💾  Downloading Kubernetes v1.19.0 preload ...
+    &gt; preloaded-images-k8s-v6-v1.19.0-docker-overlay2-amd64.tar.lz4: 486.28 MiB
+🔥  Creating hyperkit VM (CPUs=2, Memory=4000MB, Disk=20000MB) ...
+🐳  Preparing Kubernetes v1.19.0 on Docker 19.03.12 ...
+🔎  Verifying Kubernetes components...
+🌟  Enabled addons: default-storageclass, storage-provisioner
+🏄  Done! kubectl is now configured to use &quot;minikube&quot; by default
+</code></pre>
+
+<ul>
+<li><p>If you run the status command, you should see the following:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+</code></pre></li>
+
+<li><p>We can also query the nodes (we only have one) and more information about them as below:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:k8s theja$ kubectl get nodes
+NAME       STATUS   ROLES    AGE    VERSION
+minikube   Ready    master   131m   v1.19.0
+(datasci-dev) ttmac:k8s theja$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   140m
+</code></pre></li>
+
+<li><p>Although we have the weather_service image (can be viewed by using the <code>docker images</code> command as long as the Docker daemon is running) in our local repository, we need to access and use the repository specific to Minikube. This can be done using the following two commands:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ minikube docker-env
+(datasci-dev) ttmac:docker-weather-service theja$ eval $(minikube -p minikube docker-env)
+</code></pre></li>
+
+<li><p>Now if we build the same weather service flask app (recall the corresponding Dockerfile and weather.py from before). This time, we will give a slightly different repository name.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ docker build -t weather-service-k8s/latest .
+</code></pre></li>
+
+<li><p>The newly created repository is now available in the minikube specific image repository (notice the other images for instance):</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ docker images
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+weather-service-k8s/latest                latest              ae4f44a22535        11 seconds ago      496MB
+debian                                    buster-slim         052664ad4351        6 days ago          69.2MB
+gcr.io/k8s-minikube/storage-provisioner   v3                  bad58561c4be        2 weeks ago         29.7MB
+k8s.gcr.io/kube-proxy                     v1.19.0             bc9c328f379c        2 weeks ago         118MB
+k8s.gcr.io/kube-apiserver                 v1.19.0             1b74e93ece2f        2 weeks ago         119MB
+k8s.gcr.io/kube-controller-manager        v1.19.0             09d665d529d0        2 weeks ago         111MB
+k8s.gcr.io/kube-scheduler                 v1.19.0             cbdc8369d8b1        2 weeks ago         45.7MB
+k8s.gcr.io/etcd                           3.4.9-1             d4ca8726196c        2 months ago        253MB
+kubernetesui/dashboard                    v2.0.3              503bc4b7440b        2 months ago        225MB
+k8s.gcr.io/coredns                        1.7.0               bfe3a36ebd25        3 months ago        45.2MB
+kubernetesui/metrics-scraper              v1.0.4              86262685d9ab        5 months ago        36.9MB
+k8s.gcr.io/pause                          3.2                 80d28bedfe5d        7 months ago        683kB
+</code></pre></li>
+
+<li><p>Although there is a local image, we need to set a specific parameter to make kubectl not search for the image elsewhere. In order to do so, we create the following yaml (a data-serialization language thats quite popular to set config parameters and is very tab/space sensitive). See <a href="https://en.wikipedia.org/wiki/YAML">https://en.wikipedia.org/wiki/YAML</a> for more info on yaml files.</p></li>
+
+<li><p>The yaml was generated automatically by running the following command and then modified by adding the line <code>imagePullPolicy: Never</code>:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ kubectl create deployment weather-minikube --image=weather-service-k8s:latest -o yaml --dry-run=client
+</code></pre>
+
+<pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+creationTimestamp: null
+labels:
+app: weather-minikube
+name: weather-minikube
+spec:
+replicas: 1
+selector:
+matchLabels:
+  app: weather-minikube
+strategy: {}
+template:
+metadata:
+  creationTimestamp: null
+  labels:
+    app: weather-minikube
+spec:
+  containers:
+  - image: weather-service-k8s/latest:latest
+    name: weather-service-k8s
+    resources: {}
+    imagePullPolicy: Never
+status: {}
+</code></pre></li>
+
+<li><p>Save the above in a file called. <code>weather_minikube.yaml</code>. Next we create a new deployment using the minikube cluster.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ kubectl apply -f weather_minikube.yaml
+deployment.apps/weather-minikube created
+(datasci-dev) ttmac:docker-weather-service theja$ kubectl get all
+NAME                                   READY   STATUS         RESTARTS   AGE
+pod/weather-minikube-56fd45dd59-zkmmg   1/1     Running   0          71s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        443/TCP   160m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/weather-minikube   1/1     1            1           71s
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/weather-minikube-76cb958c4   1         1         1       71s
+</code></pre></li>
+
+<li><p>Next, we will expose this deployment. The option <code>--type=NodePort</code> specifies the type of the Service.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ kubectl expose deployment weather-minikube --type=NodePort --port=5000
+service/weather-minikube exposed
+</code></pre></li>
+
+<li><p>We can check that the container is in fact running fine using the following command:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ kubectl get pod
+NAME                                READY   STATUS    RESTARTS   AGE
+weather-minikube-56fd45dd59-zkmmg   1/1     Running   0          171m
+</code></pre></li>
+
+<li><p>Once we have verified that the container is running, we can figure out the URL that is being exposed by the system as follows:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ minikube service weather-minikube --url
+http://192.168.64.2:32233
+</code></pre></li>
+
+<li><p>We can then access the weather service flask app from the browser and make sure that it works with a few test examples:</p></li>
+</ul>
+
+<p><img src="container_browser_local.png" alt="container_browser_local" /></p>
+
+<ul>
+<li><p>We may have to debug our container for various reasons. For instance, it can throw up 500 errors, which correspond to internal server errors due to errors in the python function attached to a URL route in Flask. There are a couple of options:</p>
+
+<ul>
+<li><p>We can look at the logs (the last argument is the pod name and it has a single container in our example):</p>
+
+<pre><code class="language-bash">kubectl logs weather-minikube-56fd45dd59-zkmmg
+</code></pre></li>
+
+<li><p>We can access the container shell (assuming it has <code>bash</code> at the appropriate path) by referencing the pod name and try to see which commands are not working:</p>
+
+<pre><code class="language-bash">kubectl exec --stdin --tty weather-minikube-56fd45dd59-zkmmg -- /bin/bash
+</code></pre></li>
+
+<li><p>Finally, the command <code>kubectl describe</code> also helps in debugging by showing us detailed information associated with any resource.</p></li>
+</ul></li>
+
+<li><p>Teardown involves the following commands:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ kubectl delete services weather-minikube
+service &quot;weather-minikube&quot; deleted
+(datasci-dev) ttmac:docker-weather-service theja$ kubectl delete deployment weather-minikube
+deployment.apps &quot;weather-minikube&quot; deleted
+</code></pre></li>
+
+<li><p>We can then stop and delete the minikube cluster using the <code>minikube stop</code> and <code>minikube delete</code> commands:</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:docker-weather-service theja$ minikube stop
+✋  Stopping node &quot;minikube&quot;  ...
+🛑  1 nodes stopped.
+</code></pre></li>
+
+<li><p>Finally, you can delete the cluster using the command <code>minikube delete</code>.</p></li>
+</ul>
 
 
 <footer class="footline">
@@ -2171,6 +2623,38 @@
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -2250,7 +2734,7 @@
 			<a class="nav nav-prev" href="/MLOps/lecture4/" title="Lecture 4"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture4/gke/" title="Orchestration using GKE" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

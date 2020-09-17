@@ -77,13 +77,12 @@ Weather Reporting Service The key thing to see here are that the HTTP route / is
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</guid>
-      <description> Deploy model on Heroku.
+      <description>Deploy model on Heroku.
  Set up your custom domain to point to your VPS.
  Repeat the setup on AWS, GCP, DigitalOcean or any other VPS of your choice.
  Read the documentation for flask, mlflow, pytorch, surprise, pandas.
  Replace Flask with Django and Starlette.
- Read up about function decorators in Python.
-  </description>
+ Read up about function decorators in Python (see here and here for instance). Function decorators add functionality to an existing function, and are an example of metaprogramming.</description>
     </item>
     
   </channel>

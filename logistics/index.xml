@@ -27,7 +27,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/logistics/schedule/</guid>
-      <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers  Ref Chapter 2  Lecture 2: Serving ML Models Using Serverless Infrastructure  Ref Chapter 3  Lecture 3: Serving ML Models Using Docker  Ref Chapter 4, upto 4.</description>
+      <description>Textbook  Data Science in Production by Ben Weber (2020, $5 for the ebook/pdf). A sample of the first three chapters is available at the publishers page linked here.  Lecture Schedule Lecture 1: Serving ML Models Using Web Servers Reference: Chapter 2  Learning Goals:  Be able to set up a Python environment Be able to set up a jupyter session with SSH tunneling Be able to secure a web server Be able to use Flask to serve a ML model   Lecture 2: Serving ML Models Using Serverless Infrastructure Reference: Chapter 3  Learning Goals:  Be able to differentiate hosted vs managed solutions Assess deops effort for web server vs serverless deployments Be able to deploy a ML model using Google Cloud Functions and AWS Lambda Functions   Lecture 3: Serving ML Models Using Docker Reference: Chapter 4, upto 4.</description>
     </item>
     
     <item>

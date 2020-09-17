@@ -819,7 +819,28 @@
     
       <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
         <a href="/MLOps/lecture4/kubernetes/">
-        <b>5. </b>Kubernetes
+        <b>1. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/modelkube/">
+        <b>2. </b>Model Serving using Kubernetes
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -840,7 +861,28 @@
     
       <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
         <a href="/MLOps/lecture4/gke/">
-        <b>6. </b>Orchestration using GKE
+        <b>3. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture4/exercises/">
+        <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
         </a>
     </li>
@@ -1012,6 +1054,8 @@
 <li>
 <ul>
 <li><a href="#elastic-container-service-ecs">Elastic Container Service (ECS)</a></li>
+<li><a href="#setting-up-a-load-balancer">Setting Up a Load Balancer</a></li>
+<li><a href="#recap-summary-for-ecs">Recap: Summary for ECS</a></li>
 <li><a href="#tear-down-the-ecs-cluster">Tear Down the ECS Cluster</a></li>
 </ul></li>
 </ul></li>
@@ -1138,6 +1182,76 @@ gives the following response.</li>
 </ul>
 
 <p><img src="ecs_status4.png" alt="ecs_status4" /></p>
+
+<h3 id="setting-up-a-load-balancer">Setting Up a Load Balancer</h3>
+
+<ul>
+<li>Directly accessing the IP address (and thus the single container) is not scalable.</li>
+
+<li><p>A Load Balancer will give a static URL and route incoming HTTP(S) requests to ECS tasks managed by an ECS service.</p></li>
+
+<li><p>There are many types of load balancers on AWS, see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/load-balancer-types.html">here</a>. We will use an application load balancer (<a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html">ALB</a>).</p></li>
+
+<li><p>Using the &lsquo;Get Started&rsquo; workflow on ECS is the easiest to set this up to work with the cluster.</p></li>
+</ul>
+
+<p><img src="alb_ecs.png" alt="alb_ecs" /></p>
+
+<ul>
+<li>Otherwise, we can instantiate the same from the EC2 page.</li>
+</ul>
+
+<p><img src="alb_ec2.png" alt="alb_ec2" /></p>
+
+<ul>
+<li><p>The load balancer uses a <a href="https://aws.amazon.com/vpc/">VPC</a> (virtual private cloud, an AWS terminology and service), a security group (who can access our container) and a target group (who to route requests to).</p></li>
+
+<li><p><em>Aside</em>: VPC essentially isolates your computing environment from the external world.</p></li>
+</ul>
+
+<blockquote>
+<p>Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define. You have complete control over your virtual networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways. You can use both IPv4 and IPv6 in your VPC for secure and easy access to resources and applications.</p>
+</blockquote>
+
+<ul>
+<li>The ECS service should use the load balancer as shown below (if we did it using &lsquo;Get Started&rsquo; workflow on ECS).</li>
+</ul>
+
+<p><img src="alb_ecs1.png" alt="alb_ecs1" /></p>
+
+<ul>
+<li><p>We can also add it separately while creating the service (we will skip the details here).</p></li>
+
+<li><p>You can access the public static url by navigating to the load balancer page.</p></li>
+
+<li><p>First click on the load balancer on the service page shown above.</p></li>
+
+<li><p>Then click on the load balancer link to the top right of the page.</p></li>
+</ul>
+
+<p><img src="alb_ecs2.png" alt="alb_ecs2" /></p>
+
+<ul>
+<li>The public URL is the DNS name (the IP itself will be dynamic). You can bind it to your domain (using CNAME records).</li>
+</ul>
+
+<p><img src="alb_ecs3.png" alt="alb_ecs3" /></p>
+
+<h3 id="recap-summary-for-ecs">Recap: Summary for ECS</h3>
+
+<ul>
+<li><p>Since there are a lot of steps involved (as well as quite a few moving parts), its good to revisit what our original goal is.</p></li>
+
+<li><p>Our goal was to set the model prediction/deployment up in such a way that it scales and has no issues with failures.</p></li>
+
+<li><p>The ECS cluster is scalable (we can add more tasks and services easily).</p></li>
+
+<li><p>Further, the ECS service manages these tasks such that even if the underlying EC2 instances that run these containers fail (could be any reason) the task can be restarted on other machines to keep everything running smoothly.</p></li>
+
+<li><p>Finally the load balancer, maps a static external IP to the internal container(s). So if there are multiple model prediction containers, the load balancer will use an algorithm (such as round robin) to distribute the incoming requests.</p></li>
+
+<li><p>While there is a lot more work to set this up unlike the serverless solution, there is more fine grained control and visibility into the components supporting your scalable model deployment effort.</p></li>
+</ul>
 
 <h3 id="tear-down-the-ecs-cluster">Tear Down the ECS Cluster</h3>
 
@@ -2262,6 +2376,38 @@ gives the following response.</li>
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             

@@ -16,7 +16,19 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture4/kubernetes/</guid>
-      <description>TBD</description>
+      <description>Caveat: Unless we have a truly massive or complex system, we probably don’t need Kubernetes, and using it should be the result of a deliberate cost benefit analysis in comparison to other hosted solutions or managed solutions.
+Introduction  Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications. It was open-sourced by Google. Its predecessor was called borg internally. Kubernetes, or K8s for short, is a central orchestration system in large complex software systems.</description>
+    </item>
+    
+    <item>
+      <title>Model Serving using Kubernetes</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture4/modelkube/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture4/modelkube/</guid>
+      <description>This time, instead of the weather app, we will deploy a container containing our recommendation model. Here are the steps.
+ Lets start minicube
+(datasci-dev) ttmac:docker-prediction-service theja$ minikube start 😄 minikube v1.13.0 on Darwin 10.14.6 ▪ MINIKUBE_ACTIVE_DOCKERD=minikube ✨ Using the hyperkit driver based on existing profile 👍 Starting control plane node minikube in cluster minikube 🔄 Restarting existing hyperkit VM for &amp;quot;minikube&amp;quot; ... 🐳 Preparing Kubernetes v1.19.0 on Docker 19.03.12 .</description>
     </item>
     
     <item>
@@ -25,8 +37,22 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture4/gke/</guid>
-      <description> Google Kubernetes Engine by GCP  Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications A container is a basic building block in Kubernetes. Google Kubernetes Engine (GKE) a managed service for running Kubernetes, with key features such as security, scaling and multi-cluster support.  Note: While exploring GKE, keep a tab on billing (check every so often)!
-What we will Study  Kubernetes on Desktop Use GKE (Google Kubernetes Engine) on GCP for deploying the recommendation system  </description>
+      <description>Note: While exploring GKE, keep a tab on billing (check every so often)!
+Introduction to Google Kubernetes Engine by GCP  Google Kubernetes Engine (GKE) by GCP a managed service for running K8s, with key features such as security, scaling and multi-cluster support taken care of as part of K8s on their infrastructure.
+ GKE&amp;rsquo;s operation is very similar to ECS.
+ Our goal will be to use GKE for deploying our recommendation system (the ML model we have been using).</description>
+    </item>
+    
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture4/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture4/exercises/</guid>
+      <description>Launch a kubernetes cluster with a single pod/container that loads and serves Jupyter notebooks, and which can be accessed via the browser. The images from https://hub.docker.com/u/jupyter/#! such as https://hub.docker.com/r/jupyter/datascience-notebook can help.
+ Go through the introductory examples from https://k3s.io and from https://microk8s.io/. Both of these allow you to try Kubernetes locally.
+ Try switching to different images such as https://hub.docker.com/_/python/  with minikube.
+ Go through the documentation for Kubernetes and Docker.</description>
     </item>
     
   </channel>

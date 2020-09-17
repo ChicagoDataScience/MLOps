@@ -115,11 +115,15 @@
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture4/gke/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/</loc>
   </url>
   
   <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture4/</loc>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/modelkube/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/gke/</loc>
   </url>
   
   <url>
@@ -148,6 +152,10 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture3/exercises/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture4/exercises/</loc>
   </url>
   
   <url>
