@@ -1,0 +1,3104 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.58.3" />
+    <meta name="description" content="MLOps: Operationalizing Machine Learning">
+<meta name="author" content="Theja Tulabandhula">
+
+    <link rel="shortcut icon" href="/MLOps/images/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" sizes="180x180" href="/MLOps/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
+<link rel="manifest" href="/MLOps/images/site.webmanifest">
+    <title>Cron Jobs :: MLOps: Operationalizing Machine Learning</title>
+
+    
+    <link href="/MLOps/css/nucleus.css" rel="stylesheet">
+    <link href="/MLOps/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/MLOps/css/hybrid.css" rel="stylesheet">
+    <link href="/MLOps/css/featherlight.min.css" rel="stylesheet">
+    <link href="/MLOps/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="/MLOps/css/auto-complete.css" rel="stylesheet">
+    <link href="/MLOps/css/atom-one-dark-reasonable.css" rel="stylesheet">
+    <link href="/MLOps/css/theme.css" rel="stylesheet">
+    <link href="/MLOps/css/hugo-theme.css" rel="stylesheet">
+    
+      <link href="/MLOps/css/theme-blue.css" rel="stylesheet">
+    
+
+    <script src="/MLOps/js/jquery-3.3.1.min.js"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/MLOps/lecture5/cron/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a href="/MLOps/"> <img src="/MLOps/images/logo.png" alt="MLOps"></a>
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/MLOps/js/lunr.min.js"></script>
+<script type="text/javascript" src="/MLOps/js/auto-complete.js"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/chicagodatascience.github.io\/MLOps\/";
+    
+</script>
+<script type="text/javascript" src="/MLOps/js/search.js"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/logistics/">
+          <b> </b>Course Logistics
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item ">
+        <a href="/MLOps/logistics/online_technology_requirements/">
+        Online Learning Details
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/schedule/" title="Schedule" class="dd-item ">
+        <a href="/MLOps/logistics/schedule/">
+        <b> </b>Schedule
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/project_instructions/" title="Project" class="dd-item ">
+        <a href="/MLOps/logistics/project_instructions/">
+        <b> </b>Project
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture1/">
+          <b> </b>Lecture 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/intro/" title="Basics" class="dd-item ">
+        <a href="/MLOps/lecture1/intro/">
+        <b> 1. </b>Basics
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/ssh_and_firewall/" title="SSH and Firewall" class="dd-item ">
+        <a href="/MLOps/lecture1/ssh_and_firewall/">
+        <b> 2. </b>SSH and Firewall
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/conda/" title="Setting up Python" class="dd-item ">
+        <a href="/MLOps/lecture1/conda/">
+        <b> 3. </b>Setting up Python
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/jupyter/" title="Remote Jupyter Server" class="dd-item ">
+        <a href="/MLOps/lecture1/jupyter/">
+        <b> 4. </b>Remote Jupyter Server
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture1/recommendation_model/">
+          <b>5. </b>Recommendation Models
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_training/" title="Recommendation (SVD) Training" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/surprise_training/">
+        <b> </b>Recommendation (SVD) Training
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_inference/" title="Recommendation (SVD) Inference" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/surprise_inference/">
+        <b> </b>Recommendation (SVD) Inference
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_training/" title="Recommendation (Pytorch) Training" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/pytorch_training/">
+        <b> </b>Recommendation (Pytorch) Training
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_inference/" title="Recommendation (Pytorch) Inference" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/pytorch_inference/">
+        <b> </b>Recommendation (Pytorch) Inference
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/deploy_webserver/" title="Serving ML Models Using Web Servers" class="dd-item ">
+        <a href="/MLOps/lecture1/deploy_webserver/">
+        <b> 6. </b>Serving ML Models Using Web Servers
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/flask/" title="Flask App" class="dd-item ">
+        <a href="/MLOps/lecture1/flask/">
+        <b> 7. </b>Flask App
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture1/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture2/">
+          <b> </b>Lecture 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/serverless/" title="Serverless Deployments" class="dd-item ">
+        <a href="/MLOps/lecture2/serverless/">
+        <b>1. </b>Serverless Deployments
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions/" title="Cloud Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions/">
+        <b>2. </b>Cloud Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions_model/">
+        <b>3. </b>GCP Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions/" title="Lambda Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions/">
+        <b>4. </b>Lambda Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions_model/">
+        <b>5. </b>AWS Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture2/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture3/">
+          <b> </b>Lecture 3
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/intro/" title="Introduction" class="dd-item ">
+        <a href="/MLOps/lecture3/intro/">
+        <b>1. </b>Introduction
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/docker/" title="Docker" class="dd-item ">
+        <a href="/MLOps/lecture3/docker/">
+        <b>2. </b>Docker
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecr/" title="Orchestration using ECS and ECR - Part I" class="dd-item ">
+        <a href="/MLOps/lecture3/ecr/">
+        <b>3. </b>Orchestration using ECS and ECR - Part I
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR - Part II" class="dd-item ">
+        <a href="/MLOps/lecture3/ecs/">
+        <b>4. </b>Orchestration using ECS and ECR - Part II
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture3/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture4/" title="Lecture 4" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture4/">
+          <b> </b>Lecture 4
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/kubernetes/">
+        <b>1. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/modelkube/">
+        <b>2. </b>Model Serving using Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
+        <a href="/MLOps/lecture4/gke/">
+        <b>3. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture4/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture5/" title="Lecture 5" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/MLOps/lecture5/">
+          <b> </b>Lecture 5
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/workflow/" title="Data Science Workflows" class="dd-item ">
+        <a href="/MLOps/lecture5/workflow/">
+        <b>1. </b>Data Science Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/simple_pipeline/" title="Training Workflows" class="dd-item ">
+        <a href="/MLOps/lecture5/simple_pipeline/">
+        <b>2. </b>Training Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/cron/" title="Cron Jobs" class="dd-item active">
+        <a href="/MLOps/lecture5/cron/">
+        <b>3. </b>Cron Jobs
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/airflow/" title="Apache Airflow" class="dd-item ">
+        <a href="/MLOps/lecture5/airflow/">
+        <b>4. </b>Apache Airflow
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture5/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture6/" title="Lecture 6" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture6/">
+          <b> </b>Lecture 6
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture7/" title="Lecture 7" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture7/">
+          <b> </b>Lecture 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture8/" title="Lecture 8" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture8/">
+          <b> </b>Lecture 8
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    <section id="footer">
+      
+
+
+
+<i class='fab fa-fw fa-github'></i> <a href="https://github.com/chicagodatascience/MLOps/"> GitHub repo</a>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                   Cron Jobs 
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#docker-image-of-the-transient-pipeline">Docker Image of the Transient Pipeline</a></li>
+<li><a href="#cron-1975">Cron (1975-)</a></li>
+<li><a href="#running-cron-on-the-cloud">Running Cron on the Cloud</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Cron Jobs
+            </h1>
+          
+
+        
+
+
+
+
+
+<p><em>Cron expressions will be useful while looking at Apache Airflow scheduling system</em>.</p>
+
+<h3 id="docker-image-of-the-transient-pipeline">Docker Image of the Transient Pipeline</h3>
+
+<ul>
+<li><p>First, we will convert our notebook to a script (reduces dependency on Jupyter, try to find other packages you can get away with not installing). Running the py file locally updates the predictions on BigQuery as expected.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ jupyter nbconvert --to script recommend_lightfm.ipynb
+[NbConvertApp] Converting notebook recommend_lightfm.ipynb to script
+[NbConvertApp] Writing 4718 bytes to recommend_lightfm.py
+(datasci-dev) ttmac:lec05 theja$ python recommend_lightfm.py
+/Users/theja/miniconda3/envs/datasci-dev/lib/python3.7/site-packages/lightfm/_lightfm_fast.py:9: UserWarning: LightFM was compiled without OpenMP support. Only a single thread will be used.
+warnings.warn('LightFM was compiled without OpenMP support. '
+&lt;943x1682 sparse matrix of type '&lt;class 'numpy.int32'&gt;'
+	with 19048 stored elements in COOrdinate format&gt;
+&lt;943x1682 sparse matrix of type '&lt;class 'numpy.int32'&gt;'
+	with 2153 stored elements in COOrdinate format&gt;
+1it [00:03,  3.86s/it]
+</code></pre></li>
+
+<li><p>Second, we will create a simple bash script called <code>run_transient_pipeline.sh</code> which has the following content for ease of use:</p>
+
+<ul>
+<li><p><a href="run_transient_pipeline.sh">Download locally</a></p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+export GOOGLE_APPLICATION_CREDENTIALS=/model-user.json
+python recommend_lightfm.py
+</code></pre></li>
+</ul></li>
+
+<li><p>Next, we will repeat the steps covered in a previous section to quickly build a docker image. For this, we will need a Dockerfile that installs the appropriate dependencies beforehand.</p>
+
+<ul>
+<li><p><a href="Dockerfile">Download locally</a></p>
+
+<pre><code class="language-bash">FROM debian:buster-slim
+
+MAINTAINER Theja Tulabandhula
+
+RUN apt-get update \
+&amp;&amp; apt-get install -y python3-pip python3-dev \
+&amp;&amp; cd /usr/local/bin \
+&amp;&amp; ln -s /usr/bin/python3 python
+
+RUN pip3 install pandas-gbq lightfm==1.15 numpy 
+
+RUN pip3 install google-cloud-core==1.3.0 google-cloud-bigquery==1.20.0
+
+COPY recommend_lightfm.py recommend_lightfm.py
+
+COPY model-user.json model-user.json
+
+COPY run_transient_pipeline.sh run_transient_pipeline.sh
+
+RUN chmod +x run_transient_pipeline.sh
+
+CMD ./run_transient_pipeline.sh
+</code></pre></li>
+</ul></li>
+
+<li><p>We can build the image and then run a container based on this image locally.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ docker image build -t &quot;recommend_pipeline&quot; .
+.
+.
+(truncated output)
+.
+.
+(datasci-dev) ttmac:lec05 theja$ docker images
+REPOSITORY                                                     TAG                 IMAGE ID            CREATED             SIZE
+recommend_pipeline                                             latest              12a25accc725        36 seconds ago      758MB
+(datasci-dev) ttmac:lec05 theja$ docker run recommend_pipeline
+&lt;943x1682 sparse matrix of type '&lt;class 'numpy.int32'&gt;'
+	with 19048 stored elements in COOrdinate format&gt;
+&lt;943x1682 sparse matrix of type '&lt;class 'numpy.int32'&gt;'
+	with 2153 stored elements in COOrdinate format&gt;
+(datasci-dev) ttmac:lec05 theja$
+</code></pre>
+
+<ul>
+<li>Verify through the browser based BigQuery page that the predictions are indeed updated.</li>
+</ul></li>
+</ul>
+
+<h3 id="cron-1975">Cron (1975-)</h3>
+
+<ul>
+<li><p>As described on <a href="https://en.wikipedia.org/wiki/Cron">wikipedia</a>, <code>cron</code> is a command line service/daemon/program for time based scheduling of programs (python scripts in our case). Its present in many UNIX-like OSs including Ubuntu/CentOS etc.</p></li>
+
+<li><p>It is a very useful tool to automate system maintenance (e.g., taking backups) as well as for administration.</p></li>
+
+<li><p>Its name originates from the greek word χρόνος (chronos) meaning time.</p></li>
+
+<li><p>One of the greatest benefits of using cron is that:</p>
+
+<ul>
+<li>it has been widely used for several decades, and</li>
+<li>it is easy to use with limited ways to go wrong.</li>
+</ul></li>
+
+<li><p>The key limitations of using a cron daemon for scheduling include:</p>
+
+<ul>
+<li>can run tasks on a single machine</li>
+<li>OS dependent</li>
+<li>need glue code (python, bash) to work with it</li>
+</ul></li>
+
+<li><p>While cron has its issues with respect to how flexible it is in large scale production environments. But it is a great time-tested utility for individual level automation (e.g., scraping, training models repeatedly as we are planning to do etc).</p></li>
+
+<li><p><code>crontab</code> is the command line utility to set up the task schedule (as a user or by root). The task (our python script) is run on the system where cron itself is present, so it is good to ensure all dependencies and logging are in place.</p></li>
+
+<li><p>The tasks are run according to the privileges of the user who created the schedule.</p></li>
+
+<li><p>We can edit/create a schedule by using the command <code>crontab -e</code> on the commandline (linux/macOS).</p></li>
+
+<li><p>Task schedules are expressed in terms of corn expressions.</p></li>
+
+<li><p>This is a sequence of 5 numbers that tell the scheduler to run your program periodically. Instead of numbers, characters such as <code>*</code>,<code>-</code>,<code>\</code> and <code>,</code> are also used. Lets look at an example expression and understand what it does:</p>
+
+<pre><code class="language-bash">1 2 3 4 5 /path/to/mycommand argument1 argument2
+</code></pre></li>
+
+<li><p>In the above, the first entry is the minute index (varying between 0-59), 2nd is for hour (0-23), 3rd for day of the month (1-31), 4th for month (1-12) and 5th for day of week (0 or 7 is for Sunday).</p></li>
+
+<li><p>If we need to run a job/task as a system service, then the username also features into the task expression. So the above becomes:</p>
+
+<pre><code class="language-bash">1 2 3 4 5 username /path/to/mycommand argument1 argument2
+</code></pre></li>
+
+<li><p>Example 1: To run a task everyday at 12 minutes past 2pm, our specification would be:</p>
+
+<pre><code class="language-bash">12 14 * * * /path/to/mycommand argument1 argument2
+</code></pre></li>
+
+<li><p>Example 2: If you want a task to be run every month at a certain date (say the 5th and 7th days), then the specification would be:</p>
+
+<pre><code class="language-bash">12 14 5,7 * * /path/to/mycommand argument1 argument2
+</code></pre></li>
+
+<li><p>Example 3: If a task needs to be run every two hours after midnight, then:</p>
+
+<pre><code class="language-bash">12 0-23/2 * * * /path/to/mycommand argument1 argument2
+</code></pre></li>
+
+<li><p>In the above, <code>*</code> specifies all possible values for that field. and <code>-</code> spcifies a range. Similarly, <code>/</code> specifies the jump and <code>,</code> specifies a list.</p></li>
+
+<li><p>By default cron will try to email you the outcome of running the command. We can just redirect it to the commandline. For example:</p>
+
+<pre><code class="language-bash">1 2 3 4 5 /path/to/mycommand argument1 argument2 &gt;/dev/null 2&gt;&amp;1
+</code></pre></li>
+
+<li><p>Additional useful commands are:</p>
+
+<ul>
+<li><code>crontab -l</code> to list the current jobs, and</li>
+<li><code>crontab -r</code> to remove all current job specifications.</li>
+</ul></li>
+
+<li><p>System jobs are typically listed in the file <code>/etc/crontab</code> or <code>/etc/cron.d/*</code> folders. For example, if you open a terminal into the recommend_pipeline container and  install cron, you can see the following output:</p>
+
+<pre><code class="language-bash">root@27cf8d2b2681:/# cat /etc/crontab
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+17 *	* * *	root    cd / &amp;&amp; run-parts --report /etc/cron.hourly
+25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.daily )
+47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.weekly )
+52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / &amp;&amp; run-parts --report /etc/cron.monthly )
+#
+</code></pre></li>
+
+<li><p>Here are a couple of useful websites to interpret the expressions: <a href="https://crontab.guru/">https://crontab.guru/</a> and <a href="http://cron.schlitt.info/">http://cron.schlitt.info/</a>. And <a href="https://en.wikipedia.org/wiki/Cron">wikipedia</a> does a good job laying out the details of expression design.</p></li>
+
+<li><p>To get our hands dirty, we can run a simple cron job that appends a word to a file every minute with the specification:</p>
+
+<pre><code class="language-bash">* * * * * echo &quot;hello&quot; &gt;&gt; /Users/theja/cds/mlops/crontest.log
+</code></pre></li>
+
+<li><p>And check that the log file is indeed being written to. (Don&rsquo;t forget to delete the job after checking this.)</p></li>
+
+<li><p>We can run our transient pipeline container (although it is not fetching new data, it is easy to see how it can be integrated with something like BigQuery to read updated training data) every hour using the following entry:</p>
+
+<pre><code class="language-bash"># run every hour on the dot
+0 * * * * docker run recommend_pipeline
+</code></pre></li>
+
+<li><p>Note that an application started via cron has no connected terminal, so printing to terminal does not work. So to check that your job is indeed working, you can write something to disk (such as to a log file).</p></li>
+</ul>
+
+<h3 id="running-cron-on-the-cloud">Running Cron on the Cloud</h3>
+
+<ul>
+<li><p>Cron is provided as a managed option by AWS, Google Cloud and others. We can look at GKE for an example of this.</p></li>
+
+<li><p>Note that the key difference between previous docker images and the image we created above is that the former was a web server (a flask app) that used a pretrained model/predictions, whereas the latter is only focused on training and generating predictions. Both are complimentary to each other. In fact, the previous container can be triggered to update its predictions/model for serving after the transient training pipeline is completed. And this can be done in a periodic manner.</p></li>
+
+<li><p>Lets come back to scheduling the transient training pipeline as a job on GCP.</p></li>
+
+<li><p>To do so, lets repeat the steps to upload our docker image to the container registry. This involves the following steps.</p></li>
+
+<li><p>First we login via docker using our credentials so that docker can push to the Google container registry.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ cat model-user.json | docker login -u _json_key --password-stdin https://us.gcr.io
+Login Succeeded
+</code></pre></li>
+
+<li><p>Next we tag our image appropriately to reflect the registry URL and repository name.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ docker tag recommend_pipeline us.gcr.io/authentic-realm-276822/recommend_pipeline
+(datasci-dev) ttmac:lec05 theja$ docker images
+REPOSITORY                                                     TAG                 IMAGE ID            CREATED             SIZE
+recommend_pipeline                                             latest              12a25accc725        13 hours ago        758MB
+us.gcr.io/authentic-realm-276822/recommend_pipeline            latest              12a25accc725        13 hours ago        758MB
+</code></pre></li>
+
+<li><p>Finally, lets push the image to the container registry. Here is a snapshot when its still uploading.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ docker push us.gcr.io/authentic-realm-276822/recommend_pipeline
+The push refers to repository [us.gcr.io/authentic-realm-276822/recommend_pipeline]
+4e9c256172e5: Pushed
+8f8a170d6a46: Pushed
+d84f1396f776: Pushed
+ae965efd348c: Pushed
+0978afbb1068: Pushed
+3c1ec82efa99: Pushing [&gt;                                                  ]  3.315MB/269.1MB
+21b00e3fe1bb: Pushing [&gt;                                                  ]  8.079MB/418.4MB
+d0f104dc0a1f: Layer already exists
+</code></pre></li>
+
+<li><p>And here is the final result.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:lec05 theja$ docker push us.gcr.io/authentic-realm-276822/recommend_pipeline
+The push refers to repository [us.gcr.io/authentic-realm-276822/recommend_pipeline]
+4e9c256172e5: Pushed
+8f8a170d6a46: Pushed
+d84f1396f776: Pushed
+ae965efd348c: Pushed
+0978afbb1068: Pushed
+3c1ec82efa99: Pushed
+21b00e3fe1bb: Pushed
+d0f104dc0a1f: Layer already exists
+latest: digest: sha256:9df0d99623e6408d187736c2b82a748ed30eeb773dffb70dfffe03aaa7113173 size: 1995
+</code></pre></li>
+
+<li><p>We can verify that the container is uploaded by checking the container registry page in the browser.</p></li>
+</ul>
+
+<p><img src="gcr1.png" alt="gcr1" /></p>
+
+<ul>
+<li>We will need the image URL shown below.</li>
+</ul>
+
+<p><img src="gcr2.png" alt="gcr2" /></p>
+
+<ul>
+<li>More details about this image are available once you click on the image id. We will not be needing this information further, but its a good practice to check it (you can also see how to pull or deploy the image directly from this page).</li>
+</ul>
+
+<p><img src="gcr3.png" alt="gcr3" /></p>
+
+<ul>
+<li><p>We will now use K8s (GKE) to schedule the image to run periodically.</p></li>
+
+<li><p>Note that we are not triggering the python script to run periodically, but creating a new container every time.</p></li>
+
+<li><p>This container is downloading the same data in our running example (but it is conceivable how it can be modified to use updated training data).</p>
+
+<ul>
+<li>Hint: there is no need to modify the image in our example. We only need to have updated data at the URL from which the data is being read.</li>
+</ul></li>
+
+<li><p>Lets set up a K8s cluster next. Navigate to the GKE page.</p></li>
+</ul>
+
+<p><img src="cluster1.png" alt="cluster1" /></p>
+
+<ul>
+<li>Click &lsquo;create a cluster&rsquo;.</li>
+</ul>
+
+<p><img src="cluster2.png" alt="cluster2" /></p>
+
+<ul>
+<li>We will choose the &lsquo;cluster setup guide&rsquo; option on the right and choose &lsquo;my first cluster&rsquo; (this uses lower end underlying machines). We can see the spec below.</li>
+</ul>
+
+<p><img src="cluster3.png" alt="cluster3" /></p>
+
+<ul>
+<li>Once the cluster is created, we can view it in the GKE homepage.</li>
+</ul>
+
+<p><img src="cluster4.png" alt="cluster4" /></p>
+
+<ul>
+<li><p>We will use <code>kubectl</code> to manage this cluster (just like we managed the <code>minikube</code> single node cluster).</p></li>
+
+<li><p>In particular, we will create a YAML file which will have cron scheduling instructions.</p></li>
+
+<li><p>Lets connect to the cluster on the homepage. We can get information of how to connect bu clicking the connect link.</p></li>
+</ul>
+
+<p><img src="connect1.png" alt="connect" /></p>
+
+<ul>
+<li>Lets choose the &lsquo;Run in cloud shell&rsquo; option.</li>
+</ul>
+
+<p><img src="connect2.png" alt="connect" /></p>
+
+<ul>
+<li>If its the first time, it will instantiate a machine to run the shell.</li>
+</ul>
+
+<p><img src="cloudshell1.png" alt="cloudshell1" /></p>
+
+<ul>
+<li>Once instantiated, it will show the command we wanted to run to be able to start using the <code>kubectl</code> utility to deploy our recommend_pipeline image.</li>
+</ul>
+
+<p><img src="cloudshell2.png" alt="cloudshell2" /></p>
+
+<ul>
+<li>You may run into an authorization issue (gcloud utility does not have the credentials on this machine to access any of the cloud services in our account).</li>
+</ul>
+
+<p><img src="authorize1.png" alt="authorize1" /></p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ gcloud container clusters get-credentials my-first-cluster-1 --zone us-central1-c -
+-project authentic-realm-276822
+ERROR: (gcloud.container.clusters.get-credentials) You do not currently have an active account selected.
+Please run:
+  $ gcloud auth login
+to obtain new credentials.
+If you have already logged in with a different account:
+    $ gcloud config set account ACCOUNT
+to select an already authenticated account to use.
+</code></pre>
+
+<ul>
+<li><p>The cloud shell may then complain about the following when you run <code>gcloud auth login</code>:</p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ gcloud auth login
+Go to the following link in your browser:
+https://accounts.google.com/o/oauth2/auth?client_id=32555940559.apps.googleusercontent.com&amp;redirect_uri=urn%3Aietf%3Awg%3Aoauth%
+3A2.0%3Aoob&amp;scope=openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-pl
+atform+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fappengine.admin+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcompute+https%3A%2F%2Fwww
+.googleapis.com%2Fauth%2Faccounts.reauth&amp;code_challenge=Vb_NeTDzREqrM34Aiv-64YwhY44vnz9ahbu0idZ0gQM&amp;code_challenge_method=S256&amp;acces
+s_type=offline&amp;response_type=code&amp;prompt=select_account
+Enter verification code:
+</code></pre></li>
+
+<li><p>You will use the code generated as below into the cloud shell.</p></li>
+</ul>
+
+<p><img src="authorize2.png" alt="authorize2" /></p>
+
+<ul>
+<li><p>Once entered, you will see the following success message:</p>
+
+<pre><code class="language-bash">You are now logged in as [theja4gcp@gmail.com].
+Your current project is [authentic-realm-276822].  You can change this setting by running:
+$ gcloud config set project PROJECT_ID
+</code></pre></li>
+
+<li><p>Lets run the original gcloud command that was trying to get the credentials for <code>my-first-cluster</code> again:</p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ gcloud container clusters get-credentials my-first-cluster-1 --zone us-central1-c -
+-project authentic-realm-276822
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for my-first-cluster-1.
+</code></pre></li>
+
+<li><p>We can check the <code>kubectl</code> version:</p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ kubectl version
+Client Version: version.Info{Major:&quot;1&quot;, Minor:&quot;19&quot;, GitVersion:&quot;v1.19.2&quot;, GitCommit:&quot;f5743093fd1c663cb0cbc89748f730662345d44d&quot;, GitT
+reeState:&quot;clean&quot;, BuildDate:&quot;2020-09-16T13:41:02Z&quot;, GoVersion:&quot;go1.15&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;}
+Server Version: version.Info{Major:&quot;1&quot;, Minor:&quot;18+&quot;, GitVersion:&quot;v1.18.6-gke.3504&quot;, GitCommit:&quot;ebdafa7ed3984f94e1ab914221bf04b62a5cd
+1b8&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2020-09-09T02:49:12Z&quot;, GoVersion:&quot;go1.13.9b4&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;}
+</code></pre></li>
+
+<li><p>Next we will create a yaml file in the current directory (using the <code>vim</code> text editor) in the cloud shell. The file contents are shown below.</p>
+
+<pre><code class="language-bash">apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+name: recommend-pipeline-deployment
+spec:
+schedule: &quot;* * * * *&quot;
+jobTemplate:
+spec:
+  template:
+    spec:
+      containers:
+      - name: recommend-pipeline
+        image: us.gcr.io/authentic-realm-276822/recommend_pipeline
+      restartPolicy: OnFailure
+</code></pre></li>
+
+<li><p>Vim specific keys to use are (i for insert, esc to escape from insert mode, &lsquo;wq&rsquo; to write and quit, and &lsquo;q!&rsquo; to quit without any modifications if needed).</p></li>
+
+<li><p>Once the yaml file is created as shown below, we can deploy the image:</p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ vim recommend_pipeline.yaml
+</code></pre></li>
+</ul>
+
+<p><img src="vi_terminal.png" alt="vi_terminal" /></p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ ls
+README-cloudshell.txt  recommend_pipeline.yaml
+theja4gcp@cloudshell:~ (authentic-realm-276822)$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.108.0.1   &lt;none&gt;        443/TCP   56m
+theja4gcp@cloudshell:~ (authentic-realm-276822)$ kubectl apply -f recommend_pipeline.yaml
+cronjob.batch/recommend-pipeline-deployment created
+</code></pre>
+
+<ul>
+<li>We can now go to the workloads page of GKE and view the deployment.</li>
+</ul>
+
+<p><img src="deployed1.png" alt="deployed1" /></p>
+
+<ul>
+<li>Clicking on it gives more information.</li>
+</ul>
+
+<p><img src="deployed2.png" alt="deployed2" /></p>
+
+<ul>
+<li>You can see at the bottom that it is a 3 node cluster.</li>
+</ul>
+
+<p><img src="deployed3.png" alt="deployed3" /></p>
+
+<ul>
+<li>Switching to the events tab shows how the cronjob is being run every minute:</li>
+</ul>
+
+<p><img src="deployed4.png" alt="deployed4" /></p>
+
+<ul>
+<li>We can also inspect the BigQuery table details page. Here are two screenshots about 1 minute apart from each other:</li>
+</ul>
+
+<p><img src="updatecheck1.png" alt="updatecheck1" /></p>
+
+<p><img src="updatecheck2.png" alt="updatecheck2" /></p>
+
+<ul>
+<li><p>Great, so we have run a cron job on the cloud. A key benefit of doing this on the cloud is fault tolerance.</p></li>
+
+<li><p>To wrap up things, we can delete the deployment using the following command:</p>
+
+<pre><code class="language-bash">theja4gcp@cloudshell:~ (authentic-realm-276822)$ kubectl delete -f recommend_pipeline.yaml
+cronjob.batch &quot;recommend-pipeline-deployment&quot; deleted
+theja4gcp@cloudshell:~ (authentic-realm-276822)$ kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.108.0.1   &lt;none&gt;        443/TCP   73m
+</code></pre></li>
+
+<li><p>You can see the deployment getting terminated in the browser as well.</p></li>
+</ul>
+
+<p><img src="terminate1.png" alt="terminate1" /></p>
+
+<ul>
+<li>Finally, we can also terminate the cluster.</li>
+</ul>
+
+<p><img src="terminate2.png" alt="terminate2" /></p>
+
+<ul>
+<li>We have only scratched the surface of scheduled jobs. Both cron on a self-hosted instance as well as K8s scheduling are very powerful for automation. It is worthwhile delving deeper into these using the resources linked throughout this section.</li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/MLOps/lecture5/simple_pipeline/" title="Training Workflows"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/MLOps/lecture5/airflow/" title="Apache Airflow" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/MLOps/js/clipboard.min.js"></script>
+    <script src="/MLOps/js/perfect-scrollbar.min.js"></script>
+    <script src="/MLOps/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/MLOps/js/jquery.sticky.js"></script>
+    <script src="/MLOps/js/featherlight.min.js"></script>
+    <script src="/MLOps/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/MLOps/js/modernizr.custom-3.6.0.js"></script>
+    <script src="/MLOps/js/learn.js"></script>
+    <script src="/MLOps/js/hugo-learn.js"></script>
+
+    <link href="/MLOps/mermaid/mermaid.css" rel="stylesheet" />
+    <script src="/MLOps/mermaid/mermaid.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156050402-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156050402-2');
+</script>
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+  </body>
+</html>
+

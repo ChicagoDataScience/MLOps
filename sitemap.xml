@@ -127,7 +127,23 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/workflow/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture5/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/simple_pipeline/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/cron/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/airflow/</loc>
   </url>
   
   <url>
@@ -156,6 +172,10 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture4/exercises/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture5/exercises/</loc>
   </url>
   
   <url>

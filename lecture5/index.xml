@@ -10,5 +10,65 @@
 	<atom:link href="https://chicagodatascience.github.io/MLOps/lecture5/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>Data Science Workflows</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture5/workflow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture5/workflow/</guid>
+      <description>Introduction  In data science work streams, batch pipelines involve touching varied data sources (databases, warehouses, data lakes), generating features, imputing, exploration and many other tasks all the way to generating trained model artifacts.
+ While doing so, we think of the process from the start to end as blocks that can be chained in a sequence (or more generally as a directed acyclic graph or DAG).
+ Some desirable properties we want from model pipelines are:</description>
+    </item>
+    
+    <item>
+      <title>Training Workflows</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture5/simple_pipeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture5/simple_pipeline/</guid>
+      <description>What are some common task blocks?
+ Extract data Train a model Predict on a test set Save results in a database  The data must first be prepared (via ETL or extract/transform/load jobs).
+ Training and making predictions requires appropriate compute resources.
+ Data read and write imply access to an external service (such as a database) or storage (such as AWS S3).
+ When you do data science work on a local machine, you will likely use some simple ways to read data (likely from disk or from databases) as well as write your results to disk.</description>
+    </item>
+    
+    <item>
+      <title>Cron Jobs</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture5/cron/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture5/cron/</guid>
+      <description>Cron expressions will be useful while looking at Apache Airflow scheduling system.
+Docker Image of the Transient Pipeline  First, we will convert our notebook to a script (reduces dependency on Jupyter, try to find other packages you can get away with not installing). Running the py file locally updates the predictions on BigQuery as expected.
+(datasci-dev) ttmac:lec05 theja$ jupyter nbconvert --to script recommend_lightfm.ipynb [NbConvertApp] Converting notebook recommend_lightfm.ipynb to script [NbConvertApp] Writing 4718 bytes to recommend_lightfm.</description>
+    </item>
+    
+    <item>
+      <title>Apache Airflow</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture5/airflow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture5/airflow/</guid>
+      <description>While cron and cron based scheduling is great, it becomes harder to manage if certain jobs fail and other scheduled jobs depend on their outputs.
+ Workflow tools help with resolving these types of dependencies.
+ They also allow for version control of objects beyond code.
+ These tools have additional capabilities such as alerting team members if a block/task/job failed so that someone can fix and even manually run it.</description>
+    </item>
+    
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture5/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture5/exercises/</guid>
+      <description>Generalize the data fetching in the recommendation workflow from a external URL that changes the data each day.
+ Change the package pandas_gbq to google-cloud-bigquery to accomplish saving the predictions to google cloud. See https://cloud.google.com/bigquery/docs/pandas-gbq-migration for more information.
+ Improve the formatting of the recommended movies in Section; Recommendation Workflow.
+ Go through the CronJob documentation on https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/ and run the example cronjob on minikube.
+ Go through the tutorial on cron by Digitalocean.</description>
+    </item>
+    
   </channel>
 </rss>
