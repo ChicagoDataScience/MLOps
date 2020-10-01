@@ -151,6 +151,26 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/spark/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/spark_envs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/databricks/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/mllib/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture7/</loc>
   </url>
   
@@ -176,6 +196,25 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture5/exercises/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/exercises/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/basics/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/recommendation_system_mllib/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/recommendation_system_surpriselib/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
