@@ -203,17 +203,17 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/mllib/recommendation_system_mllib/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture6/mllib/recommendation_system_surpriselib/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/basics/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/recommendation_system_mllib/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/recommendation_system_surpriselib/</loc>
     <priority>0</priority>
   </url>
   
