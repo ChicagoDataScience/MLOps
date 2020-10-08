@@ -175,6 +175,18 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/streaming/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/kafka/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/spark_streaming/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture8/</loc>
   </url>
   
@@ -203,6 +215,10 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/exercises/</loc>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture6/mllib/recommendation_system_mllib/</loc>
     <priority>0</priority>
   </url>
@@ -214,6 +230,11 @@
   
   <url>
     <loc>https://chicagodatascience.github.io/MLOps/lecture6/pyspark/basics/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/kafka/producer_consumer_example/</loc>
     <priority>0</priority>
   </url>
   

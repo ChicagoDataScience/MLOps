@@ -10,5 +10,56 @@
 	<atom:link href="https://chicagodatascience.github.io/MLOps/lecture7/index.xml" rel="self" type="application/rss+xml" />
     
     
+    <item>
+      <title>Streaming Workflows</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture7/streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture7/streaming/</guid>
+      <description>Introduction  Stream processing is a way of architecting a system of computers that exploits parallelism. This is achieved by reducing the amount of synchronization requirements between interacting components. From our limited view point (i.e., from ML deployment perspective), in such systems, one should think of data not primarily residing on disks/storage anymore. Instead, we could think of data as always moving across parts of the cloud/system. At certain junctions, it is getting transformed or even logged.</description>
+    </item>
+    
+    <item>
+      <title>Apache Kafka</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture7/kafka/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture7/kafka/</guid>
+      <description>We will start with a python and ML agnostic component of our streaming ML model deployment workflow.
+Apache Kafka  Is a popular Java/Scala based OSS (open-source software) streaming solution that allows one to stream messages. These messages can be streamed to and from various end-points.
+ See the Github repo for the code and wikipedia for its history. It started out of LinkedIn in 2011.
+ From its webpage,</description>
+    </item>
+    
+    <item>
+      <title>Spark Streaming</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture7/spark_streaming/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture7/spark_streaming/</guid>
+      <description>Background  Spark Streaming relies on the underlying building blocks of spark (which allow for fast distributed processing of large datasets) to allow for streaming operations/transformations. In its core, it reads data (thus a consumer) in fixed small sizes and then converts them to RDDs for processing. As a benefit, this type of interfacing allows Spark Streaming to utilize essentially the same codebase written for a batch pipeline with minor modifications.</description>
+    </item>
+    
+    <item>
+      <title>Exercises</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture7/exercises/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture7/exercises/</guid>
+      <description> Go through the docs and quickstart for AWS Kinesis. This is a managed streaming platform. In particular, read this case study on streaming social media data.
+ Go through the docs and quickstart for Google PubSub. This is a managed streaming platform.
+ Go through the docs and quickstart for Apache Flume. This is an open-source streaming solution.
+  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture7/kafka/producer_consumer_example/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture7/kafka/producer_consumer_example/</guid>
+      <description>producer_consumer_example pre { line-height: 125%; margin: 0; } td.linenos pre { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; } span.linenos { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; } td.linenos pre.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; } span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; } .highlight .hll { background-color: var(--jp-cell-editor-active-background) } .highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) } .</description>
+    </item>
+    
   </channel>
 </rss>

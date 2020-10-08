@@ -1286,6 +1286,121 @@
           
       </a>
       
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/streaming/" title="Streaming Workflows" class="dd-item ">
+        <a href="/MLOps/lecture7/streaming/">
+        <b>1. </b>Streaming Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/kafka/" title="Apache Kafka" class="dd-item ">
+        <a href="/MLOps/lecture7/kafka/">
+        <b>2. </b>Apache Kafka
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/spark_streaming/" title="Spark Streaming" class="dd-item ">
+        <a href="/MLOps/lecture7/spark_streaming/">
+        <b>3. </b>Spark Streaming
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture7/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/kafka/producer_consumer_example/" title="" class="dd-item ">
+        <a href="/MLOps/lecture7/kafka/producer_consumer_example/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
               
     </li>
   
@@ -1599,7 +1714,7 @@ for bucket in storage_client.list_buckets():
 print(bucket.name)
 </code></pre></li>
 
-<li><p>We can dump the model we used previous here using the following snippet</p>
+<li><p>We can dump the model we used previous here using the following snippet. Here, v1a and v1b are just the new names of our <code>surprise_model</code> and <code>movies.dat</code> files. We could have given the original names (surprise_model and movies.dat) instead of v1a and v1b. These are the two files we are uploading into the <code>theja_model_store</code> bucket. One can upload any files in general, but for our setting, these two (the trained model and the movie metadata file) are of interest. If we need access to the dataset as well to make new predictions, then one may need to upload the dataset as well.</p>
 
 <pre><code class="language-python">
 from google.cloud import storage
@@ -3080,6 +3195,86 @@ blob.download_to_filename(&quot;movies.dat.from_gcp&quot;)
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
             
         

@@ -25,7 +25,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture6/spark_envs/</guid>
-      <description>The execution environment is typically distributed across several machines (i.e., a cluster). We submit jobs to clusters for execution. Spark itself is written in Scala/Java. But the Python interface makes it amenable for data science professionals to benefit from it.  Types of Deployments There are three types: - Self hosted cluster deployments - Direct cloud solutions (e.g., Cloud Dataproc by Google Cloud and EMR by AWS) - Vendor based deployments (e.</description>
+      <description>The execution environment is typically distributed across several machines (i.e., a cluster). We submit jobs to clusters for execution. Spark itself is written in Scala/Java. But the Python interface makes it amenable for data science professionals to benefit from it.  Types of Deployments There are three types:
+ Self hosted cluster deployments Direct cloud solutions (e.g., Cloud Dataproc by Google Cloud and EMR by AWS) Vendor based deployments (e.</description>
     </item>
     
     <item>
