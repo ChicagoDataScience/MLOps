@@ -239,6 +239,16 @@
   </url>
   
   <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/spark_streaming/streaming101/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://chicagodatascience.github.io/MLOps/lecture7/spark_streaming/streaming_recs/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://chicagodatascience.github.io/MLOps/categories/</loc>
   </url>
   
