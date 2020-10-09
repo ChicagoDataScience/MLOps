@@ -1,0 +1,3553 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.58.3" />
+    <meta name="description" content="MLOps: Operationalizing Machine Learning">
+<meta name="author" content="Theja Tulabandhula">
+
+    <link rel="shortcut icon" href="/MLOps/images/favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" sizes="180x180" href="/MLOps/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
+<link rel="manifest" href="/MLOps/images/site.webmanifest">
+    <title>Apache Kafka :: MLOps: Operationalizing Machine Learning</title>
+
+    
+    <link href="/MLOps/css/nucleus.css" rel="stylesheet">
+    <link href="/MLOps/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/MLOps/css/hybrid.css" rel="stylesheet">
+    <link href="/MLOps/css/featherlight.min.css" rel="stylesheet">
+    <link href="/MLOps/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="/MLOps/css/auto-complete.css" rel="stylesheet">
+    <link href="/MLOps/css/atom-one-dark-reasonable.css" rel="stylesheet">
+    <link href="/MLOps/css/theme.css" rel="stylesheet">
+    <link href="/MLOps/css/hugo-theme.css" rel="stylesheet">
+    
+      <link href="/MLOps/css/theme-blue.css" rel="stylesheet">
+    
+
+    <script src="/MLOps/js/jquery-3.3.1.min.js"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/MLOps/lecture7/kafka/">
+    <nav id="sidebar" class="showVisitedLinks">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a href="/MLOps/"> <img src="/MLOps/images/logo.png" alt="MLOps"></a>
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/MLOps/js/lunr.min.js"></script>
+<script type="text/javascript" src="/MLOps/js/auto-complete.js"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/chicagodatascience.github.io\/MLOps\/";
+    
+</script>
+<script type="text/javascript" src="/MLOps/js/search.js"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/logistics/" title="Course Logistics" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/logistics/">
+          <b> </b>Course Logistics
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/online_technology_requirements/" title="Online Learning Details" class="dd-item ">
+        <a href="/MLOps/logistics/online_technology_requirements/">
+        Online Learning Details
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/schedule/" title="Schedule" class="dd-item ">
+        <a href="/MLOps/logistics/schedule/">
+        <b> </b>Schedule
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/logistics/project_instructions/" title="Project" class="dd-item ">
+        <a href="/MLOps/logistics/project_instructions/">
+        <b> </b>Project
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture1/" title="Lecture 1" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture1/">
+          <b> </b>Lecture 1
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/intro/" title="Basics" class="dd-item ">
+        <a href="/MLOps/lecture1/intro/">
+        <b> 1. </b>Basics
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/ssh_and_firewall/" title="SSH and Firewall" class="dd-item ">
+        <a href="/MLOps/lecture1/ssh_and_firewall/">
+        <b> 2. </b>SSH and Firewall
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/conda/" title="Setting up Python" class="dd-item ">
+        <a href="/MLOps/lecture1/conda/">
+        <b> 3. </b>Setting up Python
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/jupyter/" title="Remote Jupyter Server" class="dd-item ">
+        <a href="/MLOps/lecture1/jupyter/">
+        <b> 4. </b>Remote Jupyter Server
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture1/recommendation_model/" title="Recommendation Models" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture1/recommendation_model/">
+          <b>5. </b>Recommendation Models
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_training/" title="Recommendation (SVD) Training" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/surprise_training/">
+        <b> </b>Recommendation (SVD) Training
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/surprise_inference/" title="Recommendation (SVD) Inference" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/surprise_inference/">
+        <b> </b>Recommendation (SVD) Inference
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_training/" title="Recommendation (Pytorch) Training" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/pytorch_training/">
+        <b> </b>Recommendation (Pytorch) Training
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/recommendation_model/pytorch_inference/" title="Recommendation (Pytorch) Inference" class="dd-item ">
+        <a href="/MLOps/lecture1/recommendation_model/pytorch_inference/">
+        <b> </b>Recommendation (Pytorch) Inference
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/deploy_webserver/" title="Serving ML Models Using Web Servers" class="dd-item ">
+        <a href="/MLOps/lecture1/deploy_webserver/">
+        <b> 6. </b>Serving ML Models Using Web Servers
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/flask/" title="Flask App" class="dd-item ">
+        <a href="/MLOps/lecture1/flask/">
+        <b> 7. </b>Flask App
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture1/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture1/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture2/">
+          <b> </b>Lecture 2
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/serverless/" title="Serverless Deployments" class="dd-item ">
+        <a href="/MLOps/lecture2/serverless/">
+        <b>1. </b>Serverless Deployments
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions/" title="Cloud Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions/">
+        <b>2. </b>Cloud Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/cloud_functions_model/" title="GCP Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/cloud_functions_model/">
+        <b>3. </b>GCP Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions/" title="Lambda Functions" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions/">
+        <b>4. </b>Lambda Functions
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving" class="dd-item ">
+        <a href="/MLOps/lecture2/lambda_functions_model/">
+        <b>5. </b>AWS Serverless Model Serving
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture2/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture2/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture3/" title="Lecture 3" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture3/">
+          <b> </b>Lecture 3
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/intro/" title="Introduction" class="dd-item ">
+        <a href="/MLOps/lecture3/intro/">
+        <b>1. </b>Introduction
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/docker/" title="Docker" class="dd-item ">
+        <a href="/MLOps/lecture3/docker/">
+        <b>2. </b>Docker
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecr/" title="Orchestration using ECS and ECR - Part I" class="dd-item ">
+        <a href="/MLOps/lecture3/ecr/">
+        <b>3. </b>Orchestration using ECS and ECR - Part I
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/ecs/" title="Orchestration using ECS and ECR - Part II" class="dd-item ">
+        <a href="/MLOps/lecture3/ecs/">
+        <b>4. </b>Orchestration using ECS and ECR - Part II
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture3/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture3/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture4/" title="Lecture 4" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture4/">
+          <b> </b>Lecture 4
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/kubernetes/" title="Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/kubernetes/">
+        <b>1. </b>Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/modelkube/" title="Model Serving using Kubernetes" class="dd-item ">
+        <a href="/MLOps/lecture4/modelkube/">
+        <b>2. </b>Model Serving using Kubernetes
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/gke/" title="Orchestration using GKE" class="dd-item ">
+        <a href="/MLOps/lecture4/gke/">
+        <b>3. </b>Orchestration using GKE
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture4/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture4/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture5/" title="Lecture 5" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture5/">
+          <b> </b>Lecture 5
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/workflow/" title="Data Science Workflows" class="dd-item ">
+        <a href="/MLOps/lecture5/workflow/">
+        <b>1. </b>Data Science Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/simple_pipeline/" title="Training Workflows" class="dd-item ">
+        <a href="/MLOps/lecture5/simple_pipeline/">
+        <b>2. </b>Training Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/cron/" title="Cron Jobs" class="dd-item ">
+        <a href="/MLOps/lecture5/cron/">
+        <b>3. </b>Cron Jobs
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/airflow/" title="Apache Airflow" class="dd-item ">
+        <a href="/MLOps/lecture5/airflow/">
+        <b>4. </b>Apache Airflow
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture5/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture5/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture6/" title="Lecture 6" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture6/">
+          <b> </b>Lecture 6
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/spark/" title="Spark based Pipelines" class="dd-item ">
+        <a href="/MLOps/lecture6/spark/">
+        <b>1. </b>Spark based Pipelines
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/spark_envs/" title="Spark Clusters" class="dd-item ">
+        <a href="/MLOps/lecture6/spark_envs/">
+        <b>2. </b>Spark Clusters
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/databricks/" title="Spark on Databricks" class="dd-item ">
+        <a href="/MLOps/lecture6/databricks/">
+        <b>3. </b>Spark on Databricks
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/pyspark/" title="PySpark" class="dd-item ">
+        <a href="/MLOps/lecture6/pyspark/">
+        <b>4. </b>PySpark
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/mllib/" title="MLlib - ML Library for Spark" class="dd-item ">
+        <a href="/MLOps/lecture6/mllib/">
+        <b>5. </b>MLlib - ML Library for Spark
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture6/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/mllib/recommendation_system_mllib/" title="" class="dd-item ">
+        <a href="/MLOps/lecture6/mllib/recommendation_system_mllib/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/mllib/recommendation_system_surpriselib/" title="" class="dd-item ">
+        <a href="/MLOps/lecture6/mllib/recommendation_system_surpriselib/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture6/pyspark/basics/" title="" class="dd-item ">
+        <a href="/MLOps/lecture6/pyspark/basics/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture7/" title="Lecture 7" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/MLOps/lecture7/">
+          <b> </b>Lecture 7
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/streaming/" title="Streaming Workflows" class="dd-item ">
+        <a href="/MLOps/lecture7/streaming/">
+        <b>1. </b>Streaming Workflows
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/kafka/" title="Apache Kafka" class="dd-item active">
+        <a href="/MLOps/lecture7/kafka/">
+        <b>2. </b>Apache Kafka
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/spark_streaming/" title="Spark Streaming" class="dd-item ">
+        <a href="/MLOps/lecture7/spark_streaming/">
+        <b>3. </b>Spark Streaming
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/exercises/" title="Exercises" class="dd-item ">
+        <a href="/MLOps/lecture7/exercises/">
+        <b> </b>Exercises
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/kafka/producer_consumer_example/" title="" class="dd-item ">
+        <a href="/MLOps/lecture7/kafka/producer_consumer_example/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/spark_streaming/streaming101/" title="" class="dd-item ">
+        <a href="/MLOps/lecture7/spark_streaming/streaming101/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+
+
+ 
+  
+    
+      <li data-nav-id="/MLOps/lecture7/spark_streaming/streaming_recs/" title="" class="dd-item ">
+        <a href="/MLOps/lecture7/spark_streaming/streaming_recs/">
+        
+        <i class="fas fa-check read-icon"></i>
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/MLOps/lecture8/" title="Lecture 8" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/MLOps/lecture8/">
+          <b> </b>Lecture 8
+          
+            <i class="fas fa-check read-icon"></i>
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    <section id="footer">
+      
+
+
+
+<i class='fab fa-fw fa-github'></i> <a href="https://github.com/chicagodatascience/MLOps/"> GitHub repo</a>
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                   Apache Kafka 
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#apache-kafka">Apache Kafka</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#setup">Setup</a>
+<ul>
+<li><a href="#lets-spin-up-a-vm">Lets spin up a VM</a>
+<ul>
+<li><a href="#next">Next</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Apache Kafka
+            </h1>
+          
+
+        
+
+
+
+
+
+<p>We will start with a python and ML agnostic component of our streaming ML model deployment workflow.</p>
+
+<h3 id="apache-kafka">Apache Kafka</h3>
+
+<ul>
+<li><p>Is a popular Java/Scala based OSS (open-source software) streaming solution that allows one to stream messages. These messages can be streamed to and from various end-points.</p></li>
+
+<li><p>See the <a href="https://github.com/apache/kafka">Github repo</a> for the code and  <a href="https://en.wikipedia.org/wiki/Apache_Kafka">wikipedia</a> for its history. It started out of LinkedIn in 2011.</p></li>
+
+<li><p>From its <a href="https://kafka.apache.org/">webpage</a>,</p></li>
+</ul>
+
+<blockquote>
+<p>Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.</p>
+</blockquote>
+
+<p><img src="prop1.png" alt="prop1" />
+<img src="prop2.png" alt="prop2" />
+<img src="prop3.png" alt="prop3" />
+<div style="text-align: right"> Source: <a href="https://kafka.apache.org/">https://kafka.apache.org/</a> </div></p>
+
+<h3 id="architecture">Architecture</h3>
+
+<ul>
+<li><p>We will not go into the technical details of the software here. Instead, we will familiarize ourselves with some of its building blocks.</p></li>
+
+<li><p>First is the notion of producers and consumers of messages.</p></li>
+
+<li><p>These producers and consumers are arbitrary programs (e.g., pyspark in our case).</p></li>
+
+<li><p>The messages produced by producers are partitioned into <em>topics</em>. Within a topic, the messages are stored in ways that maximize I/O and network efficiency.</p></li>
+
+<li><p>Consumers read from these topics, and thus partitions.</p></li>
+
+<li><p>The messages in the topics typically have constraints (older messages will be deleted or only the most recent messages will be retained).</p></li>
+
+<li><p>The messages can be read many times by many consumers as long as the constraints are met.</p></li>
+
+<li><p>The manageemnt of topics,partitions and messages happens on <em>brokers</em> (essentially nodes of a cluster). For instance, partitions are copied and synced on multiple brokers for redundancy.</p></li>
+</ul>
+
+<p><img src="Overview_of_Apache_Kafka.svg" alt="arch" />
+<div style="text-align: right"> Source: <a href="https://upload.wikimedia.org/wikipedia/commons/6/64/Overview_of_Apache_Kafka.svg">https://upload.wikimedia.org/wikipedia/commons/6/64/Overview_of_Apache_Kafka.svg</a></div></p>
+
+<h3 id="setup">Setup</h3>
+
+<ul>
+<li>We will set up Kafka on a local dev machine (e.g., AWS EC2/your laptop) and create a topic to which producers can send messages to and consumers can read messages from.</li>
+<li>Typically it needs one to build out a cluster ourselves and manage it. There are managed solutions by cloud vendors that help you with this.</li>
+</ul>
+
+<h4 id="lets-spin-up-a-vm">Lets spin up a VM</h4>
+
+<ul>
+<li>We will use Vultr VPS that we have used before. We could also use AS EC2 or GCP Cloud Instances.</li>
+<li>Below are the screenshots of the process.</li>
+</ul>
+
+<p><img src="v1.png" alt="v1" /></p>
+
+<p><img src="v2.png" alt="v2" />
+<img src="v3.png" alt="v3" />
+<img src="v4.png" alt="v4" />
+<img src="v5.png" alt="v5" />
+<img src="v6.png" alt="v6" />
+<img src="v7.png" alt="v7" />
+<img src="v8.png" alt="v8" />
+<img src="v9.png" alt="v9" /></p>
+
+<ul>
+<li><p>Given the details, log into the machine. Copy your ssh keys if needed and change the access to a password less access.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:mlops theja$ ssh root@155.138.192.245
+root@vultr:~# pwd
+root@vultr:~# mkdir .ssh
+root@vultr:~# cd .ssh/
+root@vultr:~# vim authorized_keys #paste your id_rsa.pub or other SSH key file
+root@vultr:~# vim /etc/ssh/sshd_config #change line 58 or nearby by removing # and setting `no`: PasswordAuthentication no
+root@vultr:~# sudo systemctl restart ssh
+root@vultr:~# apt install fail2ban
+root@vultr:~# ufw allow 22
+root@vultr:~# ufw enable
+Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup
+root@vultr:~# ufw status verbose
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22                         ALLOW IN    Anywhere
+22 (v6)                    ALLOW IN    Anywhere (v6)
+
+root@vultr:~#
+</code></pre></li>
+
+<li><p>We have discussed these steps and others while investigating ML hosted deployment on VMs/VPSs. The above instructions are minimal to get started with a somewhat secure machine.</p></li>
+
+<li><p>Next we will follow the quickstart guide here: <a href="https://kafka.apache.org/quickstart">https://kafka.apache.org/quickstart</a></p></li>
+
+<li><p>Install java runtime.</p>
+
+<pre><code class="language-bash">root@vultr:~# apt install openjdk-8-jre-headless
+root@vultr:~# java -version
+openjdk version &quot;1.8.0_265&quot;
+OpenJDK Runtime Environment (build 1.8.0_265-8u265-b01-0ubuntu2~20.04-b01)
+OpenJDK 64-Bit Server VM (build 25.265-b01, mixed mode)
+</code></pre></li>
+
+<li><p>Download Kafka and unzip it</p>
+
+<pre><code class="language-bash">root@vultr:~# wget http://mirror.cc.columbia.edu/pub/software/apache/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+--2020-10-08 17:46:46--  http://mirror.cc.columbia.edu/pub/software/apache/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+Resolving mirror.cc.columbia.edu (mirror.cc.columbia.edu)... 128.59.59.71
+Connecting to mirror.cc.columbia.edu (mirror.cc.columbia.edu)|128.59.59.71|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 65537909 (63M) [application/x-gzip]
+Saving to: ‘kafka_2.13-2.6.0.tgz’
+
+kafka_2.13-2.6.0.tg 100%[===================&gt;]  62.50M  11.1MB/s    in 14s
+
+2020-10-08 17:47:01 (4.44 MB/s) - ‘kafka_2.13-2.6.0.tgz’ saved [65537909/65537909]
+root@vultr:~# ls
+kafka_2.13-2.6.0.tgz
+root@vultr:~# tar -xzf kafka_2.13-2.6.0.tgz
+root@vultr:~# cd kafka_2.13-2.6.0
+root@vultr:~/kafka_2.13-2.6.0#
+</code></pre></li>
+
+<li><p>We will also get into a screen session:</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# screen -list
+No Sockets found in /run/screen/S-root.
+
+root@vultr:~/kafka_2.13-2.6.0# screen -S kafka
+</code></pre></li>
+
+<li><p>Next lets start a service called <code>zookeeper</code>. This is a distributed configuration and synchronization service. We won&rsquo;t worry about it, and it will be removed from kafka as a dependency soon.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/zookeeper-server-start.sh config/zookeeper.properties
+[2020-10-08 17:50:09,690] INFO Reading configuration from: config/zookeeper.properties (org.apache.zookeeper.server.quorum.QuorumPeerConfig)
+[2020-10-08 17:50:09,696] WARN config/zookeeper.properties is relative. Prepend ./ to indicate that you're sure! (org.apache.zookeeper.server.quorum.QuorumPeerConfig)
+[2020-10-08 17:50:09,706] INFO clientPortAddress is 0.0.0.0:2181 (org.apache.zookeeper.server.quorum.QuorumPeerConfig)
+.
+.
+(truncated)
+.
+.
+</code></pre></li>
+
+<li><p>In a different terminal in the same screen session (Ctrl+a Ctrl+c, Ctrl+a n/p to navigate), run the Kafka broker service:</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-server-start.sh config/server.properties #you may have to edit the kafka-server-start.sh to reduce the heap size. 
+</code></pre></li>
+
+<li><p>In a third terminal, lets create a topic. A topic is like a folder and events/messages/records can be considered as files.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+Created topic quickstart-events.
+</code></pre></li>
+
+<li><p>We can also get a descirption of the currently created topic (such as replication, number of partitions etc):</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092
+Topic: quickstart-events        PartitionCount: 1       ReplicationFactor: 1   Configs: segment.bytes=1073741824
+    Topic: quickstart-events        Partition: 0    Leader: 0       Replicas: 0     Isr: 0
+</code></pre></li>
+
+<li><p>Lets write some events and read some events next. We will then hook this up with our Databricks spark environment in the next section.</p></li>
+
+<li><p>If we execute the following in a new terminal, we can create events as strings (one per line). We can stop by using <code>Ctrl+c</code>.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+&gt;Hello
+&gt;Theja
+&gt;
+</code></pre></li>
+
+<li><p>We can then read these events from Kafka in yet another terminal.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+Hello
+Theja
+
+</code></pre></li>
+
+<li><p>We can switch back to the producer terminal and add more events and experiment with this.</p></li>
+
+<li><p>Next, lets do the same as above but with a jupyter notebook. We will port forward so we can access jupyter locally. For a change, we will not use conda below.</p></li>
+
+<li><p>Install python and pip.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0#  apt-get update &amp;&amp; apt install -y python3-pip python3-dev
+root@vultr:~/kafka_2.13-2.6.0# pip3 install --upgrade pip
+Collecting pip
+Downloading pip-20.2.3-py2.py3-none-any.whl (1.5 MB)
+ |████████████████████████████████| 1.5 MB 11.8 MB/s
+Installing collected packages: pip
+root@vultr:~/kafka_2.13-2.6.0# python3 --version
+Python 3.8.5
+root@vultr:~/kafka_2.13-2.6.0# pip --version
+pip 20.2.3 from /usr/local/lib/python3.8/dist-packages/pip (python 3.8)
+root@vultr:~/kafka_2.13-2.6.0# pip3 --version
+pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
+</code></pre></li>
+
+<li><p>Install virtualenv.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# pip3 install virtualenv
+Collecting virtualenv
+Downloading virtualenv-20.0.33-py2.py3-none-any.whl (4.9 MB)
+ |████████████████████████████████| 4.9 MB 16.3 MB/s
+Collecting distlib&lt;1,&gt;=0.3.1
+Downloading distlib-0.3.1-py2.py3-none-any.whl (335 kB)
+ |████████████████████████████████| 335 kB 21.0 MB/s
+Requirement already satisfied: six&lt;2,&gt;=1.9.0 in /usr/lib/python3/dist-packages (from virtualenv) (1.14.0)
+Collecting filelock&lt;4,&gt;=3.0.0
+Downloading filelock-3.0.12-py3-none-any.whl (7.6 kB)
+Collecting appdirs&lt;2,&gt;=1.4.3
+Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Installing collected packages: distlib, filelock, appdirs, virtualenv
+Successfully installed appdirs-1.4.4 distlib-0.3.1 filelock-3.0.12 virtualenv-20.0.33
+</code></pre></li>
+
+<li><p>Change directories if needed.</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# mkdir ../jupyter
+root@vultr:~/kafka_2.13-2.6.0# cd ../jupyter/
+root@vultr:~/jupyter#
+</code></pre></li>
+
+<li><p>Create a virtual environment.</p>
+
+<pre><code class="language-bash">root@vultr:~/jupyter# virtualenv datasci-dev
+created virtual environment CPython3.8.5.final.0-64 in 1330ms
+creator CPython3Posix(dest=/root/jupyter/datasci-dev, clear=False, global=False)
+seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/root/.local/share/virtualenv)
+added seed packages: pip==20.2.3, setuptools==50.3.0, wheel==0.35.1
+activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
+</code></pre></li>
+
+<li><p>Source activate the environment.</p>
+
+<pre><code class="language-bash">root@vultr:~/jupyter# source datasci-dev/bin/activate
+(datasci-dev) root@vultr:~/jupyter#
+</code></pre></li>
+
+<li><p>Next lets install <code>jupyter</code> and <code>kafka-python</code>.</p>
+
+<pre><code class="language-bash">(datasci-dev) root@vultr:~/jupyter# pip install jupyter kafka-python
+(datasci-dev) root@vultr:~/jupyter# jupyter notebook --generate-config
+Writing default config to: /root/.jupyter/jupyter_notebook_config.py
+(datasci-dev) root@vultr:~/jupyter# jupyter notebook password
+Enter password:
+Verify password:
+[NotebookPasswordApp] Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json
+</code></pre></li>
+
+<li><p>Because we ran as root (bad idea!), we will have to explicitly pass <code>--allow-root</code> to start the server.</p>
+
+<pre><code class="language-bash">(datasci-dev) root@vultr:~/jupyter# jupyter notebook --no-browser --port=8888 --allow-root
+[I 18:31:40.386 NotebookApp] Serving notebooks from local directory: /root/jupyter
+[I 18:31:40.387 NotebookApp] Jupyter Notebook 6.1.4 is running at:
+[I 18:31:40.387 NotebookApp] http://localhost:8888/
+[I 18:31:40.387 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+</code></pre></li>
+
+<li><p>Lets tunnel and access Jupyter from our local machine.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:~ theja$ ssh -N -f -L localhost:9999:localhost:8888 root@155.138.192.245
+</code></pre></li>
+
+<li><p>Open the browser, key in your password and start a notebook.</p></li>
+</ul>
+
+<p><img src="nb1.png" alt="nb1" /></p>
+
+<p><img src="nb2.png" alt="nb2" /></p>
+
+<ul>
+<li><p>We can now push events to the <code>quickstart-events</code> topic of our Kafka cluster programmatically using python. The Kafka API we are using here is called the <code>Producer API</code>.</p></li>
+
+<li><p>Download locally as <a href="producer_consumer_example.ipynb">ipynb</a> or <a href="producer_consumer_example.py">py</a> or view as <a href="producer_consumer_example">html</a></p></li>
+</ul>
+
+<p><img src="nb3.png" alt="nb3" /></p>
+
+<ul>
+<li><p>To verify, we can go back to the screen session on the remote machine, and go to the termial where we had started a consumer to view the events:</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+Hello
+Theja
+[&quot;Hello from python&quot;, &quot;Theja from python&quot;]
+</code></pre></li>
+
+<li><p>We can also consume from the Jupyter notebook. And the underlying Kafka API we are using here is called the <code>Consumer API</code>.</p></li>
+</ul>
+
+<p><img src="nb4.png" alt="nb4" /></p>
+
+<ul>
+<li><p>Restart the producer and add an entry as shown below:</p>
+
+<pre><code class="language-bash">root@vultr:~/kafka_2.13-2.6.0# bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+&gt;{&quot;name&quot;:&quot;Theja&quot;}
+</code></pre></li>
+
+<li><p>You should be able to see the output via the consumer iterable in the jupyter notebook.</p></li>
+</ul>
+
+<p><img src="nb5.png" alt="nb5" /></p>
+
+<ul>
+<li>The deserializer argument above defined how the input string has to be processed (here we want to make it a dictionary).</li>
+</ul>
+
+<h5 id="next">Next</h5>
+
+<ul>
+<li>Consuming messages or producing messages from a single machine is not practiced typically in production environments.</li>
+<li>The underlying <code>Producer API</code> and <code>Consumer API</code> themselves are highly scalable.</li>
+<li>To illistrate scalability, we will use PySpark to consume and transform ML inputs.</li>
+</ul>
+
+
+<footer class="footline">
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="/MLOps/lecture7/streaming/" title="Streaming Workflows"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="/MLOps/lecture7/spark_streaming/" title="Spark Streaming" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/MLOps/js/clipboard.min.js"></script>
+    <script src="/MLOps/js/perfect-scrollbar.min.js"></script>
+    <script src="/MLOps/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/MLOps/js/jquery.sticky.js"></script>
+    <script src="/MLOps/js/featherlight.min.js"></script>
+    <script src="/MLOps/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/MLOps/js/modernizr.custom-3.6.0.js"></script>
+    <script src="/MLOps/js/learn.js"></script>
+    <script src="/MLOps/js/hugo-learn.js"></script>
+
+    <link href="/MLOps/mermaid/mermaid.css" rel="stylesheet" />
+    <script src="/MLOps/mermaid/mermaid.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156050402-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156050402-2');
+</script>
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+  </body>
+</html>
+
