@@ -1605,20 +1605,14 @@
 
 
 
-<h3 id="tldr">TLDR</h3>
+<h3 id="a-brief-introduction">A Brief Introduction</h3>
 
 <ul>
-<li>A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trails.</li>
+<li>A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trials.</li>
 <li>They are a data-driven way to prove to the business stakeholders that your solution (say a new prediction model) gives a tangible lift to appropriate business metric (e.g., sales, conversion, engagement etc).</li>
 <li>The greatest advantage and dis-advantage of A/B testing is that they are easy to understand as well as easy to mis-understand.</li>
 <li>Using them while doing ML model deployments is a great way to hedge risks (of rolling out something that does not work) as well as demonstrate real value to stakeholders (on a subset of users).</li>
 <li>There are better tools such as multi-armed bandits and variants to address <em>regret</em> (loss due to using sub-optimal treatments/decisions in hindsight).</li>
-</ul>
-
-<h3 id="introduction">Introduction</h3>
-
-<ul>
-<li></li>
 </ul>
 
 <h4 id="vendors">Vendors</h4>
@@ -1630,17 +1624,7 @@
 <li><a href="https://vwo.com/">VWO</a></li>
 <li><a href="https://www.adobe.com/marketing/target.html">Adobe Target</a></li>
 <li>&hellip;</li>
-<li>Lots of implementation on <a href="https://github.com/topics/ab-testing">github</a> such as <a href="https://github.com/intuit/wasabi">wasabi</a> by Intuit, <a href="https://github.com/zalando/expan">expan</a> by Zalando and <a href="https://flask-split.readthedocs.io/en/latest/">Flask-Split</a>.</li>
-</ul>
-
-<h3 id="sample-size-considerations">Sample Size Considerations</h3>
-
-<ul>
-<li>a
-
-<ul>
-<li>b</li>
-</ul></li>
+<li>Lots of implementations on <a href="https://github.com/topics/ab-testing">Github</a> such as <a href="https://github.com/intuit/wasabi">wasabi</a> by Intuit, <a href="https://github.com/zalando/expan">expan</a> by Zalando and <a href="https://flask-split.readthedocs.io/en/latest/">Flask-Split</a>.</li>
 </ul>
 
 <h3 id="bandit-feedback">Bandit Feedback</h3>
@@ -1674,24 +1658,6 @@
 <li>If we have this score function, we can also score how well any other recommendation list would have been. In this case, the feedback is called full information feedback.</li>
 <li>But what if we did not have such a scoring function? Then we only know how the current recommended list fared, but cannot find a score for how any other recommendation list would have worked.</li>
 </ul>
-
-<h3 id="topics">Topics</h3>
-
-<ul>
-<li>combining ML with A/B testing</li>
-<li>Tests with large samples</li>
-<li>Tests with small samples</li>
-<li>Repetition for drift</li>
-<li>Peeking</li>
-<li>Multiple hypotheses</li>
-<li>Criticism of p-values</li>
-<li>Post-selection inference</li>
-</ul>
-
-<p>Additional
- - How do classical testing approaches differ from Bayesian and other bandit approaches.
- - advanced techniques including heterogeneous treatment effects, uplift modeling, causal forests, blocking, matching, and post-stratification.
- - profit-maximizing Bayesian approaches to A/B testing including test &amp; roll and multi-armed bandits</p>
 
 
 <footer class="footline">

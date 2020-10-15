@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://chicagodatascience.github.io/MLOps/lecture8/abtest/</guid>
-      <description>TLDR  A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trails. They are a data-driven way to prove to the business stakeholders that your solution (say a new prediction model) gives a tangible lift to appropriate business metric (e.g., sales, conversion, engagement etc). The greatest advantage and dis-advantage of A/B testing is that they are easy to understand as well as easy to mis-understand.</description>
+      <description>A Brief Introduction  A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trials. They are a data-driven way to prove to the business stakeholders that your solution (say a new prediction model) gives a tangible lift to appropriate business metric (e.g., sales, conversion, engagement etc). The greatest advantage and dis-advantage of A/B testing is that they are easy to understand as well as easy to mis-understand.</description>
     </item>
     
     <item>

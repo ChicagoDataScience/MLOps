@@ -1624,7 +1624,7 @@
 </ul></li>
 </ul>
 
-<h4 id="essential-elements-of-a-test">Essential Elements of a Test</h4>
+<h4 id="sample-size-considerations">Sample Size Considerations</h4>
 
 <ul>
 <li>Recall the terminology
@@ -1645,7 +1645,7 @@
 <li><a href="https://www.optimizely.com/sample-size-calculator/">Demo: Optimizely</a>
 
 <ul>
-<li>Caveat: This page only discusses fixed horizon tests and the sample size requirements thereof. Optimizely&rsquo;s calculator uses more sophisticated test suite that allows for <em>early stopping</em>. So the estimated sample sizes may differ.</li>
+<li>Caveat: We are only discussing fixed horizon tests and the sample size requirements thereof. Optimizely&rsquo;s calculator uses a more sophisticated test suite that allows for <em>early stopping</em>. So the estimated sample sizes may differ.</li>
 </ul></li>
 </ul>
 
@@ -1715,6 +1715,17 @@
 <li>Counts of successful content interactions (e.g., news article clicks on a search page or a marketing page)</li>
 </ul></li>
 <li><a href="https://www.evanmiller.org/ab-testing/poisson-means.html">Demo</a></li>
+</ul>
+
+<h4 id="how-to-remember">How to Remember?</h4>
+
+<ul>
+<li>It may seem that there are a lot of tests, each with its own assumptions about the data. That is true. But a way to approach the testing complexity is to know a few popular tests.</li>
+<li>Another way is to think of tests from a linear model perspective. This is better explained at <a href="https://lindeloev.github.io/tests-as-linear/">https://lindeloev.github.io/tests-as-linear/</a>. The gist is that, many hypothesis tests are essentially tests for the coefficients of a corresponding linear model. With this view point, it is also easy to understand the assumptions being made.
+
+<ul>
+<li>A port of the above mapping between tests and linear modeling (originally in R) to python can be viewed at <a href="https://eigenfoo.xyz/tests-as-linear/">https://eigenfoo.xyz/tests-as-linear/</a>.</li>
+</ul></li>
 </ul>
 
 <h4 id="gotchas-with-testing">Gotchas with Testing</h4>

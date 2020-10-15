@@ -1648,7 +1648,9 @@ model_type = model_perf_exp.get('model_type')
 <li><p>The complete flask script is as follows.</p>
 
 <ul>
-<li><p><a href="model_testing.py">Download</a></p>
+<li><a href="model_testing.py">Download the flask app</a></li>
+
+<li><p><a href="extra.zip">Download the additional files</a></p>
 
 <pre><code class="language-python">from surprise import Dataset
 from surprise.dump import load as surprise_model_load
@@ -1734,11 +1736,7 @@ def get_top_n_pytorch(model,trainset,urid_input,n=10):
 		preds = []
 		for urid, irid, _ in testset:
 				if urid==urid_input:
-						preds.append((irid,float(model(torch.tensor([[int(trainset.to_inner_uid(urid)),
-																													int(trainset.to_inner_iid(irid))]]
-																											 ))
-																		))
-												)
+						preds.append((irid,float(model(torch.tensor([[int(trainset.to_inner_uid(urid))]])))))
 		# Then sort the predictions and retrieve the n highest ones.
 		preds.sort(key=lambda x: x[1], reverse=True)
 		return preds[:n]
@@ -1755,7 +1753,12 @@ def get_top_n_surprise(model,trainset,urid_input,n=10):
 		preds.sort(key=lambda x: x[1], reverse=True)
 		return preds[:n]
 
+</code></pre></li>
+</ul></li>
 
+<li><p>We read the models from disk and some associated metadata. Although we are loading the training data below, this is only for convenience and should not be done ideally.</p>
+
+<pre><code class="language-python">
 #Data
 df = pd.read_csv('./movies.dat',sep=&quot;::&quot;,header=None,engine='python')
 df.columns = ['iid','name','genre']
@@ -1775,8 +1778,11 @@ model_pytorch.eval()
 _, model_surprise = surprise_model_load('./surprise_model')
 
 
+</code></pre></li>
 
+<li><p>We start with the flask app setup below.</p>
 
+<pre><code class="language-python">
 
 app = Flask(__name__)
 
@@ -1786,7 +1792,11 @@ app.config.update(dict(
 ))
 
 
-@app.route('/',methods=[&quot;GET&quot;])
+</code></pre></li>
+
+<li><p>Below is the recommendation function that responds with recommendations from either the surprise model or the pytorch model.</p>
+
+<pre><code class="language-python">@app.route('/',methods=[&quot;GET&quot;])
 def main():
 		# if no userid is defined make one up
 		if 'userid' not in session:
@@ -1868,12 +1878,19 @@ def main():
 			&lt;/html&gt;
 			&quot;&quot;&quot;, userid=session['userid'], model_type=model_type, resp=resp)
 
-@app.route('/reset')
+</code></pre></li>
+
+<li><p>Below is the resetting function that essentially switches the user ID.</p>
+
+<pre><code class="language-python">@app.route('/reset')
 def reset():
 		session.clear()
 		return redirect(url_for('main'))
+</code></pre></li>
 
-@app.route('/rate')
+<li><p>Below is the rating function that documents the received rating.</p>
+
+<pre><code class="language-python">@app.route('/rate')
 def rate():
 		rate_string = request.args.get('rate')
 		try:
@@ -1911,6 +1928,51 @@ def rate():
 # start the flask app, allow remote connections
 app.run(host='0.0.0.0')
 </code></pre></li>
+
+<li><p>Notice that currently we are logging events such as exposure (the recommendations were shown) and users explicitly rating into a simple log file in the same directory.</p>
+
+<pre><code class="language-bash">(datasci-dev) ttmac:code_lecture08 theja$ ls
+flask_pytorch_model.py	model_abtest.log	movies.dat		pytorch_model		surprise_model
+flask_surprise_model.py	model_testing.py	pytorch_inference.ipynb	recommend.py		two_sample_test.ipynb
+(datasci-dev) ttmac:code_lecture08 theja$ head -n3 model_abtest.log
+{&quot;name&quot;: &quot;ModelExperiment&quot;, &quot;time&quot;: 1602739669, &quot;salt&quot;: &quot;ModelExperiment&quot;, &quot;inputs&quot;: {&quot;userid&quot;: &quot;431&quot;}, &quot;params&quot;: {&quot;use_pytorch&quot;: 1, &quot;model_type&quot;: &quot;pytorch&quot;}, &quot;event&quot;: &quot;exposure&quot;, &quot;checksum&quot;: &quot;796b9a12&quot;}
+{&quot;name&quot;: &quot;ModelExperiment&quot;, &quot;time&quot;: 1602739720, &quot;salt&quot;: &quot;ModelExperiment&quot;, &quot;inputs&quot;: {&quot;userid&quot;: &quot;431&quot;}, &quot;params&quot;: {&quot;use_pytorch&quot;: 1, &quot;model_type&quot;: &quot;pytorch&quot;}, &quot;event&quot;: &quot;exposure&quot;, &quot;checksum&quot;: &quot;796b9a12&quot;}
+{&quot;name&quot;: &quot;ModelExperiment&quot;, &quot;time&quot;: 1602739722, &quot;salt&quot;: &quot;ModelExperiment&quot;, &quot;inputs&quot;: {&quot;userid&quot;: &quot;431&quot;}, &quot;params&quot;: {&quot;use_pytorch&quot;: 1, &quot;model_type&quot;: &quot;pytorch&quot;}, &quot;event&quot;: &quot;exposure&quot;, &quot;checksum&quot;: &quot;796b9a12&quot;}
+</code></pre></li>
+
+<li><p>We can load this log file into a Jupyter notebook to conduct our test.</p>
+
+<ul>
+<li><a href="two_sample_test.ipynb">Download locally</a></li>
+</ul></li>
+</ul>
+
+<p><img src="test1.png" alt="test1" />
+- Lets zoom into the data we care about for testing.
+<img src="test2.png" alt="test2" />
+- We can do a simple two sample t test using the <code>scipy.stats</code> package.
+<img src="test3.png" alt="test3" /></p>
+
+<ul>
+<li>For more deliberation on the choice of the test, have a look at <a href="https://stats.stackexchange.com/questions/305/when-conducting-a-t-test-why-would-one-prefer-to-assume-or-test-for-equal-vari">this discussion</a> on the assumption about equal population variances.</li>
+</ul>
+
+<h4 id="summary">Summary</h4>
+
+<ul>
+<li>We have seen a simple A/B testing setup where we are testing two recommendation models. Most commercial and open source implementations follow similar patterns for setting up an experiment.</li>
+<li>While the basic A/B testing ideas seen above are a good way to validate improvements in models and products, more advanced techniques such as multi-armed bandits, Bayesian tests and contextual bandits may help with issues such as wrong assumptions or sample inefficiency.</li>
+<li>For instance, there are several ideas worth exploring such as:
+
+<ul>
+<li>combining ML withing an A/B testing setup (note that this is not related to the variants being ML models)</li>
+<li>Tests with small and large samples</li>
+<li>Repeating A/B test to address drift</li>
+<li>Avoiding peeking</li>
+<li>Dealing with multiple hypotheses</li>
+<li>Working with quantities such as posteriors rather than p-values</li>
+<li>Being careful with post-selection inference</li>
+<li>Causal modeling techniques such as causal forests and various observational techniques for causal inference.</li>
 </ul></li>
 </ul>
 
