@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/MLOps/images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/MLOps/images/favicon-16x16.png">
 <link rel="manifest" href="/MLOps/images/site.webmanifest">
-    <title>Exercises :: MLOps: Operationalizing Machine Learning</title>
+    <title>A/B Testing :: MLOps: Operationalizing Machine Learning</title>
 
     
     <link href="/MLOps/css/nucleus.css" rel="stylesheet">
@@ -38,7 +38,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/MLOps/lecture2/exercises/">
+  <body class="" data-url="/MLOps/lecture8/abtest/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -486,7 +486,7 @@
   
     
     <li data-nav-id="/MLOps/lecture2/" title="Lecture 2" class="dd-item 
-        parent
+        
         
         
         ">
@@ -619,7 +619,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture2/exercises/" title="Exercises" class="dd-item active">
+      <li data-nav-id="/MLOps/lecture2/exercises/" title="Exercises" class="dd-item ">
         <a href="/MLOps/lecture2/exercises/">
         <b> </b>Exercises
         <i class="fas fa-check read-icon"></i>
@@ -1458,7 +1458,7 @@
   
     
     <li data-nav-id="/MLOps/lecture8/" title="Lecture 8" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1486,7 +1486,7 @@
  
   
     
-      <li data-nav-id="/MLOps/lecture8/abtest/" title="A/B Testing" class="dd-item ">
+      <li data-nav-id="/MLOps/lecture8/abtest/" title="A/B Testing" class="dd-item active">
         <a href="/MLOps/lecture8/abtest/">
         <b>1. </b>A/B Testing
         <i class="fas fa-check read-icon"></i>
@@ -1579,22 +1579,13 @@
                         </a>
                     </span>
                   
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
-                  
                   <span class="links">
                  
                  
-                   Exercises 
+                   A/B Testing 
                  
                   </span>
                 </div>
-                
-                    <div class="progress">
-    <div class="wrapper">
-
-    </div>
-</div>
-
                 
               </div>
             </div>
@@ -1603,35 +1594,112 @@
         
         </div>
         
+          <div id="chapter">
+        
         <div id="body-inner">
-          
-            <h1>
-              
-              Exercises
-            </h1>
           
 
         
 
 
 
-<ol>
-<li><p>Find out how serverless technologies work behind the scene.</p></li>
 
-<li><p>Connect your custom domain to the GCP Cloudn Function and the API Gateway/Lambda function in AWS.</p></li>
 
-<li><p>Learn command line tools for GCP and the difference between programmatic access and manual access.</p></li>
+<h3 id="tldr">TLDR</h3>
 
-<li><p>Learn about identities, roles and access aspects in GCP and AWS.</p></li>
+<ul>
+<li>A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trails.</li>
+<li>They are a data-driven way to prove to the business stakeholders that your solution (say a new prediction model) gives a tangible lift to appropriate business metric (e.g., sales, conversion, engagement etc).</li>
+<li>The greatest advantage and dis-advantage of A/B testing is that they are easy to understand as well as easy to mis-understand.</li>
+<li>Using them while doing ML model deployments is a great way to hedge risks (of rolling out something that does not work) as well as demonstrate real value to stakeholders (on a subset of users).</li>
+<li>There are better tools such as multi-armed bandits and variants to address <em>regret</em> (loss due to using sub-optimal treatments/decisions in hindsight).</li>
+</ul>
 
-<li><p>Try deploying a <a href="https://github.com/lyst/lightfm">different</a> recommendation model.</p></li>
-</ol>
+<h3 id="introduction">Introduction</h3>
+
+<ul>
+<li></li>
+</ul>
+
+<h4 id="vendors">Vendors</h4>
+
+<ul>
+<li><a href="https://www.optimizely.com/">Optimizely</a></li>
+<li><a href="https://optimize.google.com/">Google Optimize</a></li>
+<li><a href="https://www.oracle.com/cx/marketing/">Oracle CX  Marketing</a></li>
+<li><a href="https://vwo.com/">VWO</a></li>
+<li><a href="https://www.adobe.com/marketing/target.html">Adobe Target</a></li>
+<li>&hellip;</li>
+<li>Lots of implementation on <a href="https://github.com/topics/ab-testing">github</a> such as <a href="https://github.com/intuit/wasabi">wasabi</a> by Intuit, <a href="https://github.com/zalando/expan">expan</a> by Zalando and <a href="https://flask-split.readthedocs.io/en/latest/">Flask-Split</a>.</li>
+</ul>
+
+<h3 id="sample-size-considerations">Sample Size Considerations</h3>
+
+<ul>
+<li>a
+
+<ul>
+<li>b</li>
+</ul></li>
+</ul>
+
+<h3 id="bandit-feedback">Bandit Feedback</h3>
+
+<ul>
+<li>This is a term borrowed from the ML research community, which itself borrows it from the casino/gambling vocabulary.</li>
+<li>The idea is that we only receive feedback (say from a user) on the decision that we took and we have no idea what would have happened if we took a different decision. This essentially is called a <em>bandit feedback</em>.</li>
+<li>In the full information feedback setting (which is the alternative), one would not only be able to score how well the decision they took, but retroactively assess how any other decision would score.</li>
+</ul>
+
+<h5 id="example-1">Example 1</h5>
+
+<ul>
+<li>First lets look at an example of full information feedback. Consider an image tagging service, that can also collect feedback.</li>
+<li>In this service, a user uploads an image, and the ML model predicts it class and outputs that as the tag (e.g., a cat or a dog or a fox).</li>
+<li>The user can accept that the tag is correct or let us know what the right tag is.</li>
+<li>This is considered full information feedback.</li>
+<li>If the model predicted the tag as a cat and the user gives a feedback saying that the tag is actually dog. Then we can know how our prediction performance would be if we had predicted a cat or a dog or a fox.</li>
+<li>What is the user only gives feedback that the tag is correct or wrong. This would be an instance of partial or bandit feedback. Here, if the tag turns out to be wrong, we may never know what the right tag is (unless someone tells it explicitly).</li>
+</ul>
+
+<h5 id="example-2">Example 2</h5>
+
+<ul>
+<li>The following example illustrates how one can consider the feedback obtained in a recommendation system as both full information or bandit feedback (based on assumptions)</li>
+<li>Lets say we deployed a model and it recommends list of movies.</li>
+<li>The recommended list is (sometimes after post-processing based on business rules) is shown to the user.</li>
+<li>The user may click/act on some of the recommendations.</li>
+<li>We can collect this information and figure out how effective our current recommendation list was (i.e., we can obtain a score).</li>
+<li>This score is a function of the recommendation list we provided and the items that the user actually liked.</li>
+<li>If we have this score function, we can also score how well any other recommendation list would have been. In this case, the feedback is called full information feedback.</li>
+<li>But what if we did not have such a scoring function? Then we only know how the current recommended list fared, but cannot find a score for how any other recommendation list would have worked.</li>
+</ul>
+
+<h3 id="topics">Topics</h3>
+
+<ul>
+<li>combining ML with A/B testing</li>
+<li>Tests with large samples</li>
+<li>Tests with small samples</li>
+<li>Repetition for drift</li>
+<li>Peeking</li>
+<li>Multiple hypotheses</li>
+<li>Criticism of p-values</li>
+<li>Post-selection inference</li>
+</ul>
+
+<p>Additional
+ - How do classical testing approaches differ from Bayesian and other bandit approaches.
+ - advanced techniques including heterogeneous treatment effects, uplift modeling, causal forests, blocking, matching, and post-stratification.
+ - profit-maximizing Bayesian approaches to A/B testing including test &amp; roll and multi-armed bandits</p>
 
 
 <footer class="footline">
 	
 </footer>
 
+        
+            </div> 
         
         </div> 
         
@@ -2514,7 +2582,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -2527,9 +2594,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -2611,7 +2675,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -2630,9 +2693,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -3194,6 +3254,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -3206,6 +3267,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -3222,6 +3284,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -3262,10 +3327,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/MLOps/lecture2/lambda_functions_model/" title="AWS Serverless Model Serving"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/MLOps/lecture8/" title="Lecture 8"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/MLOps/lecture3/" title="Lecture 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/MLOps/lecture8/statistical/" title="Statistical Tests" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

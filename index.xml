@@ -391,6 +391,33 @@ Apache Kafka  Is a popular Java/Scala based OSS (open-source software) streaming
     </item>
     
     <item>
+      <title>A/B Testing</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture8/abtest/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture8/abtest/</guid>
+      <description>TLDR  A/B tests are also called split tests. In much of science, these are also referred to as randomized controlled trails. They are a data-driven way to prove to the business stakeholders that your solution (say a new prediction model) gives a tangible lift to appropriate business metric (e.g., sales, conversion, engagement etc). The greatest advantage and dis-advantage of A/B testing is that they are easy to understand as well as easy to mis-understand.</description>
+    </item>
+    
+    <item>
+      <title>Statistical Tests</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture8/statistical/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture8/statistical/</guid>
+      <description>Introduction  For simplicity, in this section, lets assume we are only comparing control with a single treatment/variant. If we have more variants, the underlying tests will change. We will look at three different tests based on the type of question we would like to answer from a corresponding experiment. These tests are:  Two-sample T Test Chi-squared Test Poisson Means Test  There are always alternative tests that can be used depending on the assumptions.</description>
+    </item>
+    
+    <item>
+      <title>Testing Models</title>
+      <link>https://chicagodatascience.github.io/MLOps/lecture8/modeltesting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://chicagodatascience.github.io/MLOps/lecture8/modeltesting/</guid>
+      <description>Example Online Experiment  There are many solutions, each with its own nuances. To get to a minimum viable testing setup, we will instead do the following. We will develop a bare-bones setup to test two recommendation models based on the flask deployment from earlier. This will involve using the open source package planout (see here) to do the randomization. Assuming flask, surpriselib, pytorch and others are already installed, we can install planout using the following:</description>
+    </item>
+    
+    <item>
       <title>Exercises</title>
       <link>https://chicagodatascience.github.io/MLOps/lecture1/exercises/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
